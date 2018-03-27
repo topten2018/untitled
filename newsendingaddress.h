@@ -1,7 +1,7 @@
 #ifndef NEWSENDINGADDRESS_H
 #define NEWSENDINGADDRESS_H
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 namespace Ui {
 class newsendingaddress;

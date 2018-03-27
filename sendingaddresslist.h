@@ -1,7 +1,7 @@
 #ifndef SENDINGADDRESSLIST_H
 #define SENDINGADDRESSLIST_H
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 namespace Ui {
 class SendingAddressList;

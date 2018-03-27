@@ -1,7 +1,7 @@
 #include "sockettest.h"
 #include "QString";
 #include "QSettings";
-#include <QtWidgets/QMessageBox>
+#include <QMessageBox>
 #include <QFile>
 #include <QTextStream>
 #include <QRegExp>

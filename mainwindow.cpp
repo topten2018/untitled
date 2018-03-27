@@ -42,12 +42,13 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowTitle(tr("APR Wallet Version 1.0"));
 	this->setWindowIcon(*(new QIcon(":/ico/icon.ico")));
   
-	ui->tabWidget->setTabIcon(0, QIcon(":/png/overview.png"));
-	ui->tabWidget->setTabIcon(1, QIcon(":/png/send.png"));
-    ui->tabWidget->setTabIcon(2, QIcon(":/png/receive.png"));
-    ui->tabWidget->setTabIcon(3, QIcon(":/png/history.png"));
-    ui->tabWidget->setTabIcon(4, QIcon(":/png/privacy.png"));
-    ui->tabWidget->setTabIcon(5, QIcon(":/png/masternodes.png"));
+	ui->m_twMainArea->setTabIcon(0, QIcon(":/png/overview.png"));
+	ui->m_twMainArea->setTabIcon(1, QIcon(":/png/send.png"));
+    ui->m_twMainArea->setTabIcon(2, QIcon(":/png/receive.png"));
+    ui->m_twMainArea->setTabIcon(3, QIcon(":/png/history.png"));
+    ui->m_twMainArea->setTabIcon(4, QIcon(":/png/privacy.png"));
+    ui->m_twMainArea->setTabIcon(5, QIcon(":/png/masternodes.png"));
+	ui->m_twMainArea->setCurrentIndex(0);
 	
 	m_pRecipients = new RecPayModel(ui->m_lvRecipients);
 		
@@ -593,6 +594,8 @@ void MainWindow::onSendClear()
     connect(jworker, SIGNAL (finished()), jworker, SLOT (deleteLater()));
     connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
     thread->start();
+
+	m_pRecipients->clear();
 }
 
 void MainWindow::onAddRecipient()

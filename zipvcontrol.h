@@ -1,7 +1,7 @@
 #ifndef ZIPVCONTROL_H
 #define ZIPVCONTROL_H
 
-#include <QtWidgets/QWidget>
+#include <QWidget>
 
 namespace Ui {
 class zipvcontrol;

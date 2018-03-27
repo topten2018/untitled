@@ -1,7 +1,7 @@
 #ifndef FORM_H
 #define FORM_H
 
-#include <QtWidgets/QWidget>
+#include <QWidget>
 
 namespace Ui {
 class Form;

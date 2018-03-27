@@ -6,7 +6,7 @@
 #include <QtGlobal>
 
 #include <QtGlobal>
-#include <QtWidgets/QApplication>
+#include <QApplication>
 
 
 #define DEBUG_TEST
