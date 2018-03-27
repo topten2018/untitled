@@ -2696,7 +2696,7 @@ selection-color: rgb(255, 255, 255);
      <string>File</string>
     </property>
     <addaction name="m_actOpenUri"/>
-    <addaction name="actionBackup_Wallet"/>
+    <addaction name="m_actBackupWallet"/>
     <addaction name="actionSign_message"/>
     <addaction name="actionVerify_message"/>
     <addaction name="separator"/>
@@ -2740,11 +2740,19 @@ selection-color: rgb(255, 255, 255);
    <addaction name="menuTools"/>
   </widget>
   <action name="m_actOpenUri">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/new.png</normaloff>:/png/new.png</iconset>
+   </property>
    <property name="text">
     <string>Open URI...</string>
    </property>
   </action>
-  <action name="actionBackup_Wallet">
+  <action name="m_actBackupWallet">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/save.png</normaloff>:/png/save.png</iconset>
+   </property>
    <property name="text">
     <string>Backup Wallet</string>
    </property>

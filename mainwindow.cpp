@@ -28,7 +28,7 @@
 
 #include "Models/RecPayModel.h"
 
-#include "OpenUri.h"
+#include "dialogs/OpenUri.h"
 
 int jTotalBalance=0;
 QStringList jReceiveAddresses;

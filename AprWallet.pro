@@ -22,12 +22,12 @@ SOURCES += main.cpp\
     sockettest.cpp \
     worker.cpp \
     tools.cpp \
-    open_uri.cpp \
     sign_mess.cpp \
     receiveaddresslist.cpp \
     receiveaddress_info.cpp \
     sendingaddresslist.cpp \
     newsendingaddress.cpp \
+    dialogs\OpenUri.cpp \
     items\RecPayItem.cpp \
     models\RecPayModel.cpp	
 
@@ -39,12 +39,12 @@ HEADERS  += mainwindow.h \
     sockettest.h \
     worker.h \
     tools.h \
-    open_uri.h \
     sign_mess.h \
     receiveaddresslist.h \
     receiveaddress_info.h \
     sendingaddresslist.h \
     newsendingaddress.h \
+    dialogs\OpenUri.h \
     items\RecPayItem.h \
     models\RecPayModel.h
 
@@ -52,7 +52,7 @@ FORMS    += ./ui/mainwindow.ui \
     ./ui/form.ui \
     ./ui/zipvcontrol.ui \
     ./ui/tools.ui \
-    ./ui/open_uri.ui \
+    ./ui/OpenUri.ui \
     ./ui/sign_mess.ui \
     ./ui/receiveaddresslist.ui \
     ./ui/receiveaddress_info.ui \

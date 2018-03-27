@@ -51,6 +51,9 @@
     <Filter Include="Items">
       <UniqueIdentifier>{d3560cdc-49d0-4190-841a-851a3d2ef2f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dialogs">
+      <UniqueIdentifier>{584c8d3f-1094-4df1-a728-3b8e21b363f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d.cpp">
@@ -98,8 +101,8 @@
     <ClCompile Include="models\RecPayModel.cpp">
       <Filter>Models</Filter>
     </ClCompile>
-    <ClCompile Include="OpenUri.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="dialogs\OpenUri.cpp">
+      <Filter>Dialogs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,8 +151,8 @@
     <QtMoc Include="models\RecPayModel.h">
       <Filter>Models</Filter>
     </QtMoc>
-    <QtMoc Include="OpenUri.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="dialogs\OpenUri.h">
+      <Filter>Dialogs</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

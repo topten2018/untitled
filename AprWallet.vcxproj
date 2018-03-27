@@ -202,13 +202,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="d.cpp" />
+    <ClCompile Include="dialogs\OpenUri.cpp" />
     <ClCompile Include="form.cpp" />
     <ClCompile Include="items\RecPayItem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="models\RecPayModel.cpp" />
     <ClCompile Include="newsendingaddress.cpp" />
-    <ClCompile Include="OpenUri.cpp" />
     <ClCompile Include="receiveaddress_info.cpp" />
     <ClCompile Include="receiveaddresslist.cpp" />
     <ClCompile Include="sendingaddresslist.cpp" />
@@ -219,6 +219,7 @@
     <ClCompile Include="zipvcontrol.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="dialogs\OpenUri.h" />
     <QtMoc Include="models\RecPayModel.h" />
     <QtMoc Include="items\RecPayItem.h" />
     <QtMoc Include="d.h">
@@ -229,8 +230,6 @@
     <QtMoc Include="mainwindow.h">
     </QtMoc>
     <QtMoc Include="newsendingaddress.h">
-    </QtMoc>
-    <QtMoc Include="OpenUri.h">
     </QtMoc>
     <QtMoc Include="receiveaddress_info.h">
     </QtMoc>
