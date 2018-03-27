@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{f2179125-e407-4a1c-8966-3f4372f610fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{d3560cdc-49d0-4190-841a-851a3d2ef2f2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="form.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="newsendingaddress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="open_uri.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="receiveaddress_info.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="receiveaddresslist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sendingaddresslist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sign_mess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sockettest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="worker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="zipvcontrol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="items\RecPayItem.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="models\RecPayModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="d.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="form.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="mainwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="newsendingaddress.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="open_uri.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="receiveaddress_info.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="receiveaddresslist.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="sendingaddresslist.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="sign_mess.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="sockettest.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="tools.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="worker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="zipvcontrol.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="items\RecPayItem.h">
+      <Filter>Items</Filter>
+    </QtMoc>
+    <QtMoc Include="models\RecPayModel.h">
+      <Filter>Models</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="GeneratedFiles\moc_predefs.h.cbt">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="ui\dialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\form.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\mainwindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\newsendingaddress.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\open_uri.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\receiveaddress_info.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\receiveaddresslist.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\sendingaddresslist.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\sign_mess.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\tools.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\zipvcontrol.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\RecPayItem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="resources\resource.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+</Project>
