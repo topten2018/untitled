@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
-#include<QTabWidget>
+#include <QTabWidget>
 #include <QTabBar>
 #include <QRegExp>
 #include <QObject>
@@ -26,83 +26,80 @@
 #include <cmath>
 #include <QDebug>
 
+#include "Models/RecPayModel.h"
+
+int jTotalBalance=0;
+QStringList jReceiveAddresses;
+QStringList jSendingAddressListOUT;
+QString jGlobalparam = "";
+QString jAddressParam="";
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle("APR Wallet Version 1.0");
-  //  QWidget *tab1 = new QWidget;
-
-  //  ui->tabWidget->insertTab(0, tab1, "Tab 1");
-
-
-
-  ui->tabWidget->setTabIcon(0,*(new QIcon("overview.png")));
-   ui->tabWidget->setTabIcon(1,*(new QIcon("send.png")));
-    ui->tabWidget->setTabIcon(2,*(new QIcon("receive.png")));
-     ui->tabWidget->setTabIcon(3,*(new QIcon("history.png")));
-      ui->tabWidget->setTabIcon(4,*(new QIcon("privacy.png")));
-       ui->tabWidget->setTabIcon(5,*(new QIcon("masternodes.png")));
-
-this->setWindowIcon(*(new QIcon("icon.ico")));
-
-       QString fileName = "AddressList.txt";
-       QFile inputFile(fileName);
-       if (inputFile.open(QIODevice::ReadOnly))
-       {
-          QTextStream in(&inputFile);
-          while (!in.atEnd())
-          {
-             QString line = in.readLine();
+    this->setWindowTitle(tr("APR Wallet Version 1.0"));
+	this->setWindowIcon(*(new QIcon(":/ico/icon.ico")));
+  
+	ui->tabWidget->setTabIcon(0, QIcon(":/png/overview.png"));
+	ui->tabWidget->setTabIcon(1, QIcon(":/png/send.png"));
+    ui->tabWidget->setTabIcon(2, QIcon(":/png/receive.png"));
+    ui->tabWidget->setTabIcon(3, QIcon(":/png/history.png"));
+    ui->tabWidget->setTabIcon(4, QIcon(":/png/privacy.png"));
+    ui->tabWidget->setTabIcon(5, QIcon(":/png/masternodes.png"));
+	
+	m_pRecipients = new RecPayModel(ui->m_lvRecipients);
+		
+    QString fileName = "AddressList.txt";
+    QFile inputFile(fileName);
+    if (inputFile.open(QIODevice::ReadOnly))
+    {
+		QTextStream in(&inputFile);
+        while (!in.atEnd())
+        {
+			QString line = in.readLine();
             jReceiveAddresses.append(line);
+        }
+        inputFile.close();
+	}
 
-          }
-          inputFile.close();
-       }
-
-
-       QString fileName2 = "SendingAddressList.txt";
-       QFile inputFile2(fileName2);
-       if (inputFile2.open(QIODevice::ReadOnly))
-       {
-          QTextStream in(&inputFile2);
-          while (!in.atEnd())
-          {
-             QString line = in.readLine();
+    QString fileName2 = "SendingAddressList.txt";
+    QFile inputFile2(fileName2);
+    if (inputFile2.open(QIODevice::ReadOnly))
+    {
+		QTextStream in(&inputFile2);
+        while (!in.atEnd())
+        {
+			QString line = in.readLine();
             jSendingAddressListOUT.append(line);
+		}
+        inputFile2.close();
+	}
 
-          }
-          inputFile2.close();
-       }
-
-jSendingAddressesOUTList = jSendingAddressListOUT.join(";");
+	jSendingAddressesOUTList = jSendingAddressListOUT.join(";");
 /*
 QMessageBox msgBox;
 msgBox.setText(jSendingAddressesOUTList);
 msgBox.exec();
 */
+	QStandardItemModel *model = new QStandardItemModel;
+    QStandardItem *item;
 
+    //–ó–∞–≥–æ–ª–æ–≤–∫–∏ —Å—Ç–æ–ª–±—Ü–æ–≤
+    QStringList horizontalHeader;
+    horizontalHeader.append(tr("Date"));
+    horizontalHeader.append(tr("Label"));
+    horizontalHeader.append(tr("Message"));
+    horizontalHeader.append(tr("Amount(APR)"));
 
-
-
-            QStandardItemModel *model = new QStandardItemModel;
-           QStandardItem *item;
-
-           //«‡„ÓÎÓ‚ÍË ÒÚÓÎ·ˆÓ‚
-           QStringList horizontalHeader;
-           horizontalHeader.append("Date");
-           horizontalHeader.append("Label");
-           horizontalHeader.append("Message");
-           horizontalHeader.append("Amount(APR)");
-
-           QString s = QDate::currentDate().toString();
-           QStringList tempData;
-           tempData.append(s+":"+"someaddress1");
-            tempData.append(s+":"+"someaddress2");
-             tempData.append(s+":"+"someaddress3");
-              tempData.append(s+":"+"someaddress4");
-               tempData.append(s+":"+"someaddress5");
+	QString s = QDate::currentDate().toString();
+    QStringList tempData;
+    tempData.append(s+":"+"someaddress1");
+    tempData.append(s+":"+"someaddress2");
+    tempData.append(s+":"+"someaddress3");
+    tempData.append(s+":"+"someaddress4");
+    tempData.append(s+":"+"someaddress5");
 
                /*
                for (int i =0; i<5; i++)
@@ -115,210 +112,163 @@ msgBox.exec();
                */
 
 
-               for (int i =0; i<jReceiveAddresses.count(); i++)
-               {
-                   QString d = jReceiveAddresses[i];
-                   QRegExp rxs("(\\:)");
-                   QStringList ds = d.split(rxs);
+	for (int i =0; i<jReceiveAddresses.count(); i++)
+    {
+		QString d = jReceiveAddresses[i];
+        QRegExp rxs("(\\:)");
+        QStringList ds = d.split(rxs);
+
+		item = new QStandardItem(ds[0]);
+        model->setItem(i, 0, item);
+        item = new QStandardItem(ds[1]);
+        model->setItem(i, 1, item);
+	}
+
+	model->setHorizontalHeaderLabels(horizontalHeader);
+    ui->tableView->setModel(model);
+    ui->tableView->resizeRowsToContents();
+    ui->tableView->resizeColumnsToContents();
+    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    connect(ui->tableView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onTableClicked()));
 
 
-
-                   item = new QStandardItem(ds[0]);
-                   model->setItem(i, 0, item);
-                   item = new QStandardItem(ds[1]);
-                   model->setItem(i, 1, item);
-
-               }
-
-
-           model->setHorizontalHeaderLabels(horizontalHeader);
-           ui->tableView->setModel(model);
-           ui->tableView->resizeRowsToContents();
-           ui->tableView->resizeColumnsToContents();
-           ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-           connect(ui->tableView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onTableClicked()));
+    QStandardItemModel *model2 = new QStandardItemModel;
+    QStringList horizontalHeaderTH;
+    horizontalHeaderTH.append(tr("Date"));
+    horizontalHeaderTH.append(tr("Type"));
+    horizontalHeaderTH.append(tr("Address"));
+    horizontalHeaderTH.append(tr("Amount(APR)"));
+    model2->setHorizontalHeaderLabels(horizontalHeaderTH);
+    ui->tableView_2->setModel(model2);
+    ui->tableView_2->resizeRowsToContents();
+    ui->tableView_2->resizeColumnsToContents();
 
 
-           QStandardItemModel *model2 = new QStandardItemModel;
-           QStandardItem *item2;
-           QStringList horizontalHeaderTH;
-           horizontalHeaderTH.append("Date");
-           horizontalHeaderTH.append("Type");
-           horizontalHeaderTH.append("Address");
-           horizontalHeaderTH.append("Amount(APR)");
-           model2->setHorizontalHeaderLabels(horizontalHeaderTH);
-           ui->tableView_2->setModel(model2);
-           ui->tableView_2->resizeRowsToContents();
-           ui->tableView_2->resizeColumnsToContents();
+	QStandardItemModel *model3 = new QStandardItemModel;
+    QStringList horizontalHeaderMN;
+    horizontalHeaderMN.append(tr("Alias"));
+    horizontalHeaderMN.append(tr("Address"));
+    horizontalHeaderMN.append(tr("Protocol"));
+    horizontalHeaderMN.append(tr("Status"));
+    horizontalHeaderMN.append(tr("Active"));
+    horizontalHeaderMN.append(tr("Last Seen (UTC)"));
+    horizontalHeaderMN.append(tr("Pubkey"));
+    model3->setHorizontalHeaderLabels(horizontalHeaderMN);
+    ui->tableView_3->setModel(model3);
+    ui->tableView_3->resizeRowsToContents();
+    ui->tableView_3->resizeColumnsToContents();
 
+	const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+    const int randomStringLength = 72; // assuming you want random strings of 12 characters
 
-           QStandardItemModel *model3 = new QStandardItemModel;
-           QStandardItem *item3;
-           QStringList horizontalHeaderMN;
-           horizontalHeaderMN.append("Alias");
-           horizontalHeaderMN.append("Address");
-           horizontalHeaderMN.append("Protocol");
-            horizontalHeaderMN.append("Status");
-             horizontalHeaderMN.append("Active");
-              horizontalHeaderMN.append("Last Seen (UTC)");
-               horizontalHeaderMN.append("Pubkey");
-           model3->setHorizontalHeaderLabels(horizontalHeaderMN);
-           ui->tableView_3->setModel(model3);
-           ui->tableView_3->resizeRowsToContents();
-           ui->tableView_3->resizeColumnsToContents();
+    QString publicaddress;
+    QString privateaddress;
+    QDateTime cd = QDateTime::currentDateTime();
+    qsrand(cd.toTime_t());
+    for(int i=0; i<randomStringLength; ++i)
+    {
+		int index = qrand() % possibleCharacters.length();
+        QChar nextChar = possibleCharacters.at(index);
+        publicaddress.append(nextChar);
+	}
 
+    for(int i=0; i<randomStringLength; ++i)
+    {
+		int index = qrand() % possibleCharacters.length();
+        QChar nextChar = possibleCharacters.at(index);
+        privateaddress.append(nextChar);
+	}
 
-
-
-
-
-
-
-
-
-
-
-           const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
-           const int randomStringLength = 72; // assuming you want random strings of 12 characters
-
-           QString publicaddress;
-           QString privateaddress;
-           QDateTime cd = QDateTime::currentDateTime();
-           qsrand(cd.toTime_t());
-           for(int i=0; i<randomStringLength; ++i)
-           {
-               int index = qrand() % possibleCharacters.length();
-               QChar nextChar = possibleCharacters.at(index);
-               publicaddress.append(nextChar);
-           }
-
-           for(int i=0; i<randomStringLength; ++i)
-           {
-               int index = qrand() % possibleCharacters.length();
-               QChar nextChar = possibleCharacters.at(index);
-               privateaddress.append(nextChar);
-           }
-
-
-
-          /*
+      /*
            QMessageBox msgBox;
            msgBox.setText(randomString);
            msgBox.exec();
            */
-           QString jFileContent = "";
-           QString filename = "Data4.txt";
-               QFile file(filename);
-               if (file.open(QIODevice::ReadWrite))
-               {
-                 //  QTextStream stream(&file);
-                 //  stream << "something" << endl;
+	QString jFileContent = "";
+    QString filename = "Data4.txt";
+    QFile file(filename);
+	if (file.open(QIODevice::ReadWrite))
+    {
+        //  QTextStream stream(&file);
+        //  stream << "something" << endl;
 
-                 //  QTextStream ReadFile(&file);
-                   /*
-                   while (!ReadFile.atEnd())
-                       {
-                          jFileContent = ReadFile.re.readLine();
-                          jAddressParam += jFileContent;
-
-
-                       }
-                     */
-
-                   jAddressParam= file.readAll();
-                //   QMessageBox msgBox;
-                //   msgBox.setText(jAddressParam);
-                //   msgBox.exec();
-
-                  // msgBox.setText("!!!!");
-                  // msgBox.exec();
+        //  QTextStream ReadFile(&file);
+        /*
+        while (!ReadFile.atEnd())
+            {
+                jFileContent = ReadFile.re.readLine();
+                jAddressParam += jFileContent;
 
 
+            }
+            */
+		jAddressParam= file.readAll();
+        //   QMessageBox msgBox;
+        //   msgBox.setText(jAddressParam);
+        //   msgBox.exec();
+		// msgBox.setText("!!!!");
+        // msgBox.exec();
+	}
 
+    if (jAddressParam.trimmed().isEmpty())
+    {
+		QTextStream stream(&file);
+        stream << publicaddress+";"+privateaddress << endl;
+        jAddressParam = publicaddress+";"+privateaddress;
+	}
 
-               }
-
-               if (jAddressParam.trimmed().isEmpty())
-               {
-                   QTextStream stream(&file);
-                   stream << publicaddress+";"+privateaddress << endl;
-                    jAddressParam = publicaddress+";"+privateaddress;
-
-               }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              /*
-               QMessageBox msgBox;
-               msgBox.setText(jFileContent);
-               msgBox.exec();
-               */
+    /*
+    QMessageBox msgBox;
+    msgBox.setText(jFileContent);
+    msgBox.exec();
+    */
 
 
 //ui->label_2->setStyleSheet("QLabel{ background-color : black; color : white; }");
 //ui->label_2->setStyleSheet("QLabel{background-color: rgba(255, 255, 255, 0);color: rgb(255, 255, 255);}");
 //ui->label->setStyleSheet("QLabel{background:transparent}") ;
 
-               jGlobalparam = "balance";
-               QSettings sett("parameter");
-               sett.setValue("value1", jGlobalparam);
+	jGlobalparam = "balance";
+    QSettings sett("parameter");
+    sett.setValue("value1", jGlobalparam);
 
-               /*
-                QTimer *timer;
-               timer = new QTimer(this);
-               connect(timer, SIGNAL(timeout()), this, SLOT(UpdateBalance()));
-               timer->start(1000);
+    /*
+    QTimer *timer;
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(UpdateBalance()));
+    timer->start(1000);
 
-               UpdateBalance();
-               */
-
-
-               QTimer *timer = new QTimer;
-
-               // make the connection using the timer variable
-               connect(timer,SIGNAL(timeout()), this, SLOT(UpdateBalance()));
-
-               // start the timer object by first dereferencing that object first
-               timer->start(20000);
+    UpdateBalance();
+    */
 
 
-               QTimer *timer2 = new QTimer;
+    QTimer *timer = new QTimer;
 
-               // make the connection using the timer variable
-               connect(timer2,SIGNAL(timeout()), this, SLOT(UpdateGUI()));
+    // make the connection using the timer variable
+    connect(timer,SIGNAL(timeout()), this, SLOT(UpdateBalance()));
 
-               // start the timer object by first dereferencing that object first
-               timer2->start(100);
+    // start the timer object by first dereferencing that object first
+    timer->start(20000);
+
+	QTimer *timer2 = new QTimer;
+
+    // make the connection using the timer variable
+    connect(timer2,SIGNAL(timeout()), this, SLOT(UpdateGUI()));
+
+    // start the timer object by first dereferencing that object first
+    timer2->start(100);
+
+    SocketTest cTest;
+    cTest.GetBalance(jAddressParam.trimmed());
+    jDataAddress = jAddressParam;
+    //  cTest.Connect();
+    //checkbalance();
 
 
-
-
-
-
-               SocketTest cTest;
-               cTest.GetBalance(jAddressParam.trimmed());
-               jDataAddress = jAddressParam;
-             //  cTest.Connect();
-               //checkbalance();
-
-
-               float jnumber = 12;
-               float result = jnumber  * (float)(10/100.0);
-               float zerojnumber = jnumber-result;
-               QString b = QString::number(zerojnumber);
+    float jnumber = 12;
+    float result = jnumber  * (float)(10/100.0);
+    float zerojnumber = jnumber-result;
+    QString b = QString::number(zerojnumber);
 
 /*
              int satoshi = 2;
@@ -332,68 +282,49 @@ msgBox.exec();
               */
 
 
-                double satoshi = 2;
-                double satoshi2 = 0.00000005;
-                double satoshi3 = satoshi-satoshi2;
-                double resultpercent = satoshi3*10;
-                double resultpercent2 = resultpercent/100;
-                double resultpercent3= satoshi3-resultpercent2;
-                b = QString::number(resultpercent3,'f', 8);
+	double satoshi = 2;
+    double satoshi2 = 0.00000005;
+    double satoshi3 = satoshi-satoshi2;
+    double resultpercent = satoshi3*10;
+    double resultpercent2 = resultpercent/100;
+    double resultpercent3= satoshi3-resultpercent2;
+    b = QString::number(resultpercent3,'f', 8);
 
-            //     b = QString::number(satoshi3);
+    //     b = QString::number(satoshi3);
 
+    int jjnumber = 12;
+    float rresult = jjnumber  * (float)(10/100.0);
+    float zzerojnumber = jjnumber-rresult;
+    b = QString::number(zzerojnumber);
 
-
-                int jjnumber = 12;
-                float rresult = jjnumber  * (float)(10/100.0);
-                float zzerojnumber = jjnumber-rresult;
-                 b = QString::number(zzerojnumber);
-
-
-
-
-
-
-
-
+	connect(ui->m_btnSend, SIGNAL(clicked()), this, SLOT(onSend()));
+	connect(ui->m_btnSendClear, SIGNAL(clicked()), this, SLOT(onSendClear()));
+	connect(ui->m_btnAddRecipient, SIGNAL(clicked()), this, SLOT(onAddRecipient()));
 /*
 
                QMessageBox msgBox;
                msgBox.setText(b);
                msgBox.exec();
                */
-
-
-
-
-
-
 }
-int jTotalBalance=0;
-QStringList jReceiveAddresses;
-
-QStringList jSendingAddressListOUT;
-
-QString jGlobalparam = "";
-QString jAddressParam="";
 
 void MainWindow::UpdateGUI()
 {
     if (MoneySent==true)
     {
         MoneySent=false;
-        ui->textEdit_3->clear();
+		QMessageBox::critical(this, "", "ui->textEdit_3->clear();");
     }
 }
 
 void MainWindow::onTableClicked()
 {
-QModelIndex index = ui->tableView->currentIndex();
-int i = index.row(); // now you know which record was selected
-int b = i;
-jAddressInfo= jReceiveAddresses[b];
+	QModelIndex index = ui->tableView->currentIndex();
+	int i = index.row(); // now you know which record was selected
+	int b = i;
+	jAddressInfo= jReceiveAddresses[b];
 
-jReceivedAddressInfo.show();
+	jReceivedAddressInfo.show();
 }
 
 void MainWindow::UpdateBalance()
@@ -504,28 +435,11 @@ void MainWindow::UpdateBalance()
         ui->tableView_2->resizeColumnsToContents();
 
 
-
-
-
-
-
-
-
-
-
         }
 
 
 
 */
-
-
-
-
-
-
-
-
 
       //  jTotalBalance = jUpdatedBalance.toInt();
 
@@ -589,73 +503,42 @@ void MainWindow::on_pushButton_clicked()
     QStandardItemModel *model = new QStandardItemModel;
     QStandardItem *item;
 
-   //«‡„ÓÎÓ‚ÍË ÒÚÓÎ·ˆÓ‚
-   QStringList horizontalHeader;
-   horizontalHeader.append("Date");
-   horizontalHeader.append("Label");
-   horizontalHeader.append("Message");
-   horizontalHeader.append("Amount(APR)");
+	//–ó–∞–≥–æ–ª–æ–≤–∫–∏ —Å—Ç–æ–ª–±—Ü–æ–≤
+	QStringList horizontalHeader;
+	horizontalHeader.append(tr("Date"));
+	horizontalHeader.append(tr("Label"));
+	horizontalHeader.append(tr("Message"));
+	horizontalHeader.append(tr("Amount(APR)"));
 
-   QString s = QDate::currentDate().toString();
-
-
-
-       jReceiveAddresses.append(s+":"+jFinalAddress);
+	QString s = QDate::currentDate().toString();
 
 
-       QFile fileOut("AddressList.txt");
-       fileOut.open(QFile::WriteOnly|QFile::Append); // check result
-       QTextStream streamOut(&fileOut);
-       streamOut << s+":"+jFinalAddress << "\r\n";
-       fileOut.close();
+	jReceiveAddresses.append(s+":"+jFinalAddress);
 
 
+    QFile fileOut("AddressList.txt");
+    fileOut.open(QFile::WriteOnly|QFile::Append); // check result
+    QTextStream streamOut(&fileOut);
+    streamOut << s+":"+jFinalAddress << "\r\n";
+    fileOut.close();
 
+	for (int i =0; i<jReceiveAddresses.count(); i++)
+    {
+		QString d = jReceiveAddresses[i];
+        QRegExp rxs("(\\:)");
+        QStringList ds = d.split(rxs);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       for (int i =0; i<jReceiveAddresses.count(); i++)
-       {
-           QString d = jReceiveAddresses[i];
-           QRegExp rxs("(\\:)");
-           QStringList ds = d.split(rxs);
-
-
-
-           item = new QStandardItem(ds[0]);
-           model->setItem(i, 0, item);
-           item = new QStandardItem(ds[1]);
-           model->setItem(i, 1, item);
-
-       }
-
-
+		item = new QStandardItem(ds[0]);
+        model->setItem(i, 0, item);
+        item = new QStandardItem(ds[1]);
+        model->setItem(i, 1, item);
+	}
+	
    model->setHorizontalHeaderLabels(horizontalHeader);
    ui->tableView->setModel(model);
    ui->tableView->resizeRowsToContents();
    ui->tableView->resizeColumnsToContents();
-
-
 }
-
-
-
-
 
 void MainWindow::on_showRequestButton_2_clicked()
 {
@@ -669,12 +552,7 @@ void MainWindow::on_pushButton_13_clicked()
 
 void MainWindow::on_pushButton_9_clicked()
 {
-
-
-   form.show();
-
-
-
+	form.show();
 }
 
 void MainWindow::on_pushButton_11_clicked()
@@ -682,10 +560,10 @@ void MainWindow::on_pushButton_11_clicked()
     zip.show();
 }
 
-void MainWindow::on_pushButton_6_clicked()
+void MainWindow::onSend()
 {
-    QString text = ui->textEdit_3->toPlainText();
-
+	QMessageBox::critical(this, "", "QString text = ui->textEdit_3->toPlainText();");
+  /*  
     int amount = ui->spinBox_3->value();
     if (amount>jTotalBalance)
     {
@@ -695,17 +573,16 @@ void MainWindow::on_pushButton_6_clicked()
         return;
     }
 
-
     QString jamount = QVariant(amount).toString();
     jSendToAddress = text;
     jGlobalSumToSend =jamount;
     jGlobalparam = "send";
     SocketTest cTest;
     cTest.SendMoney();
-
+	*/
 }
 
-void MainWindow::on_pushButton_7_clicked()
+void MainWindow::onSendClear()
 {
     QThread* thread = new QThread;
     Worker*  jworker = new Worker();
@@ -716,6 +593,11 @@ void MainWindow::on_pushButton_7_clicked()
     connect(jworker, SIGNAL (finished()), jworker, SLOT (deleteLater()));
     connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
     thread->start();
+}
+
+void MainWindow::onAddRecipient()
+{
+	m_pRecipients->addItem();
 }
 
 void MainWindow::on_actionInformation_triggered()
@@ -765,8 +647,5 @@ void MainWindow::on_actionReceiving_addresses_triggered()
 
 void MainWindow::on_actionSending_addresses_triggered()
 {
-
-
-
     jSendingAddressList.show();
 }

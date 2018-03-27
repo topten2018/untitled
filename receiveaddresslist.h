@@ -1,7 +1,7 @@
 #ifndef RECEIVEADDRESSLIST_H
 #define RECEIVEADDRESSLIST_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Ui {
 class Receiveaddresslist;

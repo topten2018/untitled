@@ -1,7 +1,7 @@
 #ifndef D_H
 #define D_H
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 
 class d : public QWidget
 {

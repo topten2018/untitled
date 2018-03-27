@@ -1,7 +1,7 @@
 #ifndef SIGN_MESS_H
 #define SIGN_MESS_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Ui {
 class Sign_Mess;

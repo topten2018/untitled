@@ -1,4 +1,3 @@
-#include <QtGui/QApplication>
 #include "mainwindow.h"
 #include <QDebug>
 #include <QtDebug>
@@ -7,7 +6,7 @@
 #include <QtGlobal>
 
 #include <QtGlobal>
-#include <QApplication>
+#include <QtWidgets/QApplication>
 
 
 #define DEBUG_TEST

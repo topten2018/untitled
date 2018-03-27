@@ -1,9 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include "form.h";
-#include "zipvcontrol.h";
+#include <QtWidgets/QMainWindow>
+#include "form.h"
+#include "zipvcontrol.h"
 #include "tools.h"
 #include "open_uri.h"
 #include "sign_mess.h"
@@ -17,6 +17,8 @@ class MainWindow;
 
 }
 
+class RecPayModel;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -26,15 +28,10 @@ public:
 
     ~MainWindow();
 
-
-
-
     QString jGlobalparam;
     QString jAddressParam;
     QStringList jReceiveAddresses;
     QStringList jSendingAddressListOUT;
-
-
     
 private slots:
     void on_pushButton_clicked();
@@ -46,14 +43,14 @@ private slots:
     void on_pushButton_9_clicked();
 
     void on_pushButton_11_clicked();
-
-    void on_pushButton_6_clicked();
+	
     void UpdateBalance();
     void UpdateGUI();
     void onTableClicked();
 
-
-    void on_pushButton_7_clicked();
+	void onSend();
+	void onSendClear();
+	void onAddRecipient();
 
     void on_actionInformation_triggered();
 
@@ -77,6 +74,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
     Form form;
     zipvcontrol zip;
     tools jtool;
@@ -87,6 +85,7 @@ private:
     ReceiveAddress_Info jReceivedAddressInfo;
     SendingAddressList jSendingAddressList;
 
+	RecPayModel * m_pRecipients;
 };
 
 #endif // MAINWINDOW_H

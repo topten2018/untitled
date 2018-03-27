@@ -20,12 +20,9 @@ SendingAddressList::SendingAddressList(QWidget *parent) :
     horizontalHeader.append("Address");
 
     model2->setHorizontalHeaderLabels(horizontalHeader);
-
-
+	
     if (jSendingAddressesOUTList.contains(":"))
     {
-
-
         QRegExp rxad("(\\;)");
         QStringList query2 = jSendingAddressesOUTList.split(rxad);
 

@@ -1,0 +1,25 @@
+<RCC>
+  <qresource prefix="/png">
+    <file>add.png</file>
+    <file>address-book.png</file>
+    <file>remove.png</file>
+    <file>editpaste.png</file>
+    <file>apr.png</file>
+    <file>apr2.png</file>
+    <file>apr_logo3.png</file>
+    <file>apr_wallet_logo.png</file>
+    <file>connect4_16.png</file>
+    <file>notsynced.png</file>
+    <file>staking_inactive.png</file>
+    <file>apr_background.png</file>
+    <file>history.png</file>
+    <file>masternodes.png</file>
+    <file>overview.png</file>
+    <file>privacy.png</file>
+    <file>receive.png</file>
+    <file>send.png</file>
+  </qresource>
+  <qresource prefix="/ico">
+    <file>icon.ico</file>
+  </qresource>
+</RCC>

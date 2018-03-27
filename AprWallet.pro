@@ -4,11 +4,15 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT += network
-TARGET = untitled
 TEMPLATE = app
+QT += core gui network widgets
+TARGET = untitled
 
+INCLUDEPATH += ./GeneratedFiles \
+    . \
+    ./GeneratedFiles
+DEPENDPATH += .
+MOC_DIR += ./GeneratedFiles
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -23,7 +27,9 @@ SOURCES += main.cpp\
     receiveaddresslist.cpp \
     receiveaddress_info.cpp \
     sendingaddresslist.cpp \
-    newsendingaddress.cpp
+    newsendingaddress.cpp \
+    items\RecPayItem.cpp \
+    models\RecPayModel.cpp	
 
 HEADERS  += mainwindow.h \
     d.h \
@@ -38,19 +44,21 @@ HEADERS  += mainwindow.h \
     receiveaddresslist.h \
     receiveaddress_info.h \
     sendingaddresslist.h \
-    newsendingaddress.h
+    newsendingaddress.h \
+    items\RecPayItem.h \
+    models\RecPayModel.h
 
-FORMS    += mainwindow.ui \
-    form.ui \
-    zipvcontrol.ui \
-    tools.ui \
-    open_uri.ui \
-    sign_mess.ui \
-    receiveaddresslist.ui \
-    receiveaddress_info.ui \
-    sendingaddresslist.ui \
-    newsendingaddress.ui
-FORMS  +=   dialog.ui
+FORMS    += ./ui/mainwindow.ui \
+    ./ui/form.ui \
+    ./ui/zipvcontrol.ui \
+    ./ui/tools.ui \
+    ./ui/open_uri.ui \
+    ./ui/sign_mess.ui \
+    ./ui/receiveaddresslist.ui \
+    ./ui/receiveaddress_info.ui \
+    ./ui/sendingaddresslist.ui \
+    ./ui/newsendingaddress.ui \
+    ./ui/dialog.ui \
+    ./ui/RecPayItem.ui
 
-RESOURCES += \
-    resource.qrc
+RESOURCES += ./resources/resource.qrc

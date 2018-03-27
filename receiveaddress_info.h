@@ -1,7 +1,7 @@
 #ifndef RECEIVEADDRESS_INFO_H
 #define RECEIVEADDRESS_INFO_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Ui {
 class ReceiveAddress_Info;

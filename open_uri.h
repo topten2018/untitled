@@ -1,7 +1,7 @@
 #ifndef OPEN_URI_H
 #define OPEN_URI_H
 
-#include <QDialog>
+#include <QtWidgets/QDialog>
 
 namespace Ui {
 class Open_URI;

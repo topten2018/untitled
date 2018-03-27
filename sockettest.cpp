@@ -1,7 +1,7 @@
 #include "sockettest.h"
 #include "QString";
 #include "QSettings";
-#include <QMessageBox>
+#include <QtWidgets/QMessageBox>
 #include <QFile>
 #include <QTextStream>
 #include <QRegExp>
@@ -178,12 +178,6 @@ void SocketTest::GetBalance(QString Addr)
         */
 
         const char *c = j.toLatin1();
-
-
-
-
-
-
 
         socket->write(c);
         socket->waitForBytesWritten(1000);
