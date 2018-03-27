@@ -16,8 +16,6 @@ bool MoneySent = false;
 bool jUpdate1 = false;
 QString jUpdatedBalance="";
 
-
-
 QString jDataAddress="";
 QString jSendToAddress="";
 QString jGlobalSumToSend="";

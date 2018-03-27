@@ -28,6 +28,8 @@
 
 #include "Models/RecPayModel.h"
 
+#include "OpenUri.h"
+
 int jTotalBalance=0;
 QStringList jReceiveAddresses;
 QStringList jSendingAddressListOUT;
@@ -301,6 +303,8 @@ msgBox.exec();
 	connect(ui->m_btnSend, SIGNAL(clicked()), this, SLOT(onSend()));
 	connect(ui->m_btnSendClear, SIGNAL(clicked()), this, SLOT(onSendClear()));
 	connect(ui->m_btnAddRecipient, SIGNAL(clicked()), this, SLOT(onAddRecipient()));
+
+	connect(ui->m_actOpenUri, SIGNAL(triggered()), this, SLOT(onOpenUri()));
 /*
 
                QMessageBox msgBox;
@@ -628,9 +632,19 @@ void MainWindow::on_actionWallet_Repair_triggered()
     jtool.show();
 }
 
-void MainWindow::on_actionOpen_URI_triggered()
+void MainWindow::onOpenUri()
 {
-    jUri.show();
+	OpenUri dlg;
+
+	if (dlg.exec() == QDialog::Accepted)
+	{
+		ui->m_twMainArea->setCurrentIndex(MainWindow::Pages::Send);
+		RecPayItem * p = m_pRecipients->item(0);
+		if (p)
+		{
+			p->setUri(dlg.uri());
+		}
+	}
 }
 
 void MainWindow::on_actionSign_message_triggered()

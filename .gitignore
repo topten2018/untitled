@@ -31,6 +31,9 @@
 *.out
 *.app
 
+*.txt
+log
+
 .vs
 .x64
 GeneratedFiles

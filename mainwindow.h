@@ -5,7 +5,6 @@
 #include "form.h"
 #include "zipvcontrol.h"
 #include "tools.h"
-#include "open_uri.h"
 #include "sign_mess.h"
 #include "receiveaddresslist.h"
 #include "receiveaddress_info.h"
@@ -24,9 +23,17 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit MainWindow(QWidget *parent = 0);
-
-    ~MainWindow();
+	enum Pages {
+		Overview = 0,
+		Send,
+		Receive,
+		History,
+		Privacy,
+		Masternodes
+	};
+	
+	explicit MainWindow(QWidget *parent = 0);
+	~MainWindow();
 
     QString jGlobalparam;
     QString jAddressParam;
@@ -62,7 +69,7 @@ private slots:
 
     void on_actionWallet_Repair_triggered();
 
-    void on_actionOpen_URI_triggered();
+    void onOpenUri();
 
     void on_actionSign_message_triggered();
 
@@ -79,7 +86,6 @@ private:
     zipvcontrol zip;
     tools jtool;
     QTimer timer;
-    Open_URI jUri;
     Sign_Mess jsign;
     Receiveaddresslist jReceive;
     ReceiveAddress_Info jReceivedAddressInfo;

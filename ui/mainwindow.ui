@@ -2695,7 +2695,7 @@ selection-color: rgb(255, 255, 255);
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionOpen_URI"/>
+    <addaction name="m_actOpenUri"/>
     <addaction name="actionBackup_Wallet"/>
     <addaction name="actionSign_message"/>
     <addaction name="actionVerify_message"/>
@@ -2739,7 +2739,7 @@ selection-color: rgb(255, 255, 255);
    <addaction name="menuSettings"/>
    <addaction name="menuTools"/>
   </widget>
-  <action name="actionOpen_URI">
+  <action name="m_actOpenUri">
    <property name="text">
     <string>Open URI...</string>
    </property>

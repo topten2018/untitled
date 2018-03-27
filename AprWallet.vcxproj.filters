@@ -68,9 +68,6 @@
     <ClCompile Include="newsendingaddress.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="open_uri.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="receiveaddress_info.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -101,6 +98,9 @@
     <ClCompile Include="models\RecPayModel.cpp">
       <Filter>Models</Filter>
     </ClCompile>
+    <ClCompile Include="OpenUri.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="d.h">
@@ -116,9 +116,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="newsendingaddress.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="open_uri.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="receiveaddress_info.h">
@@ -151,6 +148,9 @@
     <QtMoc Include="models\RecPayModel.h">
       <Filter>Models</Filter>
     </QtMoc>
+    <QtMoc Include="OpenUri.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GeneratedFiles\moc_predefs.h.cbt">
@@ -168,9 +168,6 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\newsendingaddress.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="ui\open_uri.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\receiveaddress_info.ui">
@@ -192,6 +189,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\RecPayItem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\OpenUri.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

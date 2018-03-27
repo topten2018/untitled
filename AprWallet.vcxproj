@@ -208,7 +208,7 @@
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="models\RecPayModel.cpp" />
     <ClCompile Include="newsendingaddress.cpp" />
-    <ClCompile Include="open_uri.cpp" />
+    <ClCompile Include="OpenUri.cpp" />
     <ClCompile Include="receiveaddress_info.cpp" />
     <ClCompile Include="receiveaddresslist.cpp" />
     <ClCompile Include="sendingaddresslist.cpp" />
@@ -230,7 +230,7 @@
     </QtMoc>
     <QtMoc Include="newsendingaddress.h">
     </QtMoc>
-    <QtMoc Include="open_uri.h">
+    <QtMoc Include="OpenUri.h">
     </QtMoc>
     <QtMoc Include="receiveaddress_info.h">
     </QtMoc>
@@ -271,8 +271,7 @@
     </QtUic>
     <QtUic Include="ui\newsendingaddress.ui">
     </QtUic>
-    <QtUic Include="ui\open_uri.ui">
-    </QtUic>
+    <QtUic Include="ui\OpenUri.ui" />
     <QtUic Include="ui\receiveaddress_info.ui">
     </QtUic>
     <QtUic Include="ui\receiveaddresslist.ui">

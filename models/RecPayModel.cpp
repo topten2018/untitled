@@ -63,11 +63,8 @@ void RecPayModel::addItem()
 void RecPayModel::clear()
 {
 	int count = m_lstItems.count();
-	for (int i = count; i >= 1; --i)
+	for (int i = count-1; i >= 1; --i)
 	{
-		if (m_lstItems.count() <= 1)
-			break;
-
 		RecPayItem * item = m_lstItems.takeAt(i);
 		if (item)
 		{

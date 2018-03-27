@@ -14,6 +14,8 @@ public:
 
 public slots:
 	void clear();
+	void onPaste();
+	void setUri(const QString & uri);
 signals:
 	void removeMe();
 private:
