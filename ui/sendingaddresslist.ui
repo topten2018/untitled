@@ -6,115 +6,190 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>789</width>
-    <height>424</height>
+    <width>670</width>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Request payment to</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>30</y>
-     <width>731</width>
-     <height>21</height>
-    </rect>
-   </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/resource.qrc">
+    <normaloff>:/ico/icon.ico</normaloff>:/ico/icon.ico</iconset>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="m_lDescription">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These are your APR addresses for sending payments. Always check the amount and the receiving address before sending coins.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableView" name="m_tvAdressTable">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderHighlightSections">
+      <bool>false</bool>
+     </attribute>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="m_btnAdd">
+       <property name="minimumSize">
+        <size>
+         <width>112</width>
+         <height>34</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>New</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources/resource.qrc">
+         <normaloff>:/png/add.png</normaloff>:/png/add.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_btnCopy">
+       <property name="minimumSize">
+        <size>
+         <width>112</width>
+         <height>34</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Copy</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources/resource.qrc">
+         <normaloff>:/png/copy.png</normaloff>:/png/copy.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_btnDelete">
+       <property name="minimumSize">
+        <size>
+         <width>112</width>
+         <height>34</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Delete</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources/resource.qrc">
+         <normaloff>:/png/remove.png</normaloff>:/png/remove.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_btnExport">
+       <property name="minimumSize">
+        <size>
+         <width>112</width>
+         <height>34</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Export</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources/resource.qrc">
+         <normaloff>:/png/save.png</normaloff>:/png/save.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_bntClose">
+       <property name="minimumSize">
+        <size>
+         <width>112</width>
+         <height>34</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+  <action name="m_actCopyLabel">
    <property name="text">
-    <string>These are your APR addresses for sending payments. Always check the amount and the receiving</string>
+    <string>Copy label</string>
    </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>50</y>
-     <width>731</width>
-     <height>21</height>
-    </rect>
+   <property name="toolTip">
+    <string>Copy label</string>
    </property>
+  </action>
+  <action name="m_actCopyAdress">
    <property name="text">
-    <string>address before sending coins.</string>
+    <string>Copy adress</string>
    </property>
-  </widget>
-  <widget class="QTableView" name="tableView">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>90</y>
-     <width>721</width>
-     <height>192</height>
-    </rect>
+   <property name="toolTip">
+    <string>Copy adress</string>
    </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>320</y>
-     <width>112</width>
-     <height>34</height>
-    </rect>
-   </property>
+  </action>
+  <action name="m_actEdit">
    <property name="text">
-    <string>New</string>
+    <string>Edit</string>
    </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>320</y>
-     <width>112</width>
-     <height>34</height>
-    </rect>
+   <property name="toolTip">
+    <string>Edit</string>
    </property>
-   <property name="text">
-    <string>Copy</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_3">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
-     <y>320</y>
-     <width>112</width>
-     <height>34</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Delete</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_4">
-   <property name="geometry">
-    <rect>
-     <x>550</x>
-     <y>320</y>
-     <width>112</width>
-     <height>34</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Export</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_5">
-   <property name="geometry">
-    <rect>
-     <x>670</x>
-     <y>320</y>
-     <width>112</width>
-     <height>34</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Close</string>
-   </property>
-  </widget>
+  </action>
  </widget>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../resources/resource.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>m_bntClose</sender>
+   <signal>clicked()</signal>
+   <receiver>SendingAddressList</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>745</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>777</x>
+     <y>421</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

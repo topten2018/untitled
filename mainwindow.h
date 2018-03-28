@@ -2,21 +2,17 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "ui_MainWindow.h"
 #include "form.h"
 #include "zipvcontrol.h"
 #include "tools.h"
 #include "sign_mess.h"
 #include "receiveaddresslist.h"
 #include "receiveaddress_info.h"
-#include "sendingaddresslist.h"
-#include<QTimer>
-
-namespace Ui {
-class MainWindow;
-
-}
+#include <QTimer>
 
 class RecPayModel;
+class AdressBookModel;
 
 class MainWindow : public QMainWindow
 {
@@ -38,7 +34,6 @@ public:
     QString jGlobalparam;
     QString jAddressParam;
     QStringList jReceiveAddresses;
-    QStringList jSendingAddressListOUT;
     
 private slots:
     void on_pushButton_clicked();
@@ -70,6 +65,7 @@ private slots:
     void on_actionWallet_Repair_triggered();
 
     void onOpenUri();
+	void onSendingAddresses();
 
     void on_actionSign_message_triggered();
 
@@ -77,10 +73,10 @@ private slots:
 
     void on_actionReceiving_addresses_triggered();
 
-    void on_actionSending_addresses_triggered();
+    
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow ui;
 
     Form form;
     zipvcontrol zip;
@@ -89,9 +85,9 @@ private:
     Sign_Mess jsign;
     Receiveaddresslist jReceive;
     ReceiveAddress_Info jReceivedAddressInfo;
-    SendingAddressList jSendingAddressList;
 
-	RecPayModel * m_pRecipients;
+	RecPayModel		* m_pRecipients;
+	AdressBookModel * m_pSendingAdressBook;
 };
 
 #endif // MAINWINDOW_H

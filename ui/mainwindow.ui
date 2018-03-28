@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>&quot;APR Wallet Version 1.0&quot;</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/resource.qrc">
+    <normaloff>:/ico/icon.ico</normaloff>:/ico/icon.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2700,7 +2704,7 @@ selection-color: rgb(255, 255, 255);
     <addaction name="actionSign_message"/>
     <addaction name="actionVerify_message"/>
     <addaction name="separator"/>
-    <addaction name="actionSending_addresses"/>
+    <addaction name="m_actSendingAddresses"/>
     <addaction name="actionReceiving_addresses"/>
     <addaction name="separator"/>
     <addaction name="actionMultisignature_creation"/>
@@ -2767,7 +2771,11 @@ selection-color: rgb(255, 255, 255);
     <string>Verify message...</string>
    </property>
   </action>
-  <action name="actionSending_addresses">
+  <action name="m_actSendingAddresses">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/address-book.png</normaloff>:/png/address-book.png</iconset>
+   </property>
    <property name="text">
     <string>Sending addresses...</string>
    </property>

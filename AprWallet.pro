@@ -15,7 +15,7 @@ DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    MainWindow.cpp \
     d.cpp \
     form.cpp \
     zipvcontrol.cpp \
@@ -25,13 +25,18 @@ SOURCES += main.cpp\
     sign_mess.cpp \
     receiveaddresslist.cpp \
     receiveaddress_info.cpp \
-    sendingaddresslist.cpp \
     newsendingaddress.cpp \
-    dialogs\OpenUri.cpp \
-    items\RecPayItem.cpp \
-    models\RecPayModel.cpp	
+    dialogs/SendingAddressList.cpp \
+    dialogs/OpenUri.cpp \
+    dialogs/DlgAdress.cpp \
+    items/RecPayItem.cpp \
+    items/AdressItem.cpp \
+    models/RecPayModel.cpp \
+    models/AdressBookModel.cpp \
+    utils/AutoSaver.cpp \
+    utils/StringUtils.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += MainWindow.h \
     d.h \
     dialog.h \
     form.h \
@@ -42,13 +47,18 @@ HEADERS  += mainwindow.h \
     sign_mess.h \
     receiveaddresslist.h \
     receiveaddress_info.h \
-    sendingaddresslist.h \
     newsendingaddress.h \
-    dialogs\OpenUri.h \
-    items\RecPayItem.h \
-    models\RecPayModel.h
+    dialogs/SendingAddressList.h \
+    dialogs/OpenUri.h \
+    dialogs/DlgAdress.h \
+    items/RecPayItem.h \
+    items/AdressItem.h \
+    models/RecPayModel.h \
+    models/AdressBookModel.h \
+    utils/AutoSaver.h \
+    utils/StringUtils.h
 
-FORMS    += ./ui/mainwindow.ui \
+FORMS    += ./ui/MainWindow.ui \
     ./ui/form.ui \
     ./ui/zipvcontrol.ui \
     ./ui/tools.ui \

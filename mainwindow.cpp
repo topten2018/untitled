@@ -1,5 +1,4 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "MainWindow.h"
 #include <QMessageBox>
 #include <QTabWidget>
 #include <QTabBar>
@@ -9,10 +8,8 @@
 #include <QAbstractSocket>
 #include <QDebug>
 #include <QHBoxLayout>
-#include "dialog.h"
 #include <QDialog>
 #include <QString>
-#include "sockettest.h"
 #include <QSettings>
 #include <QStandardItemModel>
 #include <QStandardItem>
@@ -22,13 +19,19 @@
 #include <QTextStream>
 #include <QTimer>
 #include <QThread>
-#include "worker.h"
-#include <cmath>
 #include <QDebug>
+#include <QDir>
 
+#include <cmath>
+
+#include "dialog.h"
+#include "sockettest.h"
+#include "worker.h"
 #include "Models/RecPayModel.h"
+#include "Models/AdressBookModel.h"
 
 #include "dialogs/OpenUri.h"
+#include "dialogs/SendingAddressList.h"
 
 int jTotalBalance=0;
 QStringList jReceiveAddresses;
@@ -36,24 +39,39 @@ QStringList jSendingAddressListOUT;
 QString jGlobalparam = "";
 QString jAddressParam="";
 
+QString s_exeLocation;
+
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QMainWindow(parent)
 {
-    ui->setupUi(this);
-    this->setWindowTitle(tr("APR Wallet Version 1.0"));
-	this->setWindowIcon(*(new QIcon(":/ico/icon.ico")));
+	qsrand(time(NULL));
+
+	// Define the base location - Should be ended with a slash!
+	s_exeLocation = QCoreApplication::arguments()[0];
+	int i = s_exeLocation.lastIndexOf(QDir::separator());
+	if (i == -1)
+		s_exeLocation = "";
+	else
+		s_exeLocation = s_exeLocation.left(i + 1);
+
+	QCoreApplication::setOrganizationName(QLatin1String("AprWallet"));
+	QCoreApplication::setApplicationName(QLatin1String("APR Wallet Version 1.0"));
+	QCoreApplication::setApplicationVersion(QLatin1String("0.0.1"));
+
+    ui.setupUi(this);
   
-	ui->m_twMainArea->setTabIcon(0, QIcon(":/png/overview.png"));
-	ui->m_twMainArea->setTabIcon(1, QIcon(":/png/send.png"));
-    ui->m_twMainArea->setTabIcon(2, QIcon(":/png/receive.png"));
-    ui->m_twMainArea->setTabIcon(3, QIcon(":/png/history.png"));
-    ui->m_twMainArea->setTabIcon(4, QIcon(":/png/privacy.png"));
-    ui->m_twMainArea->setTabIcon(5, QIcon(":/png/masternodes.png"));
-	ui->m_twMainArea->setCurrentIndex(0);
+	ui.m_twMainArea->setTabIcon(0, QIcon(":/png/overview.png"));
+	ui.m_twMainArea->setTabIcon(1, QIcon(":/png/send.png"));
+    ui.m_twMainArea->setTabIcon(2, QIcon(":/png/receive.png"));
+    ui.m_twMainArea->setTabIcon(3, QIcon(":/png/history.png"));
+    ui.m_twMainArea->setTabIcon(4, QIcon(":/png/privacy.png"));
+    ui.m_twMainArea->setTabIcon(5, QIcon(":/png/masternodes.png"));
+	ui.m_twMainArea->setCurrentIndex(0);
 	
-	m_pRecipients = new RecPayModel(ui->m_lvRecipients);
+	m_pRecipients = new RecPayModel(ui.m_lvRecipients);
 		
+	m_pSendingAdressBook = new AdressBookModel(s_exeLocation + "SendingAddressList.txt", this);
+
     QString fileName = "AddressList.txt";
     QFile inputFile(fileName);
     if (inputFile.open(QIODevice::ReadOnly))
@@ -66,21 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
         }
         inputFile.close();
 	}
-
-    QString fileName2 = "SendingAddressList.txt";
-    QFile inputFile2(fileName2);
-    if (inputFile2.open(QIODevice::ReadOnly))
-    {
-		QTextStream in(&inputFile2);
-        while (!in.atEnd())
-        {
-			QString line = in.readLine();
-            jSendingAddressListOUT.append(line);
-		}
-        inputFile2.close();
-	}
-
-	jSendingAddressesOUTList = jSendingAddressListOUT.join(";");
+	    
 /*
 QMessageBox msgBox;
 msgBox.setText(jSendingAddressesOUTList);
@@ -128,11 +132,11 @@ msgBox.exec();
 	}
 
 	model->setHorizontalHeaderLabels(horizontalHeader);
-    ui->tableView->setModel(model);
-    ui->tableView->resizeRowsToContents();
-    ui->tableView->resizeColumnsToContents();
-    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    connect(ui->tableView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onTableClicked()));
+    ui.tableView->setModel(model);
+    ui.tableView->resizeRowsToContents();
+    ui.tableView->resizeColumnsToContents();
+    ui.tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    connect(ui.tableView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onTableClicked()));
 
 
     QStandardItemModel *model2 = new QStandardItemModel;
@@ -142,9 +146,9 @@ msgBox.exec();
     horizontalHeaderTH.append(tr("Address"));
     horizontalHeaderTH.append(tr("Amount(APR)"));
     model2->setHorizontalHeaderLabels(horizontalHeaderTH);
-    ui->tableView_2->setModel(model2);
-    ui->tableView_2->resizeRowsToContents();
-    ui->tableView_2->resizeColumnsToContents();
+    ui.tableView_2->setModel(model2);
+    ui.tableView_2->resizeRowsToContents();
+    ui.tableView_2->resizeColumnsToContents();
 
 
 	QStandardItemModel *model3 = new QStandardItemModel;
@@ -157,9 +161,9 @@ msgBox.exec();
     horizontalHeaderMN.append(tr("Last Seen (UTC)"));
     horizontalHeaderMN.append(tr("Pubkey"));
     model3->setHorizontalHeaderLabels(horizontalHeaderMN);
-    ui->tableView_3->setModel(model3);
-    ui->tableView_3->resizeRowsToContents();
-    ui->tableView_3->resizeColumnsToContents();
+    ui.tableView_3->setModel(model3);
+    ui.tableView_3->resizeRowsToContents();
+    ui.tableView_3->resizeColumnsToContents();
 
 	const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
     const int randomStringLength = 72; // assuming you want random strings of 12 characters
@@ -300,11 +304,13 @@ msgBox.exec();
     float zzerojnumber = jjnumber-rresult;
     b = QString::number(zzerojnumber);
 
-	connect(ui->m_btnSend, SIGNAL(clicked()), this, SLOT(onSend()));
-	connect(ui->m_btnSendClear, SIGNAL(clicked()), this, SLOT(onSendClear()));
-	connect(ui->m_btnAddRecipient, SIGNAL(clicked()), this, SLOT(onAddRecipient()));
+	connect(ui.m_btnSend, SIGNAL(clicked()), this, SLOT(onSend()));
+	connect(ui.m_btnSendClear, SIGNAL(clicked()), this, SLOT(onSendClear()));
+	connect(ui.m_btnAddRecipient, SIGNAL(clicked()), this, SLOT(onAddRecipient()));
 
-	connect(ui->m_actOpenUri, SIGNAL(triggered()), this, SLOT(onOpenUri()));
+	connect(ui.m_actOpenUri, SIGNAL(triggered()), this, SLOT(onOpenUri()));
+	connect(ui.m_actSendingAddresses, SIGNAL(triggered()), this, SLOT(onSendingAddresses()));
+	
 /*
 
                QMessageBox msgBox;
@@ -312,6 +318,11 @@ msgBox.exec();
                msgBox.exec();
                */
 }
+
+MainWindow::~MainWindow()
+{
+}
+
 
 void MainWindow::UpdateGUI()
 {
@@ -324,7 +335,7 @@ void MainWindow::UpdateGUI()
 
 void MainWindow::onTableClicked()
 {
-	QModelIndex index = ui->tableView->currentIndex();
+	QModelIndex index = ui.tableView->currentIndex();
 	int i = index.row(); // now you know which record was selected
 	int b = i;
 	jAddressInfo= jReceiveAddresses[b];
@@ -350,19 +361,19 @@ void MainWindow::UpdateBalance()
         QString jZbalanceString = QString::number(jZcoinbalance);
          QString jUpdatedWithZBalanceString = QString::number(jUpdatedWithZBalance);
 
-        ui->label_3->setText(jUpdatedBalance + " APR");
+        ui.label_3->setText(jUpdatedBalance + " APR");
       //   ui->label_3->setText(jUpdatedWithZBalanceString + " APR");
-        ui->label_5->setText("0.00 APR");
-        ui->label_7->setText(jUpdatedWithZBalanceString + " APR");
-        ui->label_10->setText(jZbalanceString + " APR");
-        ui->label_12->setText("0.00 APR");
-        ui->label_14->setText("0.00 APR");
-        ui->label_16->setText(jZbalanceString + " APR");
-        ui->label_19->setText(jUpdatedWithZBalanceString + " APR");
-        ui->label_21->setText("0.00 APR");
-        ui->label_23->setText(jUpdatedWithZBalanceString + " APR");
-        ui->label_25->setText(jZbalanceString + " APR");
-        ui->label_27->setText(jUpdatedWithZBalanceString + " APR");
+        ui.label_5->setText("0.00 APR");
+        ui.label_7->setText(jUpdatedWithZBalanceString + " APR");
+        ui.label_10->setText(jZbalanceString + " APR");
+        ui.label_12->setText("0.00 APR");
+        ui.label_14->setText("0.00 APR");
+        ui.label_16->setText(jZbalanceString + " APR");
+        ui.label_19->setText(jUpdatedWithZBalanceString + " APR");
+        ui.label_21->setText("0.00 APR");
+        ui.label_23->setText(jUpdatedWithZBalanceString + " APR");
+        ui.label_25->setText(jZbalanceString + " APR");
+        ui.label_27->setText(jUpdatedWithZBalanceString + " APR");
 
 
 /*
@@ -464,16 +475,10 @@ if (UpdateFinished==true)
 
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
 void checkbalance()
 {
 
 }
-
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -540,9 +545,9 @@ void MainWindow::on_pushButton_clicked()
 	}
 	
    model->setHorizontalHeaderLabels(horizontalHeader);
-   ui->tableView->setModel(model);
-   ui->tableView->resizeRowsToContents();
-   ui->tableView->resizeColumnsToContents();
+   ui.tableView->setModel(model);
+   ui.tableView->resizeRowsToContents();
+   ui.tableView->resizeColumnsToContents();
 }
 
 void MainWindow::on_showRequestButton_2_clicked()
@@ -638,7 +643,7 @@ void MainWindow::onOpenUri()
 
 	if (dlg.exec() == QDialog::Accepted)
 	{
-		ui->m_twMainArea->setCurrentIndex(MainWindow::Pages::Send);
+		ui.m_twMainArea->setCurrentIndex(MainWindow::Pages::Send);
 		RecPayItem * p = m_pRecipients->item(0);
 		if (p)
 		{
@@ -662,7 +667,11 @@ void MainWindow::on_actionReceiving_addresses_triggered()
     jReceive.show();
 }
 
-void MainWindow::on_actionSending_addresses_triggered()
+void MainWindow::onSendingAddresses()
 {
-    jSendingAddressList.show();
+	SendingAddressList dlg(m_pSendingAdressBook, this);
+	if (dlg.exec())
+	{
+
+	}
 }

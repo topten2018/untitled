@@ -54,6 +54,9 @@
     <Filter Include="Dialogs">
       <UniqueIdentifier>{584c8d3f-1094-4df1-a728-3b8e21b363f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{f8dd12d4-a5a5-4ea5-bc4e-6478e737132b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d.cpp">
@@ -65,9 +68,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="newsendingaddress.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,9 +75,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="receiveaddresslist.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sendingaddresslist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sign_mess.cpp">
@@ -104,6 +101,30 @@
     <ClCompile Include="dialogs\OpenUri.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SendingAddressList.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="items\AdressItem.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\AutoSaver.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\FileUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\StringUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\DlgAdress.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="models\AdressBookModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="d.h">
@@ -115,9 +136,6 @@
     <QtMoc Include="form.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="mainwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="newsendingaddress.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -125,9 +143,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="receiveaddresslist.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="sendingaddresslist.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="sign_mess.h">
@@ -154,6 +169,24 @@
     <QtMoc Include="dialogs\OpenUri.h">
       <Filter>Dialogs</Filter>
     </QtMoc>
+    <QtMoc Include="dialogs\SendingAddressList.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="utils\AutoSaver.h">
+      <Filter>Utils</Filter>
+    </QtMoc>
+    <QtMoc Include="utils\GuiUtils.h">
+      <Filter>Utils</Filter>
+    </QtMoc>
+    <QtMoc Include="dialogs\DlgAdress.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="models\AdressBookModel.h">
+      <Filter>Models</Filter>
+    </QtMoc>
+    <QtMoc Include="MainWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GeneratedFiles\moc_predefs.h.cbt">
@@ -167,9 +200,6 @@
     <QtUic Include="ui\form.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="ui\mainwindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="ui\newsendingaddress.ui">
       <Filter>Form Files</Filter>
     </QtUic>
@@ -177,9 +207,6 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\receiveaddresslist.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="ui\sendingaddresslist.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\sign_mess.ui">
@@ -197,10 +224,30 @@
     <QtUic Include="ui\OpenUri.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="ui\SendingAddressList.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\DlgAdress.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\MainWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="resources\resource.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="items\AdressItem.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\FileUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\StringUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
