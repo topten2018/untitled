@@ -1,11 +1,13 @@
-#include "SendingAddressList.h"
+#include "ReceiveAddressList.h"
+
 #include <QMenu>
 #include <QFileDialog>
 #include <QClipboard>
 
 #include "models/AddressBookModel.h"
 
-SendingAddressList::SendingAddressList(AddressBookModel * pModel, QWidget *parent)
+
+ReceiveAddressList::ReceiveAddressList(AddressBookModel * pModel, QWidget *parent)
 	: QDialog(parent)
 	, m_pModel(pModel)
 {
@@ -16,15 +18,14 @@ SendingAddressList::SendingAddressList(AddressBookModel * pModel, QWidget *paren
 	m_pContextMenu->addAction(ui.m_actCopyAdress);
 	m_pContextMenu->addSeparator();
 	m_pContextMenu->addAction(ui.m_actEdit);
-
-    ui.m_tvAddressTable->setModel(m_pModel);
+	   
+	ui.m_tvAddressTable->setModel(m_pModel);
 
 	int w = 600;
 	ui.m_tvAddressTable->setColumnWidth(0, w / 2);
 	ui.m_tvAddressTable->setColumnWidth(1, w / 2);
 
 	connect(ui.m_btnAdd, SIGNAL(clicked()), this, SLOT(onAdd()));
-	connect(ui.m_btnDelete, SIGNAL(clicked()), this, SLOT(onDelete()));
 	connect(ui.m_btnCopy, SIGNAL(clicked()), this, SLOT(onCopy()));
 	connect(ui.m_btnExport, SIGNAL(clicked()), this, SLOT(onExport()));
 
@@ -36,31 +37,28 @@ SendingAddressList::SendingAddressList(AddressBookModel * pModel, QWidget *paren
 	connect(ui.m_actCopyLabel, SIGNAL(triggered()), this, SLOT(onCopyLabel()));
 	connect(ui.m_actCopyAdress, SIGNAL(triggered()), this, SLOT(onCopy()));
 	connect(ui.m_actEdit, SIGNAL(triggered()), this, SLOT(onEdit()));
-	
+
 	updateButtons();
 }
-
-SendingAddressList::~SendingAddressList()
+ReceiveAddressList::~ReceiveAddressList()
 {
-	delete m_pContextMenu;
+}
+void ReceiveAddressList::updateButtons()
+{
+	QModelIndex ind = ui.m_tvAddressTable->currentIndex();
+	bool bEnabled = ind.isValid();
+
+	ui.m_btnCopy->setEnabled(bEnabled);
+	ui.m_btnExport->setEnabled(m_pModel->rowCount() > 0);
 }
 
-void SendingAddressList::onAdd()
+void ReceiveAddressList::onAdd()
 {
 	m_pModel->onAddItem();
 	updateButtons();
 }
 
-void SendingAddressList::onDelete()
-{
-	QModelIndex ind = ui.m_tvAddressTable->currentIndex();
-	if (ind.isValid())
-		m_pModel->onDeleteItem(ind.row());
-
-	updateButtons();
-}
-
-void SendingAddressList::onEdit()
+void ReceiveAddressList::onEdit()
 {
 	QModelIndex ind = ui.m_tvAddressTable->currentIndex();
 	if (ind.isValid())
@@ -69,7 +67,7 @@ void SendingAddressList::onEdit()
 	updateButtons();
 }
 
-void SendingAddressList::onCopy()
+void ReceiveAddressList::onCopy()
 {
 	QModelIndex ind = ui.m_tvAddressTable->currentIndex();
 	if (ind.isValid())
@@ -80,7 +78,7 @@ void SendingAddressList::onCopy()
 			clipboard->setText(item->address());
 	}
 }
-void SendingAddressList::onCopyLabel()
+void ReceiveAddressList::onCopyLabel()
 {
 	QModelIndex ind = ui.m_tvAddressTable->currentIndex();
 	if (ind.isValid())
@@ -92,18 +90,7 @@ void SendingAddressList::onCopyLabel()
 	}
 }
 
-void SendingAddressList::updateButtons()
-{
-	QModelIndex ind = ui.m_tvAddressTable->currentIndex();
-	bool bEnabled = ind.isValid();
-
-	ui.m_btnDelete->setEnabled(bEnabled);
-	ui.m_btnCopy->setEnabled(bEnabled);
-
-	ui.m_btnExport->setEnabled(m_pModel->rowCount() > 0);
-}
-
-void SendingAddressList::onExport()
+void ReceiveAddressList::onExport()
 {
 	QString file = QFileDialog::getSaveFileName(this,
 		tr("Select file"),
@@ -116,7 +103,7 @@ void SendingAddressList::onExport()
 	}
 }
 
-void SendingAddressList::customMenuRequested(const QPoint & pt)
+void ReceiveAddressList::customMenuRequested(const QPoint & pt)
 {
 	QModelIndex ind = ui.m_tvAddressTable->indexAt(pt);
 	if (ind.isValid())

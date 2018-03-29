@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DlgAdress</class>
- <widget class="QDialog" name="DlgAdress">
+ <class>DlgAddress</class>
+ <widget class="QDialog" name="DlgAddress">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -48,7 +48,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="m_lAdress">
+      <widget class="QLabel" name="m_lAddress">
        <property name="minimumSize">
         <size>
          <width>50</width>
@@ -56,12 +56,12 @@
         </size>
        </property>
        <property name="text">
-        <string>Adress</string>
+        <string>Address</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="m_leAdress">
+      <widget class="QLineEdit" name="m_leAddress">
        <property name="minimumSize">
         <size>
          <width>50</width>
@@ -143,7 +143,7 @@
   <connection>
    <sender>m_btnOk</sender>
    <signal>clicked()</signal>
-   <receiver>DlgAdress</receiver>
+   <receiver>DlgAddress</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -159,7 +159,7 @@
   <connection>
    <sender>m_bthCancel</sender>
    <signal>clicked()</signal>
-   <receiver>DlgAdress</receiver>
+   <receiver>DlgAddress</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

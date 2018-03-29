@@ -28,14 +28,13 @@
 #include "sockettest.h"
 #include "worker.h"
 #include "Models/RecPayModel.h"
-#include "Models/AdressBookModel.h"
+#include "Models/AddressBookModel.h"
 
 #include "dialogs/OpenUri.h"
 #include "dialogs/SendingAddressList.h"
+#include "dialogs/ReceiveAddressList.h"
 
 int jTotalBalance=0;
-QStringList jReceiveAddresses;
-QStringList jSendingAddressListOUT;
 QString jGlobalparam = "";
 QString jAddressParam="";
 
@@ -70,26 +69,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	
 	m_pRecipients = new RecPayModel(ui.m_lvRecipients);
 		
-	m_pSendingAdressBook = new AdressBookModel(s_exeLocation + "SendingAddressList.txt", this);
+	m_pSendingAddressBook = new AddressBookModel(s_exeLocation + "SendingAddressList.txt", this);
+	m_pReceiveAddressBook = new AddressBookModel(s_exeLocation + "AddressList.txt", this);
 
-    QString fileName = "AddressList.txt";
-    QFile inputFile(fileName);
-    if (inputFile.open(QIODevice::ReadOnly))
-    {
-		QTextStream in(&inputFile);
-        while (!in.atEnd())
-        {
-			QString line = in.readLine();
-            jReceiveAddresses.append(line);
-        }
-        inputFile.close();
-	}
+	m_pDlgSendingAddressList = new SendingAddressList(m_pSendingAddressBook, this);
+	m_pDlgReceiveAddressList = new ReceiveAddressList(m_pReceiveAddressBook, this);
 	    
-/*
-QMessageBox msgBox;
-msgBox.setText(jSendingAddressesOUTList);
-msgBox.exec();
-*/
 	QStandardItemModel *model = new QStandardItemModel;
     QStandardItem *item;
 
@@ -119,15 +104,13 @@ msgBox.exec();
                */
 
 
-	for (int i =0; i<jReceiveAddresses.count(); i++)
+	for (int i =0; i<m_pReceiveAddressBook->rowCount(); i++)
     {
-		QString d = jReceiveAddresses[i];
-        QRegExp rxs("(\\:)");
-        QStringList ds = d.split(rxs);
+		AddressItem * p = m_pReceiveAddressBook->item(i);
 
-		item = new QStandardItem(ds[0]);
+		item = new QStandardItem(p->label());
         model->setItem(i, 0, item);
-        item = new QStandardItem(ds[1]);
+        item = new QStandardItem(p->address());
         model->setItem(i, 1, item);
 	}
 
@@ -310,17 +293,24 @@ msgBox.exec();
 
 	connect(ui.m_actOpenUri, SIGNAL(triggered()), this, SLOT(onOpenUri()));
 	connect(ui.m_actSendingAddresses, SIGNAL(triggered()), this, SLOT(onSendingAddresses()));
+	connect(ui.m_actReceivingAddresses, SIGNAL(triggered()), this, SLOT(onReceivingAddresses()));
+	connect(ui.m_actExit, SIGNAL(triggered()), this, SLOT(close()));
 	
-/*
+	connect(ui.m_btnChooseFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
+	connect(ui.m_btnMinimizeFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
 
-               QMessageBox msgBox;
-               msgBox.setText(b);
-               msgBox.exec();
-               */
+	connect(ui.m_rbCustomFee, SIGNAL(clicked()), this, SLOT(onChangeFee()));
+	connect(ui.m_rbDefaultFee, SIGNAL(clicked()), this, SLOT(onChangeFee()));
+	
+	ui.m_swFee->setCurrentIndex(1);
+	onShowHideFeeInfo();
+	onChangeFee();
 }
 
 MainWindow::~MainWindow()
 {
+	delete m_pDlgSendingAddressList;
+	delete m_pDlgReceiveAddressList;
 }
 
 
@@ -329,7 +319,7 @@ void MainWindow::UpdateGUI()
     if (MoneySent==true)
     {
         MoneySent=false;
-		QMessageBox::critical(this, "", "ui->textEdit_3->clear();");
+		m_pRecipients->clear();
     }
 }
 
@@ -338,7 +328,7 @@ void MainWindow::onTableClicked()
 	QModelIndex index = ui.tableView->currentIndex();
 	int i = index.row(); // now you know which record was selected
 	int b = i;
-	jAddressInfo= jReceiveAddresses[b];
+	jAddressInfo= m_pReceiveAddressBook->item(b)->address();
 
 	jReceivedAddressInfo.show();
 }
@@ -522,26 +512,16 @@ void MainWindow::on_pushButton_clicked()
 
 	QString s = QDate::currentDate().toString();
 
+	m_pReceiveAddressBook->append(new AddressItem(s, jFinalAddress));
 
-	jReceiveAddresses.append(s+":"+jFinalAddress);
+	for (int i = 0; i<m_pReceiveAddressBook->rowCount(); i++)
+	{
+		AddressItem * p = m_pReceiveAddressBook->item(i);
 
-
-    QFile fileOut("AddressList.txt");
-    fileOut.open(QFile::WriteOnly|QFile::Append); // check result
-    QTextStream streamOut(&fileOut);
-    streamOut << s+":"+jFinalAddress << "\r\n";
-    fileOut.close();
-
-	for (int i =0; i<jReceiveAddresses.count(); i++)
-    {
-		QString d = jReceiveAddresses[i];
-        QRegExp rxs("(\\:)");
-        QStringList ds = d.split(rxs);
-
-		item = new QStandardItem(ds[0]);
-        model->setItem(i, 0, item);
-        item = new QStandardItem(ds[1]);
-        model->setItem(i, 1, item);
+		item = new QStandardItem(p->label());
+		model->setItem(i, 0, item);
+		item = new QStandardItem(p->address());
+		model->setItem(i, 1, item);
 	}
 	
    model->setHorizontalHeaderLabels(horizontalHeader);
@@ -607,6 +587,42 @@ void MainWindow::onSendClear()
 	m_pRecipients->clear();
 }
 
+void MainWindow::onShowHideFeeInfo()
+{
+	if (ui.m_swFee->currentIndex() == 0)
+	{
+		ui.m_swFee->setCurrentIndex(1);
+	}
+	else
+	{
+		ui.m_swFee->setCurrentIndex(0);
+	}	
+
+	QSize sz = ui.m_swFee->currentWidget()->sizeHint();
+	ui.m_swFee->setMaximumHeight(sz.height());
+}
+void MainWindow::onChangeFee()
+{
+	if (ui.m_rbDefaultFee->isChecked())
+	{
+		ui.m_hsConfirmationTime->setEnabled(true);
+
+		ui.m_rbPerKilobyte->setEnabled(false);
+		ui.m_rbTotalAtLeast->setEnabled(false);
+		ui.m_sbFee->setEnabled(false);
+		ui.m_cbMinimumFee->setEnabled(false);
+	}
+	else
+	{
+		ui.m_hsConfirmationTime->setEnabled(false);
+
+		ui.m_rbPerKilobyte->setEnabled(true);
+		ui.m_rbTotalAtLeast->setEnabled(true);
+		ui.m_sbFee->setEnabled(true);
+		ui.m_cbMinimumFee->setEnabled(true);
+	}
+}
+
 void MainWindow::onAddRecipient()
 {
 	m_pRecipients->addItem();
@@ -662,16 +678,12 @@ void MainWindow::on_actionVerify_message_triggered()
     jsign.show();
 }
 
-void MainWindow::on_actionReceiving_addresses_triggered()
+void MainWindow::onReceivingAddresses()
 {
-    jReceive.show();
+	m_pDlgReceiveAddressList->show();
 }
 
 void MainWindow::onSendingAddresses()
 {
-	SendingAddressList dlg(m_pSendingAdressBook, this);
-	if (dlg.exec())
-	{
-
-	}
+	m_pDlgSendingAddressList->show();
 }

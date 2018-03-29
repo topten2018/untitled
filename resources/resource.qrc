@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/png">
+    <file>close.png</file>
     <file>add.png</file>
     <file>copy.png</file>
     <file>new.png</file>

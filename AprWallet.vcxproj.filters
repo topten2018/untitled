@@ -68,13 +68,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="newsendingaddress.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="receiveaddress_info.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="receiveaddresslist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sign_mess.cpp">
@@ -104,9 +98,6 @@
     <ClCompile Include="dialogs\SendingAddressList.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="items\AdressItem.cpp">
-      <Filter>Items</Filter>
-    </ClCompile>
     <ClCompile Include="utils\AutoSaver.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -116,14 +107,20 @@
     <ClCompile Include="utils\StringUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="dialogs\DlgAdress.cpp">
-      <Filter>Dialogs</Filter>
-    </ClCompile>
-    <ClCompile Include="models\AdressBookModel.cpp">
-      <Filter>Models</Filter>
-    </ClCompile>
     <ClCompile Include="MainWindow.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="items\AddressItem.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="models\AddressBookModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\DlgAddress.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\ReceiveAddressList.cpp">
+      <Filter>Dialogs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,13 +133,7 @@
     <QtMoc Include="form.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="newsendingaddress.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="receiveaddress_info.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="receiveaddresslist.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="sign_mess.h">
@@ -178,14 +169,17 @@
     <QtMoc Include="utils\GuiUtils.h">
       <Filter>Utils</Filter>
     </QtMoc>
-    <QtMoc Include="dialogs\DlgAdress.h">
-      <Filter>Dialogs</Filter>
-    </QtMoc>
-    <QtMoc Include="models\AdressBookModel.h">
-      <Filter>Models</Filter>
-    </QtMoc>
     <QtMoc Include="MainWindow.h">
       <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="models\AddressBookModel.h">
+      <Filter>Models</Filter>
+    </QtMoc>
+    <QtMoc Include="dialogs\DlgAddress.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="dialogs\ReceiveAddressList.h">
+      <Filter>Dialogs</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -200,13 +194,7 @@
     <QtUic Include="ui\form.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="ui\newsendingaddress.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="ui\receiveaddress_info.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="ui\receiveaddresslist.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\sign_mess.ui">
@@ -227,10 +215,13 @@
     <QtUic Include="ui\SendingAddressList.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="ui\DlgAdress.ui">
+    <QtUic Include="ui\MainWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="ui\MainWindow.ui">
+    <QtUic Include="ui\DlgAddress.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\ReceiveAddressList.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -240,14 +231,14 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="items\AdressItem.h">
-      <Filter>Items</Filter>
-    </ClInclude>
     <ClInclude Include="utils\FileUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="utils\StringUtils.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="items\AddressItem.h">
+      <Filter>Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

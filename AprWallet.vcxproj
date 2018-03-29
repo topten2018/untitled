@@ -202,19 +202,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="d.cpp" />
-    <ClCompile Include="dialogs\DlgAdress.cpp" />
+    <ClCompile Include="dialogs\DlgAddress.cpp" />
     <ClCompile Include="dialogs\OpenUri.cpp" />
+    <ClCompile Include="dialogs\ReceiveAddressList.cpp" />
     <ClCompile Include="dialogs\SendingAddressList.cpp" />
     <ClCompile Include="form.cpp" />
-    <ClCompile Include="items\AdressItem.cpp" />
+    <ClCompile Include="items\AddressItem.cpp" />
     <ClCompile Include="items\RecPayItem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="models\AdressBookModel.cpp" />
+    <ClCompile Include="models\AddressBookModel.cpp" />
     <ClCompile Include="models\RecPayModel.cpp" />
-    <ClCompile Include="newsendingaddress.cpp" />
     <ClCompile Include="receiveaddress_info.cpp" />
-    <ClCompile Include="receiveaddresslist.cpp" />
     <ClCompile Include="sign_mess.cpp" />
     <ClCompile Include="sockettest.cpp" />
     <ClCompile Include="tools.cpp" />
@@ -225,13 +224,14 @@
     <ClCompile Include="zipvcontrol.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="dialogs\DlgAdress.h" />
-    <ClInclude Include="items\AdressItem.h" />
+    <QtMoc Include="dialogs\DlgAddress.h" />
+    <QtMoc Include="dialogs\ReceiveAddressList.h" />
+    <ClInclude Include="items\AddressItem.h" />
     <ClInclude Include="utils\FileUtils.h" />
     <ClInclude Include="utils\StringUtils.h" />
     <QtMoc Include="utils\GuiUtils.h" />
     <QtMoc Include="utils\AutoSaver.h" />
-    <QtMoc Include="models\AdressBookModel.h" />
+    <QtMoc Include="models\AddressBookModel.h" />
     <QtMoc Include="dialogs\SendingAddressList.h" />
     <QtMoc Include="dialogs\OpenUri.h" />
     <QtMoc Include="models\RecPayModel.h" />
@@ -243,11 +243,7 @@
     </QtMoc>
     <QtMoc Include="MainWindow.h">
     </QtMoc>
-    <QtMoc Include="newsendingaddress.h">
-    </QtMoc>
     <QtMoc Include="receiveaddress_info.h">
-    </QtMoc>
-    <QtMoc Include="receiveaddresslist.h">
     </QtMoc>
     <QtMoc Include="sign_mess.h">
     </QtMoc>
@@ -276,16 +272,13 @@
   <ItemGroup>
     <QtUic Include="ui\dialog.ui">
     </QtUic>
-    <QtUic Include="ui\DlgAdress.ui" />
+    <QtUic Include="ui\DlgAddress.ui" />
     <QtUic Include="ui\form.ui">
     </QtUic>
     <QtUic Include="ui\MainWindow.ui" />
-    <QtUic Include="ui\newsendingaddress.ui">
-    </QtUic>
     <QtUic Include="ui\OpenUri.ui" />
+    <QtUic Include="ui\ReceiveAddressList.ui" />
     <QtUic Include="ui\receiveaddress_info.ui">
-    </QtUic>
-    <QtUic Include="ui\receiveaddresslist.ui">
     </QtUic>
     <QtUic Include="ui\RecPayItem.ui" />
     <QtUic Include="ui\SendingAddressList.ui" />

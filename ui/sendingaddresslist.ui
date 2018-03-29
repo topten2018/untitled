@@ -11,14 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Request payment to</string>
+   <string>Sending addresses</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../resources/resource.qrc">
     <normaloff>:/ico/icon.ico</normaloff>:/ico/icon.ico</iconset>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -29,7 +26,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="m_tvAdressTable">
+    <widget class="QTableView" name="m_tvAddressTable">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>

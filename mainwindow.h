@@ -7,12 +7,14 @@
 #include "zipvcontrol.h"
 #include "tools.h"
 #include "sign_mess.h"
-#include "receiveaddresslist.h"
 #include "receiveaddress_info.h"
 #include <QTimer>
 
 class RecPayModel;
-class AdressBookModel;
+class AddressBookModel;
+
+class ReceiveAddressList;
+class SendingAddressList;
 
 class MainWindow : public QMainWindow
 {
@@ -33,7 +35,6 @@ public:
 
     QString jGlobalparam;
     QString jAddressParam;
-    QStringList jReceiveAddresses;
     
 private slots:
     void on_pushButton_clicked();
@@ -53,6 +54,8 @@ private slots:
 	void onSend();
 	void onSendClear();
 	void onAddRecipient();
+	void onShowHideFeeInfo();
+	void onChangeFee();
 
     void on_actionInformation_triggered();
 
@@ -66,12 +69,12 @@ private slots:
 
     void onOpenUri();
 	void onSendingAddresses();
+	void onReceivingAddresses();
 
     void on_actionSign_message_triggered();
 
     void on_actionVerify_message_triggered();
 
-    void on_actionReceiving_addresses_triggered();
 
     
 
@@ -83,11 +86,14 @@ private:
     tools jtool;
     QTimer timer;
     Sign_Mess jsign;
-    Receiveaddresslist jReceive;
     ReceiveAddress_Info jReceivedAddressInfo;
 
 	RecPayModel		* m_pRecipients;
-	AdressBookModel * m_pSendingAdressBook;
+	AddressBookModel * m_pSendingAddressBook;
+	AddressBookModel * m_pReceiveAddressBook;
+
+	ReceiveAddressList * m_pDlgReceiveAddressList;
+	SendingAddressList * m_pDlgSendingAddressList;
 };
 
 #endif // MAINWINDOW_H

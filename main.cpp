@@ -8,6 +8,10 @@
 #include <QtGlobal>
 #include <QApplication>
 
+#include <QSystemSemaphore>
+#include <QSharedMemory>
+#include <QMessageBox>
+
 
 #define DEBUG_TEST
 
@@ -72,6 +76,15 @@ void crashMessageOutput(QtMsgType type, const char *str)
 #endif
 int main(int argc, char *argv[])
 {
+	QStringList paths = QCoreApplication::libraryPaths();
+	paths.append(".");
+	paths.append("imageformats");
+	paths.append("audio");
+	paths.append("platforms");
+	paths.append("sqldrivers");
+	paths.append("mediaservice");
+	QCoreApplication::setLibraryPaths(paths);
+
 #ifdef DEBUG_TEST
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     qInstallMessageHandler(crashMessageOutput);
@@ -80,6 +93,41 @@ int main(int argc, char *argv[])
 #endif
 #endif
     QApplication a(argc, argv);
+
+	QSystemSemaphore semaphore(QCoreApplication::arguments()[0], 1);  
+	semaphore.acquire();
+
+#ifndef Q_OS_WIN32
+						
+	QSharedMemory nix_fix_shared_memory(QCoreApplication::arguments()[0] + "shared_mem_name");
+	if (nix_fix_shared_memory.attach()) {
+		nix_fix_shared_memory.detach();
+	}
+#endif
+
+	QSharedMemory sharedMemory(QCoreApplication::arguments()[0] + "shared_mem_name"); 
+	bool is_running;            
+	if (sharedMemory.attach())  
+	{							
+		is_running = true;      
+	}
+	else
+	{
+		sharedMemory.create(1); 
+		is_running = false;     
+	}
+	semaphore.release();        
+
+								
+								
+	if (is_running)
+	{
+		QMessageBox msgBox;
+		msgBox.setIcon(QMessageBox::Warning);
+		msgBox.setText(QObject::tr("Application already running."));
+		msgBox.exec();
+		return 1;
+	}
 
 	s_LogFileName = QCoreApplication::arguments()[0];
 	int i = s_LogFileName.lastIndexOf(QDir::separator());

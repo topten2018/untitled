@@ -23,16 +23,15 @@ SOURCES += main.cpp\
     worker.cpp \
     tools.cpp \
     sign_mess.cpp \
-    receiveaddresslist.cpp \
     receiveaddress_info.cpp \
-    newsendingaddress.cpp \
     dialogs/SendingAddressList.cpp \
     dialogs/OpenUri.cpp \
-    dialogs/DlgAdress.cpp \
+    dialogs/DlgAddress.cpp \
+    dialogs/ReceiveAddressList.cpp \
     items/RecPayItem.cpp \
-    items/AdressItem.cpp \
+    items/AddressItem.cpp \
     models/RecPayModel.cpp \
-    models/AdressBookModel.cpp \
+    models/AddressBookModel.cpp \
     utils/AutoSaver.cpp \
     utils/StringUtils.cpp
 
@@ -45,16 +44,15 @@ HEADERS  += MainWindow.h \
     worker.h \
     tools.h \
     sign_mess.h \
-    receiveaddresslist.h \
     receiveaddress_info.h \
-    newsendingaddress.h \
     dialogs/SendingAddressList.h \
     dialogs/OpenUri.h \
-    dialogs/DlgAdress.h \
+    dialogs/DlgAddress.h \
+    dialogs/ReceiveAddressList.h \
     items/RecPayItem.h \
-    items/AdressItem.h \
+    items/AddressItem.h \
     models/RecPayModel.h \
-    models/AdressBookModel.h \
+    models/AddressBookModel.h \
     utils/AutoSaver.h \
     utils/StringUtils.h
 
@@ -64,10 +62,10 @@ FORMS    += ./ui/MainWindow.ui \
     ./ui/tools.ui \
     ./ui/OpenUri.ui \
     ./ui/sign_mess.ui \
-    ./ui/receiveaddresslist.ui \
+    ./ui/DlgAddress.ui \
+    ./ui/ReceiveAddressList.ui \
     ./ui/receiveaddress_info.ui \
-    ./ui/sendingaddresslist.ui \
-    ./ui/newsendingaddress.ui \
+    ./ui/SendingAddressList.ui \
     ./ui/dialog.ui \
     ./ui/RecPayItem.ui
 

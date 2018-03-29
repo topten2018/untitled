@@ -4,7 +4,7 @@
 #include <QDialog>
 #include "ui_sendingaddresslist.h"
 
-class AdressBookModel;
+class AddressBookModel;
 
 class QMenu;
 
@@ -13,7 +13,7 @@ class SendingAddressList : public QDialog
     Q_OBJECT
     
 public:
-    explicit SendingAddressList(AdressBookModel * pModel, QWidget *parent = Q_NULLPTR);
+    explicit SendingAddressList(AddressBookModel * pModel, QWidget *parent = Q_NULLPTR);
     ~SendingAddressList();
 
 private slots:
@@ -30,7 +30,7 @@ private slots:
 private:
     Ui::SendingAddressList ui;
 
-	AdressBookModel * m_pModel;
+	AddressBookModel * m_pModel;
 
 	QMenu *m_pContextMenu;
 };

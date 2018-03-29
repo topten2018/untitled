@@ -1,31 +1,31 @@
-#ifndef ADRESSBOOKMODEL_H
-#define ADRESSBOOKMODEL_H
+#ifndef ADDRESSBOOKMODEL_H
+#define ADDRESSBOOKMODEL_H
 
 #include <QAbstractTableModel>
 #include <QPointer>
 #include <QMutex>
 
-#include "Items/AdressItem.h"
+#include "Items/AddressItem.h"
 
 class AutoSaver;
 
-class AdressBookModel : public  QAbstractTableModel
+class AddressBookModel : public  QAbstractTableModel
 {
 	Q_OBJECT
 
 public:
-	AdressBookModel(const QString filename, QObject *parent);
-	~AdressBookModel();
+	AddressBookModel(const QString filename, QObject *parent);
+	~AddressBookModel();
 
 	enum HeaderNames 
 	{ 
 		H_LABEL = 0,
-		H_ADRESS,
+		H_ADDRESS,
 		H_COUNT
 	};
 
 	/// количество строк. Устанавливаем так, чтобы скроллер отображался корректно
-	virtual int rowCount(const QModelIndex &) const override {return m_lstItems.size();};
+	virtual int rowCount(const QModelIndex & = QModelIndex()) const override {return m_lstItems.size();};
 	/// устанавливаем количество столбцов.
 	virtual int columnCount(const QModelIndex &) const override {return H_COUNT;};
 	/// функция для передачи данных пользователю
@@ -34,7 +34,8 @@ public:
 	virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
 	virtual QVariant headerData( int section, Qt::Orientation orientation, int role) const override;
 
-	AdressItem * item(int row);
+	AddressItem * item(int row);
+	void append(AddressItem *);
 public slots:
 	void onAddItem();
 	void onEditItem(int row);
@@ -44,13 +45,12 @@ public slots:
 	void save() const;
 	void exportToFile(const QString & filename) const;
 private:
-	void addItem(AdressItem *);
-	void saveToFile(const QString & filename) const;
-
-	QList<AdressItem*>		m_lstItems;
+	void addItem(AddressItem *);
+	void saveToFile(const QString & filename, bool bWriteHeader) const;
+	QList<AddressItem*>		m_lstItems;
 	QPointer<AutoSaver>		m_spAutoSaver;
 	mutable QMutex			m_mtx;
 	QString					m_strFileName;
 };
 
-#endif // ADRESSBOOKMODEL_H
+#endif // ADDRESSBOOKMODEL_H
