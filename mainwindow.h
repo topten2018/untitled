@@ -7,14 +7,39 @@
 #include "zipvcontrol.h"
 #include "tools.h"
 #include "sign_mess.h"
-#include "receiveaddress_info.h"
+
+#include <QSystemTrayIcon>
 #include <QTimer>
+
+class QCloseEvent;
 
 class RecPayModel;
 class AddressBookModel;
+class PaymentsModel;
 
 class ReceiveAddressList;
 class SendingAddressList;
+
+struct WalletSettings 
+{
+	bool m_bEnableCoinControl;
+	bool m_bShowMasterNodes;
+	bool m_bSpendUnconfirmedChange;
+
+	WalletSettings() : m_bEnableCoinControl{ false }, m_bShowMasterNodes{ false }, m_bSpendUnconfirmedChange{ false }
+	{
+	}
+};
+struct WindowSettings
+{
+	bool m_bMinimizeToTray;
+	bool m_bHideOnClose;
+
+	WindowSettings() : m_bMinimizeToTray{ false }, m_bHideOnClose{ false }
+	{
+	}
+};
+
 
 class MainWindow : public QMainWindow
 {
@@ -37,8 +62,8 @@ public:
     QString jAddressParam;
     
 private slots:
-    void on_pushButton_clicked();
-
+	void loadSettings();
+	
     void on_showRequestButton_2_clicked();
 
     void on_pushButton_13_clicked();
@@ -49,13 +74,25 @@ private slots:
 	
     void UpdateBalance();
     void UpdateGUI();
-    void onTableClicked();
+    
+	void onOverviewPage();
+	void onSendPage();
+	void onReceivePage();
+	void onTransactionsPage();
+	void onPrivacyPage();
+	void onMasternodesPage();
 
 	void onSend();
 	void onSendClear();
 	void onAddRecipient();
 	void onShowHideFeeInfo();
 	void onChangeFee();
+
+	void onRequestPayment();
+	void onReceiveClear();
+	void onShowPaymentInfo();
+	void onDeletePayment();
+	void updatePaymentButtons();
 
     void on_actionInformation_triggered();
 
@@ -70,15 +107,20 @@ private slots:
     void onOpenUri();
 	void onSendingAddresses();
 	void onReceivingAddresses();
+	void onSettings();
+	void onQuit();
+	void onShowHide();
+	void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
     void on_actionSign_message_triggered();
 
-    void on_actionVerify_message_triggered();
-
-
-    
-
+    void on_actionVerify_message_triggered(); 
 private:
+	virtual void closeEvent(QCloseEvent *) override;
+	void createTrayIcon();
+
+	QString createAddress() const;
+
     Ui::MainWindow ui;
 
     Form form;
@@ -86,14 +128,20 @@ private:
     tools jtool;
     QTimer timer;
     Sign_Mess jsign;
-    ReceiveAddress_Info jReceivedAddressInfo;
 
-	RecPayModel		* m_pRecipients;
-	AddressBookModel * m_pSendingAddressBook;
-	AddressBookModel * m_pReceiveAddressBook;
+	RecPayModel			* m_pRecipients;
+	AddressBookModel	* m_pSendingAddressBook;
+	AddressBookModel	* m_pReceiveAddressBook;
+	PaymentsModel		* m_pPaymentsHistory;
 
 	ReceiveAddressList * m_pDlgReceiveAddressList;
 	SendingAddressList * m_pDlgSendingAddressList;
+
+	QSystemTrayIcon		*m_pSysTrayIcon;
+	QMenu				*m_pTrayMenu;
+
+	WindowSettings		 m_sWindowSettings;
+	WalletSettings		 m_sWalletSettings;
 };
 
 #endif // MAINWINDOW_H

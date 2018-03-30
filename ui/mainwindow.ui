@@ -18,13 +18,54 @@
     <normaloff>:/ico/icon.ico</normaloff>:/ico/icon.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_78">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../resources/resource.qrc">:/png/staking_inactive.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_62">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../resources/resource.qrc">:/png/notsynced.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
      <widget class="QTabWidget" name="m_twMainArea">
       <property name="font">
        <font>
         <family>Montserrat</family>
-        <pointsize>7</pointsize>
+        <pointsize>8</pointsize>
        </font>
       </property>
       <property name="autoFillBackground">
@@ -37,9 +78,13 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="m_tabOverview">
+       <attribute name="icon">
+        <iconset resource="../resources/resource.qrc">
+         <normaloff>:/png/overview.png</normaloff>:/png/overview.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Overview</string>
        </attribute>
@@ -671,7 +716,11 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="m_tabSend">
+       <attribute name="icon">
+        <iconset resource="../resources/resource.qrc">
+         <normaloff>:/png/send.png</normaloff>:/png/send.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Send</string>
        </attribute>
@@ -769,7 +818,7 @@ background:transparent</string>
                 <property name="minimumSize">
                  <size>
                   <width>112</width>
-                  <height>34</height>
+                  <height>32</height>
                  </size>
                 </property>
                 <property name="font">
@@ -845,7 +894,7 @@ background:transparent</string>
                 <property name="minimumSize">
                  <size>
                   <width>112</width>
-                  <height>34</height>
+                  <height>32</height>
                  </size>
                 </property>
                 <property name="font">
@@ -1062,7 +1111,7 @@ background-position: top left;
             <property name="minimumSize">
              <size>
               <width>112</width>
-              <height>34</height>
+              <height>32</height>
              </size>
             </property>
             <property name="font">
@@ -1084,7 +1133,7 @@ background-color: rgb(255, 255, 255);</string>
             <property name="minimumSize">
              <size>
               <width>112</width>
-              <height>34</height>
+              <height>32</height>
              </size>
             </property>
             <property name="font">
@@ -1106,7 +1155,7 @@ background-color: rgb(255, 255, 255);</string>
             <property name="minimumSize">
              <size>
               <width>112</width>
-              <height>34</height>
+              <height>32</height>
              </size>
             </property>
             <property name="font">
@@ -1140,297 +1189,427 @@ background-color: rgb(255, 255, 255);</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="m_tabReceive">
+       <attribute name="icon">
+        <iconset resource="../resources/resource.qrc">
+         <normaloff>:/png/receive.png</normaloff>:/png/receive.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Receive</string>
        </attribute>
-       <widget class="QLabel" name="label_28">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>60</y>
-          <width>70</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QFormLayout" name="formLayout_3">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::ExpandingFieldsGrow</enum>
+          </property>
+          <item row="1" column="0">
+           <widget class="QLabel" name="m_lLabel">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Montserrat</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background:transparent</string>
-        </property>
-        <property name="text">
-         <string>Label:</string>
-        </property>
-       </widget>
-       <widget class="QTextEdit" name="textEdit">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>50</y>
-          <width>531</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_29">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>140</y>
-          <width>70</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);
+            </property>
+            <property name="text">
+             <string>Label:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="m_leReceiveLabel">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="m_lAmount">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Montserrat</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
 background:transparent</string>
-        </property>
-        <property name="text">
-         <string>Amount:</string>
-        </property>
-       </widget>
-       <widget class="QTextEdit" name="textEdit_2">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>210</y>
-          <width>531</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_30">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>220</y>
-          <width>81</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);
-background:transparent</string>
-        </property>
-        <property name="text">
-         <string>Message:</string>
-        </property>
-       </widget>
-       <widget class="QSpinBox" name="spinBox">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>140</y>
-          <width>58</width>
-          <height>27</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-       <widget class="QSpinBox" name="spinBox_2">
-        <property name="geometry">
-         <rect>
-          <x>260</x>
-          <y>140</y>
-          <width>58</width>
-          <height>27</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>340</y>
-          <width>191</width>
-          <height>34</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>Request payment</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>340</y>
-          <width>112</width>
-          <height>34</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>Clear </string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_40">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>20</y>
-          <width>551</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);
-background:transparent</string>
-        </property>
-        <property name="text">
-         <string>Use this form to request payment. All fields are optional.</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="checkBox">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>280</y>
-          <width>451</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);
-background:transparent</string>
-        </property>
-        <property name="text">
-         <string>Reuse an existing Receiving address (not recommended)</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_31">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>410</y>
-          <width>281</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Montserrat</family>
-          <pointsize>7</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 255);
-background:transparent</string>
-        </property>
-        <property name="text">
-         <string>Requested Payment History</string>
-        </property>
-       </widget>
-       <widget class="QTableView" name="tableView">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>440</y>
-          <width>1161</width>
-          <height>271</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>7</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 0, 0);
+            </property>
+            <property name="text">
+             <string>Amount:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QSpinBox" name="m_sbReceiveAmount">
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>41</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Montserrat</family>
+               </font>
+              </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(0, 0, 0);
 color: rgb(255, 255, 255);
 selection-color: rgb(255, 255, 255);
 </string>
-        </property>
-       </widget>
+              </property>
+              <property name="maximum">
+               <number>100000000</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="m_cbReceiveCoin">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>41</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);
+selection-color: rgb(255, 255, 255);
+</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>APR</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="m_lMessage">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Montserrat</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
+background:transparent</string>
+            </property>
+            <property name="text">
+             <string>Message:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="m_leMessage">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QCheckBox" name="m_cbReuseRcvAddress">
+            <property name="font">
+             <font>
+              <family>Montserrat</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
+background:transparent</string>
+            </property>
+            <property name="text">
+             <string>Reuse an existing Receiving address (not recommended)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QPushButton" name="m_btnRequestPayment">
+              <property name="minimumSize">
+               <size>
+                <width>191</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Montserrat</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 255, 255);</string>
+              </property>
+              <property name="text">
+               <string>Request payment</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources/resource.qrc">
+                <normaloff>:/png/receive.png</normaloff>:/png/receive.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="m_btnReceiveClear">
+              <property name="minimumSize">
+               <size>
+                <width>112</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Montserrat</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 255, 255);</string>
+              </property>
+              <property name="text">
+               <string>Clear </string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources/resource.qrc">
+                <normaloff>:/png/remove.png</normaloff>:/png/remove.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="m_lReceiveCaption">
+            <property name="font">
+             <font>
+              <family>Montserrat</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
+background:transparent</string>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this form to request payment. All fields are &lt;span style=&quot; font-weight:600;&quot;&gt;optional&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="m_lRequsterPaymentHistory">
+          <property name="font">
+           <font>
+            <family>Montserrat</family>
+            <pointsize>10</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+background:transparent</string>
+          </property>
+          <property name="text">
+           <string>Requested Payment History</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableView" name="m_tvPaymentHistory">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>2</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>2</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QTableView
+{
+background:transparent;
+alternate-background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);
+gridline-color: rgb(100, 100, 100);
+}
+
+QHeaderView::section 
+{
+    color: black;
+}</string>
+          </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderHighlightSections">
+           <bool>false</bool>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <widget class="QPushButton" name="m_btnShowPayment">
+            <property name="minimumSize">
+             <size>
+              <width>112</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Montserrat</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="text">
+             <string>Show</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/resource.qrc">
+              <normaloff>:/png/show.png</normaloff>:/png/show.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="m_btnDeletePayment">
+            <property name="minimumSize">
+             <size>
+              <width>112</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Montserrat</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="text">
+             <string>Remove</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/resource.qrc">
+              <normaloff>:/png/remove.png</normaloff>:/png/remove.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
-      <widget class="QWidget" name="tab_4">
+      <widget class="QWidget" name="m_tabTransactions">
+       <attribute name="icon">
+        <iconset resource="../resources/resource.qrc">
+         <normaloff>:/png/history.png</normaloff>:/png/history.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Transactions</string>
        </attribute>
@@ -1451,7 +1630,11 @@ selection-color: rgb(255, 255, 255);
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="tab_5">
+      <widget class="QWidget" name="m_tabPrivacy">
+       <attribute name="icon">
+        <iconset resource="../resources/resource.qrc">
+         <normaloff>:/png/privacy.png</normaloff>:/png/privacy.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Privacy</string>
        </attribute>
@@ -2797,7 +2980,11 @@ background:transparent</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="tab_6">
+      <widget class="QWidget" name="m_tabMaternodes">
+       <attribute name="icon">
+        <iconset resource="../resources/resource.qrc">
+         <normaloff>:/png/masternodes.png</normaloff>:/png/masternodes.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Masternodes</string>
        </attribute>
@@ -2886,33 +3073,7 @@ selection-color: rgb(255, 255, 255);
       </widget>
      </widget>
     </item>
-    <item>
-     <widget class="QLabel" name="label_78">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../resources/resource.qrc">:/png/staking_inactive.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_62">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../resources/resource.qrc">:/png/notsynced.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
+    <item row="3" column="0">
      <widget class="QLabel" name="label_61">
       <property name="text">
        <string/>
@@ -2925,7 +3086,7 @@ selection-color: rgb(255, 255, 255);
       </property>
      </widget>
     </item>
-    <item>
+    <item row="4" column="0">
      <widget class="QLabel" name="label_34">
       <property name="font">
        <font>
@@ -2938,7 +3099,7 @@ selection-color: rgb(255, 255, 255);
       </property>
      </widget>
     </item>
-    <item>
+    <item row="5" column="0">
      <widget class="QLabel" name="label_33">
       <property name="font">
        <font>
@@ -2990,7 +3151,7 @@ selection-color: rgb(255, 255, 255);
     <addaction name="actionBIP38_tool"/>
     <addaction name="actionMultiSend"/>
     <addaction name="separator"/>
-    <addaction name="actionOptions"/>
+    <addaction name="m_actOptions"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -3086,6 +3247,9 @@ selection-color: rgb(255, 255, 255);
    <property name="shortcut">
     <string>Ctrl+Q</string>
    </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionEncrypt_Wallet">
    <property name="text">
@@ -3107,7 +3271,11 @@ selection-color: rgb(255, 255, 255);
     <string>MultiSend</string>
    </property>
   </action>
-  <action name="actionOptions">
+  <action name="m_actOptions">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/settings.png</normaloff>:/png/settings.png</iconset>
+   </property>
    <property name="text">
     <string>Options...</string>
    </property>
@@ -3155,6 +3323,144 @@ selection-color: rgb(255, 255, 255);
   <action name="actionBlockchain_explorer">
    <property name="text">
     <string>Blockchain explorer</string>
+   </property>
+  </action>
+  <action name="m_actShowHide">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/ico/icon.ico</normaloff>:/ico/icon.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Show/Hide</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide</string>
+   </property>
+  </action>
+  <action name="m_actOverview">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/overview.png</normaloff>:/png/overview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Overview</string>
+   </property>
+   <property name="toolTip">
+    <string>Overview</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+1</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetWithChildrenShortcut</enum>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="m_actSend">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/send.png</normaloff>:/png/send.png</iconset>
+   </property>
+   <property name="text">
+    <string>Send</string>
+   </property>
+   <property name="toolTip">
+    <string>Send</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+2</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="m_actReceive">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/receive.png</normaloff>:/png/receive.png</iconset>
+   </property>
+   <property name="text">
+    <string>Receive</string>
+   </property>
+   <property name="toolTip">
+    <string>Receive</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+3</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="m_actTransactions">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/history.png</normaloff>:/png/history.png</iconset>
+   </property>
+   <property name="text">
+    <string>Transactions</string>
+   </property>
+   <property name="toolTip">
+    <string>Transactions</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+4</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="m_actPrivacy">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/privacy.png</normaloff>:/png/privacy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Privacy</string>
+   </property>
+   <property name="toolTip">
+    <string>Privacy</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+5</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="m_actMasternodes">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/masternodes.png</normaloff>:/png/masternodes.png</iconset>
+   </property>
+   <property name="text">
+    <string>Masternodes</string>
+   </property>
+   <property name="toolTip">
+    <string>Masternodes</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+6</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
    </property>
   </action>
  </widget>

@@ -16,12 +16,13 @@ SendingAddressList::SendingAddressList(AddressBookModel * pModel, QWidget *paren
 	m_pContextMenu->addAction(ui.m_actCopyAdress);
 	m_pContextMenu->addSeparator();
 	m_pContextMenu->addAction(ui.m_actEdit);
+	m_pContextMenu->addAction(ui.m_actDelete);
 
     ui.m_tvAddressTable->setModel(m_pModel);
 
-	int w = 600;
-	ui.m_tvAddressTable->setColumnWidth(0, w / 2);
-	ui.m_tvAddressTable->setColumnWidth(1, w / 2);
+	QHeaderView *header = ui.m_tvAddressTable->horizontalHeader();
+	header->setSectionResizeMode(0, QHeaderView::Stretch);
+	header->setSectionResizeMode(1, QHeaderView::Stretch);
 
 	connect(ui.m_btnAdd, SIGNAL(clicked()), this, SLOT(onAdd()));
 	connect(ui.m_btnDelete, SIGNAL(clicked()), this, SLOT(onDelete()));
@@ -36,6 +37,7 @@ SendingAddressList::SendingAddressList(AddressBookModel * pModel, QWidget *paren
 	connect(ui.m_actCopyLabel, SIGNAL(triggered()), this, SLOT(onCopyLabel()));
 	connect(ui.m_actCopyAdress, SIGNAL(triggered()), this, SLOT(onCopy()));
 	connect(ui.m_actEdit, SIGNAL(triggered()), this, SLOT(onEdit()));
+	connect(ui.m_actDelete, SIGNAL(triggered()), this, SLOT(onDelete()));
 	
 	updateButtons();
 }

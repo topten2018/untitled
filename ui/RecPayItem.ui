@@ -255,6 +255,27 @@ selection-color: rgb(255, 255, 255);
       </widget>
      </item>
      <item>
+      <widget class="QComboBox" name="comboBox">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>41</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);
+selection-color: rgb(255, 255, 255);
+</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>APR</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

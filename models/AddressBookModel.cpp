@@ -10,10 +10,11 @@
 #include <QTextStream>
 #include <QMutexLocker>
 
-AddressBookModel::AddressBookModel(const QString filename, QObject *parent)
+AddressBookModel::AddressBookModel(Mode mode, const QString filename, QObject *parent)
 	: QAbstractTableModel(parent)
 	, m_strFileName(filename)
 	, m_mtx(QMutex::Recursive)
+	, m_Mode(mode)
 {
 	m_spAutoSaver = new AutoSaver(this);
 	load();
@@ -49,11 +50,21 @@ bool AddressBookModel::setData(const QModelIndex & index, const QVariant & value
 
 	AddressItem * item = m_lstItems.at(index.row());
 
-	if (role == Qt::EditRole && index.column() == H_LABEL)
+	if (role == Qt::EditRole)
 	{
-		item->setLabel(value.toString());
-		m_spAutoSaver->changeOccurred();
-		return true;
+		switch (index.column())
+		{
+		case H_LABEL:
+			item->setLabel(value.toString());
+			m_spAutoSaver->changeOccurred();
+			return true;
+			break;
+		case H_ADDRESS:
+			item->setAddress(value.toString());
+			m_spAutoSaver->changeOccurred();
+			return true;
+			break;
+		}
 	}
 
 	return QAbstractTableModel::setData(index, value, role);
@@ -69,8 +80,15 @@ QVariant AddressBookModel::data(const QModelIndex & index,int role) const
 	{
 	case Qt::EditRole:
 	{
-		if (index.column() == H_LABEL)
+		switch (index.column())
+		{
+		case H_LABEL:
 			return item->label();
+			break;
+		case H_ADDRESS:
+			return item->address();
+			break;
+		};
 		return QVariant();
 	}
 	case Qt::DisplayRole:
@@ -94,10 +112,12 @@ Qt::ItemFlags AddressBookModel::flags(const QModelIndex &index) const
 	if (!index.isValid())
 		return QAbstractTableModel::flags(index);
 
-	if (index.column() == H_LABEL)
-		return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
-	else
-		return QAbstractTableModel::flags(index);
+	Qt::ItemFlags flags = QAbstractTableModel::flags(index);
+
+	if (index.column() == H_LABEL || m_Mode == Mode::Send)
+		return  flags | Qt::ItemIsEditable;
+	
+	return flags;
 }
 AddressItem * AddressBookModel::item(int row)
 {

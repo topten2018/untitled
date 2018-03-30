@@ -21,18 +21,27 @@
 #include <QThread>
 #include <QDebug>
 #include <QDir>
+#include <QCloseEvent>
+#include <QHeaderView>
 
 #include <cmath>
 
 #include "dialog.h"
 #include "sockettest.h"
 #include "worker.h"
-#include "Models/RecPayModel.h"
-#include "Models/AddressBookModel.h"
+#include "models/RecPayModel.h"
+#include "models/AddressBookModel.h"
+#include "models/PaymentsModel.h"
+
+#include "items/TransactionItem.h"
 
 #include "dialogs/OpenUri.h"
 #include "dialogs/SendingAddressList.h"
 #include "dialogs/ReceiveAddressList.h"
+#include "dialogs/DlgSettings.h"
+#include "dialogs/ReceiveAddressInfo.h"
+
+#include "utils/StringUtils.h"
 
 int jTotalBalance=0;
 QString jGlobalparam = "";
@@ -57,33 +66,24 @@ MainWindow::MainWindow(QWidget *parent) :
 	QCoreApplication::setApplicationName(QLatin1String("APR Wallet Version 1.0"));
 	QCoreApplication::setApplicationVersion(QLatin1String("0.0.1"));
 
-    ui.setupUi(this);
+	ui.setupUi(this);
+
+	createTrayIcon();
+	m_pSysTrayIcon->show();
   
-	ui.m_twMainArea->setTabIcon(0, QIcon(":/png/overview.png"));
-	ui.m_twMainArea->setTabIcon(1, QIcon(":/png/send.png"));
-    ui.m_twMainArea->setTabIcon(2, QIcon(":/png/receive.png"));
-    ui.m_twMainArea->setTabIcon(3, QIcon(":/png/history.png"));
-    ui.m_twMainArea->setTabIcon(4, QIcon(":/png/privacy.png"));
-    ui.m_twMainArea->setTabIcon(5, QIcon(":/png/masternodes.png"));
 	ui.m_twMainArea->setCurrentIndex(0);
 	
 	m_pRecipients = new RecPayModel(ui.m_lvRecipients);
 		
-	m_pSendingAddressBook = new AddressBookModel(s_exeLocation + "SendingAddressList.txt", this);
-	m_pReceiveAddressBook = new AddressBookModel(s_exeLocation + "AddressList.txt", this);
+	m_pSendingAddressBook	= new AddressBookModel(AddressBookModel::Send, s_exeLocation + "SendingAddressList.txt", this);
+	m_pReceiveAddressBook	= new AddressBookModel(AddressBookModel::Receive, s_exeLocation + "AddressList.txt", this);
+	m_pPaymentsHistory		= new PaymentsModel("", this);
 
 	m_pDlgSendingAddressList = new SendingAddressList(m_pSendingAddressBook, this);
 	m_pDlgReceiveAddressList = new ReceiveAddressList(m_pReceiveAddressBook, this);
 	    
 	QStandardItemModel *model = new QStandardItemModel;
     QStandardItem *item;
-
-    //Заголовки столбцов
-    QStringList horizontalHeader;
-    horizontalHeader.append(tr("Date"));
-    horizontalHeader.append(tr("Label"));
-    horizontalHeader.append(tr("Message"));
-    horizontalHeader.append(tr("Amount(APR)"));
 
 	QString s = QDate::currentDate().toString();
     QStringList tempData;
@@ -92,17 +92,6 @@ MainWindow::MainWindow(QWidget *parent) :
     tempData.append(s+":"+"someaddress3");
     tempData.append(s+":"+"someaddress4");
     tempData.append(s+":"+"someaddress5");
-
-               /*
-               for (int i =0; i<5; i++)
-               {
-                   QString d = tempData[i];
-                   item = new QStandardItem(d);
-                    model->setItem(i, 1, item);
-
-               }
-               */
-
 
 	for (int i =0; i<m_pReceiveAddressBook->rowCount(); i++)
     {
@@ -114,13 +103,13 @@ MainWindow::MainWindow(QWidget *parent) :
         model->setItem(i, 1, item);
 	}
 
-	model->setHorizontalHeaderLabels(horizontalHeader);
-    ui.tableView->setModel(model);
-    ui.tableView->resizeRowsToContents();
-    ui.tableView->resizeColumnsToContents();
-    ui.tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    connect(ui.tableView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(onTableClicked()));
-
+	ui.m_tvPaymentHistory->setModel(m_pPaymentsHistory);
+	QHeaderView *header = ui.m_tvPaymentHistory->horizontalHeader();
+	header->setSectionResizeMode(2, QHeaderView::Stretch);
+	ui.m_tvPaymentHistory->resizeRowsToContents();
+    ui.m_tvPaymentHistory->resizeColumnsToContents();
+    ui.m_tvPaymentHistory->setSelectionBehavior(QAbstractItemView::SelectRows);
+	
 
     QStandardItemModel *model2 = new QStandardItemModel;
     QStringList horizontalHeaderTH;
@@ -169,11 +158,6 @@ MainWindow::MainWindow(QWidget *parent) :
         privateaddress.append(nextChar);
 	}
 
-      /*
-           QMessageBox msgBox;
-           msgBox.setText(randomString);
-           msgBox.exec();
-           */
 	QString jFileContent = "";
     QString filename = "Data4.txt";
     QFile file(filename);
@@ -206,13 +190,6 @@ MainWindow::MainWindow(QWidget *parent) :
         stream << publicaddress+";"+privateaddress << endl;
         jAddressParam = publicaddress+";"+privateaddress;
 	}
-
-    /*
-    QMessageBox msgBox;
-    msgBox.setText(jFileContent);
-    msgBox.exec();
-    */
-
 
 //ui->label_2->setStyleSheet("QLabel{ background-color : black; color : white; }");
 //ui->label_2->setStyleSheet("QLabel{background-color: rgba(255, 255, 255, 0);color: rgb(255, 255, 255);}");
@@ -260,18 +237,6 @@ MainWindow::MainWindow(QWidget *parent) :
     float zerojnumber = jnumber-result;
     QString b = QString::number(zerojnumber);
 
-/*
-             int satoshi = 2;
-             int satoshitemp = 2*1000000;
-              int satoshi2 = 0.00000001;
-              int satoshitemp2 = satoshi2*1000000;
-              // float satoshi = 1;
-             // int satoshi2 = 10000000;
-              int satoshi3 = satoshitemp- satoshitemp2;
-              float satoshitemp3 = satoshi3/1000000;
-              */
-
-
 	double satoshi = 2;
     double satoshi2 = 0.00000005;
     double satoshi3 = satoshi-satoshi2;
@@ -291,20 +256,51 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui.m_btnSendClear, SIGNAL(clicked()), this, SLOT(onSendClear()));
 	connect(ui.m_btnAddRecipient, SIGNAL(clicked()), this, SLOT(onAddRecipient()));
 
+	connect(ui.m_btnRequestPayment, SIGNAL(clicked()), this, SLOT(onRequestPayment()));
+	connect(ui.m_btnReceiveClear, SIGNAL(clicked()), this, SLOT(onReceiveClear()));	
+	connect(ui.m_btnShowPayment, SIGNAL(clicked()), this, SLOT(onShowPaymentInfo()));
+	connect(ui.m_btnDeletePayment, SIGNAL(clicked()), this, SLOT(onDeletePayment()));
+
 	connect(ui.m_actOpenUri, SIGNAL(triggered()), this, SLOT(onOpenUri()));
 	connect(ui.m_actSendingAddresses, SIGNAL(triggered()), this, SLOT(onSendingAddresses()));
 	connect(ui.m_actReceivingAddresses, SIGNAL(triggered()), this, SLOT(onReceivingAddresses()));
-	connect(ui.m_actExit, SIGNAL(triggered()), this, SLOT(close()));
-	
+	connect(ui.m_actOptions, SIGNAL(triggered()), this, SLOT(onSettings()));
+	connect(ui.m_actExit, SIGNAL(triggered()), this, SLOT(onQuit()));
+	connect(ui.m_actShowHide, SIGNAL(triggered()), this, SLOT(onShowHide()));
+
+	connect(ui.m_actOverview, SIGNAL(triggered()), this, SLOT(onOverviewPage()));
+	connect(ui.m_actSend, SIGNAL(triggered()), this, SLOT(onSendPage()));
+	connect(ui.m_actReceive, SIGNAL(triggered()), this, SLOT(onReceivePage()));
+	connect(ui.m_actTransactions, SIGNAL(triggered()), this, SLOT(onTransactionsPage()));
+	connect(ui.m_actPrivacy, SIGNAL(triggered()), this, SLOT(onPrivacyPage()));
+	connect(ui.m_actMasternodes, SIGNAL(triggered()), this, SLOT(onMasternodesPage()));
+		
 	connect(ui.m_btnChooseFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
 	connect(ui.m_btnMinimizeFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
 
 	connect(ui.m_rbCustomFee, SIGNAL(clicked()), this, SLOT(onChangeFee()));
 	connect(ui.m_rbDefaultFee, SIGNAL(clicked()), this, SLOT(onChangeFee()));
+
+	connect(m_pSysTrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+	
+	connect(ui.m_tvPaymentHistory, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onShowPaymentInfo()));
+	connect(ui.m_tvPaymentHistory, SIGNAL(clicked(QModelIndex)), this, SLOT(updatePaymentButtons()));
+	connect(ui.m_tvPaymentHistory, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(updatePaymentButtons()));
+
+	addAction(ui.m_actOverview);
+	addAction(ui.m_actSend);
+	addAction(ui.m_actReceive);
+	addAction(ui.m_actTransactions);
+	addAction(ui.m_actPrivacy);
+	addAction(ui.m_actMasternodes);
 	
 	ui.m_swFee->setCurrentIndex(1);
 	onShowHideFeeInfo();
 	onChangeFee();
+
+	updatePaymentButtons();
+
+	loadSettings();
 }
 
 MainWindow::~MainWindow()
@@ -313,6 +309,54 @@ MainWindow::~MainWindow()
 	delete m_pDlgReceiveAddressList;
 }
 
+void MainWindow::createTrayIcon()
+{
+	m_pTrayMenu = new QMenu(this);
+	m_pTrayMenu->addAction(ui.m_actShowHide);
+	m_pTrayMenu->addSeparator();
+	m_pTrayMenu->addAction(ui.m_actSend);
+	m_pTrayMenu->addAction(ui.m_actReceive);
+	m_pTrayMenu->addAction(ui.m_actPrivacy);
+	m_pTrayMenu->addSeparator();
+	m_pTrayMenu->addAction(ui.m_actOptions);
+	m_pTrayMenu->addSeparator();
+	m_pTrayMenu->addAction(ui.m_actExit);
+
+	m_pSysTrayIcon = new QSystemTrayIcon(this);
+	m_pSysTrayIcon->setContextMenu(m_pTrayMenu);
+
+	m_pSysTrayIcon->setIcon(windowIcon());
+
+	m_pSysTrayIcon->setToolTip(windowTitle());
+}
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+	if (!m_sWindowSettings.m_bHideOnClose)
+	{
+		QMainWindow::closeEvent(e);
+		return;
+	}
+
+#ifdef Q_OS_OSX
+	if (!e->spontaneous() || !isVisible()) {
+		return;
+	}
+#endif
+
+	if (m_pSysTrayIcon->isVisible())
+	{
+		m_pSysTrayIcon->showMessage(tr("AprWallet"),
+			tr("The program will keep running in the system tray."));
+
+		hide();
+
+		e->ignore();
+	}
+}
+void MainWindow::onQuit()
+{
+	qApp->quit();
+}
 
 void MainWindow::UpdateGUI()
 {
@@ -323,14 +367,33 @@ void MainWindow::UpdateGUI()
     }
 }
 
-void MainWindow::onTableClicked()
+void MainWindow::onShowPaymentInfo()
 {
-	QModelIndex index = ui.tableView->currentIndex();
-	int i = index.row(); // now you know which record was selected
-	int b = i;
-	jAddressInfo= m_pReceiveAddressBook->item(b)->address();
+	QModelIndex index = ui.m_tvPaymentHistory->currentIndex();
+	if (!index.isValid())
+		return;
 
-	jReceivedAddressInfo.show();
+	TransactionItem * item = m_pPaymentsHistory->item(index.row());
+
+	ReceiveAddressInfo * ri = new ReceiveAddressInfo(*item, this);
+	ri->show();
+}
+
+void MainWindow::updatePaymentButtons()
+{
+	bool bSelected = ui.m_tvPaymentHistory->currentIndex().isValid();
+	ui.m_btnShowPayment->setEnabled(bSelected);
+	ui.m_btnDeletePayment->setEnabled(bSelected);
+}
+
+void MainWindow::onDeletePayment()
+{
+	QModelIndex index = ui.m_tvPaymentHistory->currentIndex();
+	if (!index.isValid())
+		return;
+
+	m_pPaymentsHistory->onDeleteItem(index.row());
+	updatePaymentButtons();
 }
 
 void MainWindow::UpdateBalance()
@@ -470,64 +533,52 @@ void checkbalance()
 
 }
 
-void MainWindow::on_pushButton_clicked()
+QString MainWindow::createAddress() const
+{//we neec to reimplement this function 
+	return Utils::guid(34);
+}
+
+void MainWindow::onRequestPayment()
 {
-
-    SocketTest cTest;
-    cTest.Connect();
-    QSettings settings("my");
-    QString myvar1 = settings.value("value1").toString();
-/*
-    QMessageBox msgBox;
-    msgBox.setText(myvar1);
-    msgBox.exec();
-    */
-
-
-    QRegExp rx("(\\:)");
-    QStringList query = myvar1.split(rx);
-
-
-    QRegExp rx2("(\\;)");
-    QStringList query2 = query[1].split(rx2);
-
-
-
-
-  // QMessageBox msgBox;
-   /* msgBox.setText(query2[0]);
-    msgBox.exec();
-    */
-
-    QString jFinalAddress = query2[0];
-    QStandardItemModel *model = new QStandardItemModel;
-    QStandardItem *item;
-
-	//Заголовки столбцов
-	QStringList horizontalHeader;
-	horizontalHeader.append(tr("Date"));
-	horizontalHeader.append(tr("Label"));
-	horizontalHeader.append(tr("Message"));
-	horizontalHeader.append(tr("Amount(APR)"));
-
-	QString s = QDate::currentDate().toString();
-
-	m_pReceiveAddressBook->append(new AddressItem(s, jFinalAddress));
-
-	for (int i = 0; i<m_pReceiveAddressBook->rowCount(); i++)
-	{
-		AddressItem * p = m_pReceiveAddressBook->item(i);
-
-		item = new QStandardItem(p->label());
-		model->setItem(i, 0, item);
-		item = new QStandardItem(p->address());
-		model->setItem(i, 1, item);
-	}
+//    SocketTest cTest;
+//    cTest.Connect();
+	TransactionItem trx;	
 	
-   model->setHorizontalHeaderLabels(horizontalHeader);
-   ui.tableView->setModel(model);
-   ui.tableView->resizeRowsToContents();
-   ui.tableView->resizeColumnsToContents();
+	QString strLabel;
+	QString strAddress;
+	if (ui.m_cbReuseRcvAddress->isChecked())
+	{
+
+	}
+	else
+	{
+		strAddress = createAddress();
+		strLabel = ui.m_leReceiveLabel->text();
+	}
+
+	if (strLabel.isEmpty())
+		strLabel = strAddress;
+	
+	trx.setAddress(strAddress);
+	trx.setLabel(strLabel);
+	trx.setDate(QDateTime::currentDateTime());
+	trx.setMessage(ui.m_leMessage->text());
+	trx.setCoin(ui.m_cbReceiveCoin->currentText());
+	trx.setAmount(tr("").sprintf("%d", ui.m_sbReceiveAmount->value()));
+
+	m_pReceiveAddressBook->append(new AddressItem(trx.label(), trx.address()));
+	m_pPaymentsHistory->append(new TransactionItem(trx));
+
+	ReceiveAddressInfo * ri = new ReceiveAddressInfo(trx, this);
+	ri->show();
+	
+}
+void MainWindow::onReceiveClear()
+{
+	ui.m_leReceiveLabel->setText("");
+	ui.m_leMessage->setText("");
+	ui.m_sbReceiveAmount->setValue(0);
+	ui.m_cbReceiveCoin->setCurrentIndex(0);
 }
 
 void MainWindow::on_showRequestButton_2_clicked()
@@ -601,6 +652,7 @@ void MainWindow::onShowHideFeeInfo()
 	QSize sz = ui.m_swFee->currentWidget()->sizeHint();
 	ui.m_swFee->setMaximumHeight(sz.height());
 }
+
 void MainWindow::onChangeFee()
 {
 	if (ui.m_rbDefaultFee->isChecked())
@@ -686,4 +738,80 @@ void MainWindow::onReceivingAddresses()
 void MainWindow::onSendingAddresses()
 {
 	m_pDlgSendingAddressList->show();
+}
+
+void MainWindow::onSettings()
+{
+	if (!isVisible())
+		showNormal();
+
+	DlgSettings dlg(this);
+	if (dlg.exec() == QDialog::Accepted)
+		loadSettings();
+}
+
+void MainWindow::loadSettings()
+{
+
+}
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+	switch (reason) {
+	case QSystemTrayIcon::Trigger:
+	case QSystemTrayIcon::DoubleClick:
+		onShowHide();
+		break;
+	case QSystemTrayIcon::MiddleClick:
+		//showMessage();
+		break;
+	default:
+		;
+	}
+}
+void MainWindow::onShowHide()
+{
+	if (isVisible())
+		hide();
+	else
+		showNormal();
+}
+
+void MainWindow::onOverviewPage()
+{
+	if (!isVisible())
+		showNormal();
+	ui.m_twMainArea->setCurrentIndex(Pages::Overview);
+}
+void MainWindow::onSendPage()
+{
+	if (!isVisible())
+		showNormal();
+	ui.m_twMainArea->setCurrentIndex(Pages::Send);
+}
+void MainWindow::onReceivePage()
+{
+	if (!isVisible())
+		showNormal();
+	ui.m_twMainArea->setCurrentIndex(Pages::Receive);
+}
+void MainWindow::onTransactionsPage()
+{
+	if (!isVisible())
+		showNormal();
+	ui.m_twMainArea->setCurrentIndex(Pages::History);
+}
+void MainWindow::onPrivacyPage()
+{
+	if (!isVisible())
+		showNormal();
+	ui.m_twMainArea->setCurrentIndex(Pages::Privacy);
+}
+void MainWindow::onMasternodesPage()
+{
+	if (m_sWalletSettings.m_bShowMasterNodes)
+	{
+		if (!isVisible())
+			showNormal();
+		ui.m_twMainArea->setCurrentIndex(Pages::Masternodes);
+	}
 }

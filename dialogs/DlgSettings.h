@@ -11,6 +11,10 @@ public:
 	DlgSettings(QWidget *parent = Q_NULLPTR);
 	~DlgSettings();
 
+private slots:
+	void load();
+	void save();
+	void resetSettings();
 private:
 	Ui::DlgSettings ui;
 };

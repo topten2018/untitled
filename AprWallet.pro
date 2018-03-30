@@ -23,17 +23,22 @@ SOURCES += main.cpp\
     worker.cpp \
     tools.cpp \
     sign_mess.cpp \
-    receiveaddress_info.cpp \
     dialogs/SendingAddressList.cpp \
     dialogs/OpenUri.cpp \
     dialogs/DlgAddress.cpp \
     dialogs/ReceiveAddressList.cpp \
+    dialogs/ReceiveAddressInfo.cpp \
+    dialogs/DlgSettings.cpp \
     items/RecPayItem.cpp \
     items/AddressItem.cpp \
+    items/TransactionItem.cpp\
     models/RecPayModel.cpp \
     models/AddressBookModel.cpp \
+    models/PaymentsModel.cpp\
     utils/AutoSaver.cpp \
-    utils/StringUtils.cpp
+    utils/StringUtils.cpp \
+    widgets/QrCodeImage.cpp \
+    utils/QrEncoder.cpp
 
 HEADERS  += MainWindow.h \
     d.h \
@@ -44,17 +49,22 @@ HEADERS  += MainWindow.h \
     worker.h \
     tools.h \
     sign_mess.h \
-    receiveaddress_info.h \
     dialogs/SendingAddressList.h \
     dialogs/OpenUri.h \
     dialogs/DlgAddress.h \
     dialogs/ReceiveAddressList.h \
+    dialogs/ReceiveAddressInfo.h \
+    dialogs/DlgSettings.h \
     items/RecPayItem.h \
     items/AddressItem.h \
+    items/TransactionItem.h \
     models/RecPayModel.h \
     models/AddressBookModel.h \
+    models/PaymentsModel.h \
     utils/AutoSaver.h \
-    utils/StringUtils.h
+    utils/StringUtils.h \
+    utils/QrEncoder.h\
+    widgets/QrCodeImage.h
 
 FORMS    += ./ui/MainWindow.ui \
     ./ui/form.ui \
@@ -64,9 +74,10 @@ FORMS    += ./ui/MainWindow.ui \
     ./ui/sign_mess.ui \
     ./ui/DlgAddress.ui \
     ./ui/ReceiveAddressList.ui \
-    ./ui/receiveaddress_info.ui \
     ./ui/SendingAddressList.ui \
     ./ui/dialog.ui \
-    ./ui/RecPayItem.ui
+    ./ui/RecPayItem.ui \
+    ./ui/ReceiveAddressInfo.ui \
+    ./ui/DlgSettings.ui
 
 RESOURCES += ./resources/resource.qrc

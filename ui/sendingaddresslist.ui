@@ -167,6 +167,14 @@
     <string>Edit</string>
    </property>
   </action>
+  <action name="m_actDelete">
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../resources/resource.qrc"/>

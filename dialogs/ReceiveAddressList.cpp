@@ -21,9 +21,9 @@ ReceiveAddressList::ReceiveAddressList(AddressBookModel * pModel, QWidget *paren
 	   
 	ui.m_tvAddressTable->setModel(m_pModel);
 
-	int w = 600;
-	ui.m_tvAddressTable->setColumnWidth(0, w / 2);
-	ui.m_tvAddressTable->setColumnWidth(1, w / 2);
+	QHeaderView *header = ui.m_tvAddressTable->horizontalHeader();
+	header->setSectionResizeMode(0, QHeaderView::Stretch);
+	header->setSectionResizeMode(1, QHeaderView::Stretch);
 
 	connect(ui.m_btnAdd, SIGNAL(clicked()), this, SLOT(onAdd()));
 	connect(ui.m_btnCopy, SIGNAL(clicked()), this, SLOT(onCopy()));

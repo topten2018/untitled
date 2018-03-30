@@ -1,34 +1,30 @@
-#ifndef ADDRESSBOOKMODEL_H
-#define ADDRESSBOOKMODEL_H
+#ifndef PAYMENTMODEL_H
+#define PAYMENTMODEL_H
 
 #include <QAbstractTableModel>
 #include <QPointer>
 #include <QMutex>
 
-#include "Items/AddressItem.h"
+#include "Items/TransactionItem.h"
 
 class AutoSaver;
 
-class AddressBookModel : public  QAbstractTableModel
+class PaymentsModel : public  QAbstractTableModel
 {
 	Q_OBJECT
 
 public:
-	enum Mode 
-	{
-		Receive = 0,
-		Send
-	};
+	PaymentsModel(const QString filename, QObject *parent);
+	~PaymentsModel();
+
 	enum HeaderNames 
 	{ 
-		H_LABEL = 0,
-		H_ADDRESS,
+		H_DATE = 0,
+		H_LABEL,
+		H_MESSAGE,
+		H_AMOUNT,
 		H_COUNT
 	};
-
-	AddressBookModel(Mode mode, const QString filename, QObject *parent);
-	~AddressBookModel();
-	
 
 	/// количество строк. Устанавливаем так, чтобы скроллер отображался корректно
 	virtual int rowCount(const QModelIndex & = QModelIndex()) const override {return m_lstItems.size();};
@@ -36,12 +32,10 @@ public:
 	virtual int columnCount(const QModelIndex &) const override {return H_COUNT;};
 	/// функция для передачи данных пользователю
 	virtual QVariant data(const QModelIndex &,int) const override;
-	virtual bool setData(const QModelIndex &, const QVariant &, int) override;
-	virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
 	virtual QVariant headerData( int section, Qt::Orientation orientation, int role) const override;
 
-	AddressItem * item(int row);
-	void append(AddressItem *);
+	TransactionItem * item(int row);
+	void append(TransactionItem *);
 public slots:
 	void onAddItem();
 	void onEditItem(int row);
@@ -51,14 +45,12 @@ public slots:
 	void save() const;
 	void exportToFile(const QString & filename) const;
 private:
-	void addItem(AddressItem *);
+	void addItem(TransactionItem *);
 	void saveToFile(const QString & filename, bool bWriteHeader) const;
-	QList<AddressItem*>		m_lstItems;
+	QList<TransactionItem*>	m_lstItems;
 	QPointer<AutoSaver>		m_spAutoSaver;
 	mutable QMutex			m_mtx;
 	QString					m_strFileName;
-
-	Mode					m_Mode;
 };
 
-#endif // ADDRESSBOOKMODEL_H
+#endif // PAYMENTMODEL_H

@@ -57,6 +57,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{f8dd12d4-a5a5-4ea5-bc4e-6478e737132b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Widgets">
+      <UniqueIdentifier>{66028616-657c-40ca-ac11-506322771e95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="d.cpp">
@@ -66,9 +69,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="receiveaddress_info.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sign_mess.cpp">
@@ -122,6 +122,24 @@
     <ClCompile Include="dialogs\ReceiveAddressList.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\DlgSettings.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\QrEncoder.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\QrCodeImage.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="models\PaymentsModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="items\TransactionItem.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\ReceiveAddressInfo.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="d.h">
@@ -131,9 +149,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <QtMoc Include="form.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="receiveaddress_info.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="sign_mess.h">
@@ -181,6 +196,18 @@
     <QtMoc Include="dialogs\ReceiveAddressList.h">
       <Filter>Dialogs</Filter>
     </QtMoc>
+    <QtMoc Include="dialogs\DlgSettings.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="models\PaymentsModel.h">
+      <Filter>Models</Filter>
+    </QtMoc>
+    <QtMoc Include="dialogs\ReceiveAddressInfo.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="items\TransactionItem.h">
+      <Filter>Items</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GeneratedFiles\moc_predefs.h.cbt">
@@ -192,9 +219,6 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\form.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="ui\receiveaddress_info.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\sign_mess.ui">
@@ -224,6 +248,12 @@
     <QtUic Include="ui\ReceiveAddressList.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="ui\DlgSettings.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\ReceiveAddressInfo.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="resources\resource.qrc">
@@ -239,6 +269,12 @@
     </ClInclude>
     <ClInclude Include="items\AddressItem.h">
       <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\QrEncoder.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\QrCodeImage.h">
+      <Filter>Widgets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
