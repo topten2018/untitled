@@ -94,21 +94,22 @@ bool RecPayModel::removeRows(int row, int count, const QModelIndex &parent)
 		return false;
 
 	int lastRow = row + count - 1;
+	beginRemoveRows(parent, row, lastRow);
 	for (int i = lastRow; i >= row; --i)
 	{
 		if (m_lstItems.count() <= 1)
 		{
 			m_lstItems.at(0)->clear();
+			endRemoveRows();
 			return true;
 		}
 		RecPayItem * item = m_lstItems.takeAt(i);
 		if (item)
-		{		
-			beginRemoveRows(parent, i, i);
+		{			
 			item->deleteLater();
-			endRemoveRows();
 		}
 	}
+	endRemoveRows();
 	return true;
 }
 
