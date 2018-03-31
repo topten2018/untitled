@@ -36,4 +36,12 @@ void rotateFiles(const QString & file, int depth)
 		}
 	}
 }
+void createDir(const QString & d, const QString & subDir)
+{
+	QDir dir(d);
+	if (QDir(subDir).exists())
+		return;
+	dir.mkdir(subDir);
+}
+
 } // namespace Utils

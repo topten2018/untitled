@@ -6,6 +6,8 @@
 #include <QTextStream>
 #include <QRegExp>
 
+extern QString s_exeLocation;
+
 SocketTest::SocketTest(QObject *parent) :
     QObject(parent)
 {
@@ -259,17 +261,8 @@ void SocketTest::GetBalance(QString Addr)
 
 
 
-
-
-
-
-
-
-
-
-
         QString jFileContent = "";
-        QString filename = "Data6.txt";
+        QString filename = s_exeLocation + "Data6.txt";
             QFile file(filename);
             if (file.open(QIODevice::ReadWrite))
             {

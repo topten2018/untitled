@@ -140,6 +140,9 @@
     <ClCompile Include="dialogs\ReceiveAddressInfo.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="WalletStorage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="d.h">
@@ -207,6 +210,9 @@
     </QtMoc>
     <QtMoc Include="items\TransactionItem.h">
       <Filter>Items</Filter>
+    </QtMoc>
+    <QtMoc Include="WalletStorage.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

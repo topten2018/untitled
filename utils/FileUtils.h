@@ -8,6 +8,7 @@
 namespace Utils
 {
 	void rotateFiles(const QString & file, int depth);
+	void createDir(const QString & dir, const QString & subDir);
 } // namespace Utils
 
 #endif // FILE_UTILS_H

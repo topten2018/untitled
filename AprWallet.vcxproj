@@ -224,6 +224,7 @@
     <ClCompile Include="utils\FileUtils.cpp" />
     <ClCompile Include="utils\QrEncoder.cpp" />
     <ClCompile Include="utils\StringUtils.cpp" />
+    <ClCompile Include="WalletStorage.cpp" />
     <ClCompile Include="widgets\QrCodeImage.cpp" />
     <ClCompile Include="worker.cpp" />
     <ClCompile Include="zipvcontrol.cpp" />
@@ -232,6 +233,7 @@
     <QtMoc Include="dialogs\ReceiveAddressInfo.h" />
     <QtMoc Include="items\TransactionItem.h" />
     <QtMoc Include="models\PaymentsModel.h" />
+    <QtMoc Include="WalletStorage.h" />
     <ClInclude Include="widgets\QrCodeImage.h" />
     <QtMoc Include="dialogs\DlgAddress.h" />
     <QtMoc Include="dialogs\ReceiveAddressList.h" />

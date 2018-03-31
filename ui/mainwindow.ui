@@ -34,33 +34,33 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_78">
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_33">
+      <property name="font">
+       <font>
+        <family>Montserrat</family>
+        <pointsize>7</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../resources/resource.qrc">:/png/staking_inactive.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
+       <string>Synchronizing with network...</string>
       </property>
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLabel" name="label_62">
+     <widget class="QLabel" name="label_34">
+      <property name="font">
+       <font>
+        <family>Montserrat</family>
+        <pointsize>7</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../resources/resource.qrc">:/png/notsynced.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
+       <string>18 weeks behind. Scanning block</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="m_twMainArea">
       <property name="font">
        <font>
@@ -78,7 +78,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="m_tabOverview">
        <attribute name="icon">
@@ -3073,45 +3073,6 @@ selection-color: rgb(255, 255, 255);
       </widget>
      </widget>
     </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_61">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../resources/resource.qrc">:/png/connect4_16.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label_34">
-      <property name="font">
-       <font>
-        <family>Montserrat</family>
-        <pointsize>7</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>18 weeks behind. Scanning block</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="label_33">
-      <property name="font">
-       <font>
-        <family>Montserrat</family>
-        <pointsize>7</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Synchronizing with network...</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -3165,7 +3126,7 @@ selection-color: rgb(255, 255, 255);
     <addaction name="separator"/>
     <addaction name="actionOpen_Wallet_Configuration_File"/>
     <addaction name="actionOpen_Masternode_Configuration_File"/>
-    <addaction name="actionShow_Automatic_Backups"/>
+    <addaction name="m_actShowAutomaticBackups"/>
     <addaction name="actionBlockchain_explorer"/>
    </widget>
    <addaction name="menuFile"/>
@@ -3315,7 +3276,11 @@ selection-color: rgb(255, 255, 255);
     <string>Open Masternode Configuration File</string>
    </property>
   </action>
-  <action name="actionShow_Automatic_Backups">
+  <action name="m_actShowAutomaticBackups">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/save.png</normaloff>:/png/save.png</iconset>
+   </property>
    <property name="text">
     <string>Show Automatic Backups</string>
    </property>

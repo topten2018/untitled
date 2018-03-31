@@ -30,6 +30,19 @@ QString guid(int len)
 	res = res.replace("}", "");
 	return res.left(len);
 }
+QString randomString(int len)
+{
+	const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+	
+	QString res;
+	for (int i = 0; i<len; ++i)
+	{
+		int index = qrand() % possibleCharacters.length();
+		QChar nextChar = possibleCharacters.at(index);
+		res.append(nextChar);
+	}
+	return res;
+}
 bool parseCsvLine(const QString str, QStringList & row)
 {
 	static const int delta[][5] = {

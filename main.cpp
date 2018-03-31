@@ -11,7 +11,7 @@
 #include <QSystemSemaphore>
 #include <QSharedMemory>
 #include <QMessageBox>
-
+#include <QDateTime>
 
 #define DEBUG_TEST
 
@@ -85,6 +85,9 @@ int main(int argc, char *argv[])
 	paths.append("mediaservice");
 	QCoreApplication::setLibraryPaths(paths);
 
+	QDateTime cd = QDateTime::currentDateTime();
+	qsrand(cd.toTime_t());
+
 #ifdef DEBUG_TEST
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     qInstallMessageHandler(crashMessageOutput);
@@ -117,8 +120,6 @@ int main(int argc, char *argv[])
 		is_running = false;     
 	}
 	semaphore.release();        
-
-								
 								
 	if (is_running)
 	{

@@ -37,8 +37,10 @@ SOURCES += main.cpp\
     models/PaymentsModel.cpp\
     utils/AutoSaver.cpp \
     utils/StringUtils.cpp \
+    utils/FileUtils.cpp \
+    utils/QrEncoder.cpp \
     widgets/QrCodeImage.cpp \
-    utils/QrEncoder.cpp
+    WalletStorage.cpp
 
 HEADERS  += MainWindow.h \
     d.h \
@@ -63,8 +65,10 @@ HEADERS  += MainWindow.h \
     models/PaymentsModel.h \
     utils/AutoSaver.h \
     utils/StringUtils.h \
-    utils/QrEncoder.h\
-    widgets/QrCodeImage.h
+    utils/QrEncoder.h \
+    utils/FileUtils.h \
+    widgets/QrCodeImage.h \
+    WalletStorage.h
 
 FORMS    += ./ui/MainWindow.ui \
     ./ui/form.ui \

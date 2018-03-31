@@ -139,7 +139,7 @@ void PaymentsModel::onEditItem(int row)
 }
 void PaymentsModel::onDeleteItem(int row)
 {
-	QMessageBox mb(QMessageBox::Icon::Warning, tr("Warning"), tr("Delete this address?")
+	QMessageBox mb(QMessageBox::Icon::Warning, tr("Warning"), tr("Delete this payment?")
 		, QMessageBox::StandardButton::Ok | QMessageBox::StandardButton::Cancel, dynamic_cast<QWidget *>(parent()));
 	
 	if (mb.exec() == QMessageBox::StandardButton::Ok)

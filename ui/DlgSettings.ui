@@ -21,7 +21,7 @@
    <item>
     <widget class="QTabWidget" name="m_twMain">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="m_pgMain">
       <attribute name="title">
@@ -180,7 +180,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="m_leProxyIp">
            <property name="inputMask">
             <string>000.000.000.000</string>
            </property>
@@ -197,7 +197,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox">
+          <widget class="QSpinBox" name="m_sbProxyPort">
            <property name="maximum">
             <number>35965</number>
            </property>

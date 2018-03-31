@@ -3,9 +3,7 @@
 #include <QTabWidget>
 #include <QTabBar>
 #include <QRegExp>
-#include <QObject>
 #include <QTcpSocket>
-#include <QAbstractSocket>
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QDialog>
@@ -23,6 +21,9 @@
 #include <QDir>
 #include <QCloseEvent>
 #include <QHeaderView>
+#include <QFileDialog>
+#include <QProcessEnvironment>
+#include <QDesktopServices>
 
 #include <cmath>
 
@@ -42,10 +43,14 @@
 #include "dialogs/ReceiveAddressInfo.h"
 
 #include "utils/StringUtils.h"
+#include "utils/FileUtils.h"
+
+#include "WalletStorage.h"
 
 int jTotalBalance=0;
 QString jGlobalparam = "";
-QString jAddressParam="";
+
+const int g_iRandomStringLength = 72;
 
 QString s_exeLocation;
 
@@ -65,9 +70,18 @@ MainWindow::MainWindow(QWidget *parent) :
 	QCoreApplication::setOrganizationName(QLatin1String("AprWallet"));
 	QCoreApplication::setApplicationName(QLatin1String("APR Wallet Version 1.0"));
 	QCoreApplication::setApplicationVersion(QLatin1String("0.0.1"));
-
+	
+	Utils::createDir(s_exeLocation, "backups");
+	
 	ui.setupUi(this);
+	
+	WalletStorage ws;
+	QString fname = s_exeLocation + tr("backups/AprWallet.dat") + QDateTime::currentDateTime().toString("-yyyy-MM-dd-hh-mm-ss");
+	ws.create(fname);
+//	ws.restore(fname);
 
+	m_pMasternodesTab = ui.m_twMainArea->widget(Pages::Masternodes);	
+	
 	createTrayIcon();
 	m_pSysTrayIcon->show();
   
@@ -137,58 +151,32 @@ MainWindow::MainWindow(QWidget *parent) :
     ui.tableView_3->resizeRowsToContents();
     ui.tableView_3->resizeColumnsToContents();
 
-	const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
-    const int randomStringLength = 72; // assuming you want random strings of 12 characters
-
-    QString publicaddress;
-    QString privateaddress;
-    QDateTime cd = QDateTime::currentDateTime();
-    qsrand(cd.toTime_t());
-    for(int i=0; i<randomStringLength; ++i)
-    {
-		int index = qrand() % possibleCharacters.length();
-        QChar nextChar = possibleCharacters.at(index);
-        publicaddress.append(nextChar);
-	}
-
-    for(int i=0; i<randomStringLength; ++i)
-    {
-		int index = qrand() % possibleCharacters.length();
-        QChar nextChar = possibleCharacters.at(index);
-        privateaddress.append(nextChar);
-	}
-
-	QString jFileContent = "";
-    QString filename = "Data4.txt";
-    QFile file(filename);
+	QString strAdresses;
+    QFile file(s_exeLocation + "Addresses.txt");
 	if (file.open(QIODevice::ReadWrite))
-    {
-        //  QTextStream stream(&file);
-        //  stream << "something" << endl;
-
-        //  QTextStream ReadFile(&file);
-        /*
-        while (!ReadFile.atEnd())
-            {
-                jFileContent = ReadFile.re.readLine();
-                jAddressParam += jFileContent;
-
-
-            }
-            */
-		jAddressParam= file.readAll();
-        //   QMessageBox msgBox;
-        //   msgBox.setText(jAddressParam);
-        //   msgBox.exec();
-		// msgBox.setText("!!!!");
-        // msgBox.exec();
+    {        
+		strAdresses = file.readAll();
 	}
 
-    if (jAddressParam.trimmed().isEmpty())
+    if (strAdresses.trimmed().isEmpty())
     {
+		m_strPublicAddress = Utils::randomString(g_iRandomStringLength);
+		m_strPrivateAddress= Utils::randomString(g_iRandomStringLength);
 		QTextStream stream(&file);
-        stream << publicaddress+";"+privateaddress << endl;
-        jAddressParam = publicaddress+";"+privateaddress;
+        stream << m_strPublicAddress  + ";"+ m_strPrivateAddress << endl;
+	}
+	else
+	{
+		QStringList sl = strAdresses.split(";");
+		m_strPublicAddress = sl[0];
+		if (sl.size() <= 1 || sl[1].isEmpty())
+		{
+			m_strPrivateAddress = Utils::randomString(g_iRandomStringLength);
+			QTextStream stream(&file);
+			stream << m_strPublicAddress + ";" + m_strPrivateAddress << endl;
+		}
+		else
+			m_strPrivateAddress = sl[1];
 	}
 
 //ui->label_2->setStyleSheet("QLabel{ background-color : black; color : white; }");
@@ -226,8 +214,9 @@ MainWindow::MainWindow(QWidget *parent) :
     timer2->start(100);
 
     SocketTest cTest;
-    cTest.GetBalance(jAddressParam.trimmed());
-    jDataAddress = jAddressParam;
+	jDataAddress = QString("%1:%2").arg(m_strPublicAddress).arg(m_strPrivateAddress);
+    cTest.GetBalance(jDataAddress);
+    
     //  cTest.Connect();
     //checkbalance();
 
@@ -261,6 +250,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui.m_btnShowPayment, SIGNAL(clicked()), this, SLOT(onShowPaymentInfo()));
 	connect(ui.m_btnDeletePayment, SIGNAL(clicked()), this, SLOT(onDeletePayment()));
 
+	connect(ui.m_actBackupWallet, SIGNAL(triggered()), this, SLOT(onBackupWallet()));
+
 	connect(ui.m_actOpenUri, SIGNAL(triggered()), this, SLOT(onOpenUri()));
 	connect(ui.m_actSendingAddresses, SIGNAL(triggered()), this, SLOT(onSendingAddresses()));
 	connect(ui.m_actReceivingAddresses, SIGNAL(triggered()), this, SLOT(onReceivingAddresses()));
@@ -274,6 +265,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui.m_actTransactions, SIGNAL(triggered()), this, SLOT(onTransactionsPage()));
 	connect(ui.m_actPrivacy, SIGNAL(triggered()), this, SLOT(onPrivacyPage()));
 	connect(ui.m_actMasternodes, SIGNAL(triggered()), this, SLOT(onMasternodesPage()));
+
+	connect(ui.m_actShowAutomaticBackups, SIGNAL(triggered()), this, SLOT(onShowAutomaticBackups()));
 		
 	connect(ui.m_btnChooseFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
 	connect(ui.m_btnMinimizeFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
@@ -352,6 +345,31 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 		e->ignore();
 	}
+}
+void MainWindow::changeEvent(QEvent* e)
+{
+	switch (e->type())
+	{
+	case QEvent::LanguageChange:
+		//this->ui->retranslateUi(this);
+		break;
+	case QEvent::WindowStateChange:
+	{
+		if (this->windowState() & Qt::WindowMinimized)
+		{
+			if (m_sWindowSettings.m_bMinimizeToTray)
+			{
+				QTimer::singleShot(250, this, SLOT(hide()));
+			}
+		}
+
+		break;
+	}
+	default:
+		break;
+	}
+
+	QMainWindow::changeEvent(e);
 }
 void MainWindow::onQuit()
 {
@@ -752,7 +770,51 @@ void MainWindow::onSettings()
 
 void MainWindow::loadSettings()
 {
+	QSettings settings(s_exeLocation + tr("AprWallet.ini"), QSettings::IniFormat, this);
 
+	settings.beginGroup("Main");
+//	ui.m_cbStartOnLogin->setChecked(settings.value("StartOnLogin", false).toBool());
+//	ui.m_sbDbSize->setValue(settings.value("bDbSize", 10).toInt());
+	settings.endGroup();
+
+	settings.beginGroup("Wallet");
+	m_sWalletSettings.m_bEnableCoinControl = settings.value("CoinControl", false).toBool();
+	m_sWalletSettings.m_bShowMasterNodes = settings.value("ShowMasterNodesTab", false).toBool();
+	m_sWalletSettings.m_bSpendUnconfirmedChange = settings.value("SpendUnconfirmedChange", false).toBool();
+	settings.endGroup();
+
+	settings.beginGroup("Network");
+/*	ui.m_cbMapPort->setChecked(settings.value("MapPort", false).toBool());
+	ui.m_cbAllowIncomingConnections->setChecked(settings.value("AllowIncomingConnections", false).toBool());
+	ui.m_cbUseProxy->setChecked(settings.value("UseProxy", false).toBool());
+	QString proxy = settings.value("Proxy", "127.0.0.1:9050").toString();
+	QStringList sl = proxy.split(":");
+	ui.m_leProxyIp->setText(sl[0]);
+	if (sl.count() > 1)
+		ui.m_sbProxyPort->setValue(sl[1].toInt());
+	else
+		ui.m_sbProxyPort->setValue(9050);
+*/	settings.endGroup();
+
+	settings.beginGroup("Window");
+	m_sWindowSettings.m_bMinimizeToTray = settings.value("MinimizeToTray", false).toBool();
+	m_sWindowSettings.m_bHideOnClose = settings.value("MinimizeOnClose", false).toBool();
+	settings.endGroup();
+
+	settings.beginGroup("Display");
+	settings.endGroup();
+
+	if (!m_sWalletSettings.m_bShowMasterNodes)
+		ui.m_twMainArea->removeTab(Pages::Masternodes);
+	else
+	{
+		if (ui.m_twMainArea->count() < Pages::Count)
+		{
+			ui.m_twMainArea->addTab(m_pMasternodesTab, QIcon(":/png/masternodes.png"), tr("Masternodes"));
+		}
+	}
+		
+		
 }
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
@@ -813,5 +875,22 @@ void MainWindow::onMasternodesPage()
 		if (!isVisible())
 			showNormal();
 		ui.m_twMainArea->setCurrentIndex(Pages::Masternodes);
+	}
+}
+void MainWindow::onShowAutomaticBackups()
+{
+	QDesktopServices::openUrl(QUrl::fromLocalFile(s_exeLocation + "backups"));
+}
+void MainWindow::onBackupWallet()
+{
+	QString file = QFileDialog::getSaveFileName(this,
+		tr("Select file"),
+		"./",
+		tr("APR Wallet files (*.dat)"));
+
+	if (!file.isEmpty())
+	{
+		WalletStorage ws;
+		ws.create(file);
 	}
 }

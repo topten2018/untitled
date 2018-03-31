@@ -52,15 +52,14 @@ public:
 		Receive,
 		History,
 		Privacy,
-		Masternodes
+		Masternodes,
+		Count
 	};
 	
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
-    QString jGlobalparam;
-    QString jAddressParam;
-    
+    QString jGlobalparam;        
 private slots:
 	void loadSettings();
 	
@@ -74,6 +73,8 @@ private slots:
 	
     void UpdateBalance();
     void UpdateGUI();
+
+	void onBackupWallet();
     
 	void onOverviewPage();
 	void onSendPage();
@@ -93,6 +94,8 @@ private slots:
 	void onShowPaymentInfo();
 	void onDeletePayment();
 	void updatePaymentButtons();
+	
+	void onShowAutomaticBackups();
 
     void on_actionInformation_triggered();
 
@@ -117,6 +120,7 @@ private slots:
     void on_actionVerify_message_triggered(); 
 private:
 	virtual void closeEvent(QCloseEvent *) override;
+	virtual void changeEvent(QEvent* e) override;
 	void createTrayIcon();
 
 	QString createAddress() const;
@@ -140,8 +144,13 @@ private:
 	QSystemTrayIcon		*m_pSysTrayIcon;
 	QMenu				*m_pTrayMenu;
 
+	QWidget				*m_pMasternodesTab;
+
 	WindowSettings		 m_sWindowSettings;
 	WalletSettings		 m_sWalletSettings;
+
+	QString				 m_strPublicAddress;
+	QString				 m_strPrivateAddress;
 };
 
 #endif // MAINWINDOW_H

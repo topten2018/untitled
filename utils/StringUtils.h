@@ -9,6 +9,7 @@ namespace Utils
 {
 	QString pars(const QString & src, const QString & open, const QString & close);
 	QString guid(int len);
+	QString randomString(int len);
 	bool parseCsvLine(const QString str, QStringList & row);
 } // namespace Utils
 

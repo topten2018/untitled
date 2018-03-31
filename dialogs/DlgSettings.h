@@ -15,6 +15,7 @@ private slots:
 	void load();
 	void save();
 	void resetSettings();
+	void onUseProxy();
 private:
 	Ui::DlgSettings ui;
 };
