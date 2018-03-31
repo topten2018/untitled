@@ -50,8 +50,6 @@
 int jTotalBalance=0;
 QString jGlobalparam = "";
 
-const int g_iRandomStringLength = 72;
-
 QString s_exeLocation;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -160,8 +158,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     if (strAdresses.trimmed().isEmpty())
     {
-		m_strPublicAddress = Utils::randomString(g_iRandomStringLength);
-		m_strPrivateAddress= Utils::randomString(g_iRandomStringLength);
+		m_strPublicAddress = createAddress();
+		m_strPrivateAddress= createAddress();
 		QTextStream stream(&file);
         stream << m_strPublicAddress  + ";"+ m_strPrivateAddress << endl;
 	}
@@ -171,7 +169,7 @@ MainWindow::MainWindow(QWidget *parent) :
 		m_strPublicAddress = sl[0];
 		if (sl.size() <= 1 || sl[1].isEmpty())
 		{
-			m_strPrivateAddress = Utils::randomString(g_iRandomStringLength);
+			m_strPrivateAddress = createAddress();
 			QTextStream stream(&file);
 			stream << m_strPublicAddress + ";" + m_strPrivateAddress << endl;
 		}
@@ -553,7 +551,7 @@ void checkbalance()
 
 QString MainWindow::createAddress() const
 {//we neec to reimplement this function 
-	return Utils::guid(34);
+	return Utils::randomString(72);
 }
 
 void MainWindow::onRequestPayment()
