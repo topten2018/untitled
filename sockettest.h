@@ -17,6 +17,10 @@ extern QString jAddressInClipboard;
 extern QString jAddressInUri;
 extern QString jSendingAddressesOUTList ;
 
+extern QString jGlobalparamEx;
+extern int jTotalBalanceEx;
+extern QString jMNdat;
+
 class SocketTest : public QObject
 {
     Q_OBJECT

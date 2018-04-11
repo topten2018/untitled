@@ -1,13 +1,17 @@
-#include "tools.h"
-#include "ui_tools.h"
+#include "Tools.h"
+#include "ui_Tools.h"
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
 
-tools::tools(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::tools)
+extern QString s_exeLocation;
+
+Tools::Tools(QWidget *parent) 
+	: QDialog(parent)	
 {
-    ui->setupUi(this);
+    ui.setupUi(this);
 
    QStandardItemModel *model = new QStandardItemModel;
    QStandardItem *item;
@@ -61,24 +65,42 @@ tools::tools(QWidget *parent) :
     item = new QStandardItem("140");
     model->setItem(5, 2, item);
 
-
-
-
-
-model->setHorizontalHeaderLabels(horizontalHeader);
-ui->tableView->setModel(model);
-ui->tableView->resizeRowsToContents();
-ui->tableView->resizeColumnsToContents();
+	model->setHorizontalHeaderLabels(horizontalHeader);
+	ui.tableView->setModel(model);
+	ui.tableView->resizeRowsToContents();
+	ui.tableView->resizeColumnsToContents();
 
 
 
     model->setHorizontalHeaderLabels(horizontalHeader);
-    ui->tableView->setModel(model);
-    ui->tableView->resizeRowsToContents();
-    ui->tableView->resizeColumnsToContents();
+    ui.tableView->setModel(model);
+    ui.tableView->resizeRowsToContents();
+    ui.tableView->resizeColumnsToContents();
+
+
 }
 
-tools::~tools()
+Tools::~Tools()
 {
-    delete ui;
+}
+
+void Tools::onSend()
+{
+    QString text = ui.textEdit_2->toPlainText();
+    QString jFinalText = "Activating function: "+ text;
+    QMessageBox msgBox;
+
+    msgBox.setText(jFinalText);
+    msgBox.exec();
+
+    if (jFinalText.contains("install"))
+    {
+        QString jFileContent = "";
+        QFile file(s_exeLocation + "DataMN.txt");
+        if (file.open(QIODevice::WriteOnly))
+        {
+            QTextStream stream(&file);
+            stream << "installed" << endl;
+        }
+    }
 }

@@ -208,6 +208,7 @@
     <ClCompile Include="dialogs\ReceiveAddressInfo.cpp" />
     <ClCompile Include="dialogs\ReceiveAddressList.cpp" />
     <ClCompile Include="dialogs\SendingAddressList.cpp" />
+    <ClCompile Include="dialogs\Tools.cpp" />
     <ClCompile Include="form.cpp" />
     <ClCompile Include="items\AddressItem.cpp" />
     <ClCompile Include="items\RecPayItem.cpp" />
@@ -219,7 +220,6 @@
     <ClCompile Include="models\RecPayModel.cpp" />
     <ClCompile Include="sign_mess.cpp" />
     <ClCompile Include="sockettest.cpp" />
-    <ClCompile Include="tools.cpp" />
     <ClCompile Include="utils\AutoSaver.cpp" />
     <ClCompile Include="utils\FileUtils.cpp" />
     <ClCompile Include="utils\QrEncoder.cpp" />
@@ -234,6 +234,7 @@
     <QtMoc Include="items\TransactionItem.h" />
     <QtMoc Include="models\PaymentsModel.h" />
     <QtMoc Include="WalletStorage.h" />
+    <QtMoc Include="dialogs\Tools.h" />
     <ClInclude Include="widgets\QrCodeImage.h" />
     <QtMoc Include="dialogs\DlgAddress.h" />
     <QtMoc Include="dialogs\ReceiveAddressList.h" />
@@ -259,8 +260,6 @@
     <QtMoc Include="sign_mess.h">
     </QtMoc>
     <QtMoc Include="sockettest.h">
-    </QtMoc>
-    <QtMoc Include="tools.h">
     </QtMoc>
     <QtMoc Include="worker.h">
     </QtMoc>
@@ -295,8 +294,7 @@
     <QtUic Include="ui\SendingAddressList.ui" />
     <QtUic Include="ui\sign_mess.ui">
     </QtUic>
-    <QtUic Include="ui\tools.ui">
-    </QtUic>
+    <QtUic Include="ui\Tools.ui" />
     <QtUic Include="ui\zipvcontrol.ui">
     </QtUic>
   </ItemGroup>

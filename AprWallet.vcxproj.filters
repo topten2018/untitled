@@ -77,9 +77,6 @@
     <ClCompile Include="sockettest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tools.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="worker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -143,6 +140,9 @@
     <ClCompile Include="WalletStorage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\Tools.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="d.h">
@@ -158,9 +158,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="sockettest.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="tools.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="worker.h">
@@ -214,6 +211,9 @@
     <QtMoc Include="WalletStorage.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="dialogs\Tools.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GeneratedFiles\moc_predefs.h.cbt">
@@ -228,9 +228,6 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\sign_mess.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="ui\tools.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\zipvcontrol.ui">
@@ -258,6 +255,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\ReceiveAddressInfo.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\Tools.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

@@ -5,7 +5,6 @@
 #include "ui_MainWindow.h"
 #include "form.h"
 #include "zipvcontrol.h"
-#include "tools.h"
 #include "sign_mess.h"
 
 #include <QSystemTrayIcon>
@@ -19,6 +18,7 @@ class PaymentsModel;
 
 class ReceiveAddressList;
 class SendingAddressList;
+class Tools;
 
 struct WalletSettings 
 {
@@ -46,7 +46,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
-	enum Pages {
+    enum Pages 
+	{
 		Overview = 0,
 		Send,
 		Receive,
@@ -61,6 +62,7 @@ public:
 
     QString jGlobalparam;        
 private slots:
+    void onAutoMN();
 	void loadSettings();
 	
     void on_showRequestButton_2_clicked();
@@ -73,7 +75,7 @@ private slots:
 	
     void UpdateBalance();
     void UpdateGUI();
-
+    void onStaking();
 	void onBackupWallet();
     
 	void onOverviewPage();
@@ -129,9 +131,10 @@ private:
 
     Form form;
     zipvcontrol zip;
-    tools jtool;
     QTimer timer;
     Sign_Mess jsign;
+
+	bool				  m_bStake;
 
 	RecPayModel			* m_pRecipients;
 	AddressBookModel	* m_pSendingAddressBook;
@@ -140,6 +143,7 @@ private:
 
 	ReceiveAddressList * m_pDlgReceiveAddressList;
 	SendingAddressList * m_pDlgSendingAddressList;
+    Tools			   * m_pDlgTool;
 
 	QSystemTrayIcon		*m_pSysTrayIcon;
 	QMenu				*m_pTrayMenu;

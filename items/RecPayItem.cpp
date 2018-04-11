@@ -17,10 +17,22 @@ RecPayItem::~RecPayItem()
 
 void RecPayItem::clear()
 {
-	ui.m_sbAmount->setValue(0);
+    ui.m_sbAmount->setValue(0.0);
 	ui.m_leRecPay->setText("");
 	ui.m_leLabel->setText("");
 }
+
+QString RecPayItem::sendto() const
+{
+    return ui.m_leRecPay->text();
+}
+
+double RecPayItem::amount() const
+{
+    return ui.m_sbAmount->value();
+}
+
+
 void RecPayItem::onPaste()
 {
 	QClipboard *clipboard = QApplication::clipboard();

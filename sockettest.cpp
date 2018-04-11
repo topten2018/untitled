@@ -27,7 +27,9 @@ QString jAddressInfo="";
 QString jAddressInClipboard="";
 QString jAddressInUri="";
 QString jSendingAddressesOUTList = "";
-
+int jTotalBalanceEx = 0;
+QString jGlobalparamEx = "";
+QString jMNdat = "";
 
 
 
@@ -56,14 +58,33 @@ void SocketTest::GetVar()
 void SocketTest::SendMoney()
 {
     socket = new QTcpSocket(this);
-    socket->connectToHost("18.222.33.249", 10116);
+    socket->connectToHost("18.219.151.208", 10116);
 
     if(socket->waitForConnected(15000))
     {
         qDebug() << "Connected!";
 
         // send
-        QString j = "send:"  + jDataAddress + ":" + jSendToAddress + ":" + jGlobalSumToSend;
+        QString j = "send:"  + jDataAddress + ":" + jSendToAddress.trimmed() + ":" + jGlobalSumToSend.trimmed();
+
+        QMessageBox msgBox2a;
+        msgBox2a.setText(jGlobalSumToSend.trimmed());
+        msgBox2a.exec();
+
+
+
+
+
+
+
+        QString jtmp = jSendToAddress+" ";
+        QString jtmp1 = jtmp+ jGlobalSumToSend;
+
+
+
+
+
+
         const char *c = j.toLatin1();
         socket->write(c);
         socket->waitForBytesWritten(1000);
@@ -160,7 +181,7 @@ void SocketTest::GetBalance(QString Addr)
 {
     socket = new QTcpSocket(this);
     //socket->connectToHost("bogotobogo.com", 80);
-    socket->connectToHost("18.222.33.249", 10116);
+    socket->connectToHost("18.219.151.208", 10116);
 
     if(socket->waitForConnected(15000))
     {
@@ -199,17 +220,20 @@ void SocketTest::GetBalance(QString Addr)
     //    QSettings sett("my");
     //    sett.setValue("balance", temp);
 
-
-//        QMessageBox msgBox;
-      /*  msgBox.setText("!!!!");
+/*
+        QMessageBox msgBox;
+        msgBox.setText(temp);
         msgBox.exec();
+        */
+
+        /*
         msgBox.setText(temp+ "!!!!");
         msgBox.exec();
         */
 
 
 
-        QRegExp rx( "(\\d+)\\[");
+        QRegExp rx( ";(\\d+.\\d+)\\[");
         int pos = rx.indexIn( temp );
         QStringList list = rx.capturedTexts();
         //msgBox.setText(list[1]);
@@ -222,6 +246,7 @@ void SocketTest::GetBalance(QString Addr)
         QRegExp rxt( "\\[(.*)\\]");
         int posd = rxt.indexIn( temp );
         QStringList listoftemp = rxt.capturedTexts();
+        if (listoftemp.size()>0)
         jStatisticsHistory = listoftemp[1];
 
 
@@ -317,7 +342,7 @@ void SocketTest::Connect()
 {
     socket = new QTcpSocket(this);
     //socket->connectToHost("bogotobogo.com", 80);
-    socket->connectToHost("18.222.33.249", 10116);
+    socket->connectToHost("18.219.151.208", 10116);
 
     if(socket->waitForConnected(15000))
     {

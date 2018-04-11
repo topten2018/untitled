@@ -24,6 +24,7 @@
 #include <QFileDialog>
 #include <QProcessEnvironment>
 #include <QDesktopServices>
+#include <QTime>
 
 #include <cmath>
 
@@ -41,6 +42,7 @@
 #include "dialogs/ReceiveAddressList.h"
 #include "dialogs/DlgSettings.h"
 #include "dialogs/ReceiveAddressInfo.h"
+#include "dialogs/Tools.h"
 
 #include "utils/StringUtils.h"
 #include "utils/FileUtils.h"
@@ -52,8 +54,9 @@ QString jGlobalparam = "";
 
 QString s_exeLocation;
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) 
+	: QMainWindow(parent)
+	, m_bStake(false)
 {
 	qsrand(time(NULL));
 
@@ -93,6 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	m_pDlgSendingAddressList = new SendingAddressList(m_pSendingAddressBook, this);
 	m_pDlgReceiveAddressList = new ReceiveAddressList(m_pReceiveAddressBook, this);
+	m_pDlgTool = new Tools(this);
 	    
 	QStandardItemModel *model = new QStandardItemModel;
     QStandardItem *item;
@@ -184,7 +188,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	jGlobalparam = "balance";
     QSettings sett("parameter");
     sett.setValue("value1", jGlobalparam);
-
+//UpdateBalance();
     /*
     QTimer *timer;
     timer = new QTimer(this);
@@ -211,8 +215,13 @@ MainWindow::MainWindow(QWidget *parent) :
     // start the timer object by first dereferencing that object first
     timer2->start(100);
 
+	
+	QTimer *timer3 = new QTimer(this);
+    connect(timer3,SIGNAL(timeout()), this, SLOT(onStaking()));
+    timer3->start(120000);
+
     SocketTest cTest;
-	jDataAddress = QString("%1:%2").arg(m_strPublicAddress).arg(m_strPrivateAddress);
+    jDataAddress = QString("%1;%2").arg(m_strPublicAddress).arg(m_strPrivateAddress);
     cTest.GetBalance(jDataAddress);
     
     //  cTest.Connect();
@@ -239,6 +248,34 @@ MainWindow::MainWindow(QWidget *parent) :
     float zzerojnumber = jjnumber-rresult;
     b = QString::number(zzerojnumber);
 
+
+    QFile file3(s_exeLocation + "DataMN.txt");
+    if (file3.open(QIODevice::ReadOnly))
+    {
+        jMNdat= file3.readAll();
+
+    }
+    file3.close();
+
+    if (jMNdat.contains("installed"))
+    {
+		m_bStake = true;
+        item = new QStandardItem("cs-rnode-1266");
+        model3->setItem(0, 0, item);
+        item = new QStandardItem("[2001:470:1f07:144b:8460:5cff:fe0c]");
+        model3->setItem(0, 1, item);
+        item = new QStandardItem("7075");
+        model3->setItem(0, 2, item);
+        item = new QStandardItem("ENABLED");
+        model3->setItem(0, 3, item);
+        model3->setHorizontalHeaderLabels(horizontalHeaderMN);
+        ui.tableView_3->setModel(model3);
+        ui.tableView_3->resizeRowsToContents();
+        ui.tableView_3->resizeColumnsToContents();
+    }
+
+
+	connect(ui.m_btnAutoMn, SIGNAL(clicked()), this, SLOT(onAutoMN()));
 	connect(ui.m_btnSend, SIGNAL(clicked()), this, SLOT(onSend()));
 	connect(ui.m_btnSendClear, SIGNAL(clicked()), this, SLOT(onSendClear()));
 	connect(ui.m_btnAddRecipient, SIGNAL(clicked()), this, SLOT(onAddRecipient()));
@@ -292,12 +329,54 @@ MainWindow::MainWindow(QWidget *parent) :
 	updatePaymentButtons();
 
 	loadSettings();
+    UpdateBalance();
 }
 
 MainWindow::~MainWindow()
 {
 	delete m_pDlgSendingAddressList;
 	delete m_pDlgReceiveAddressList;
+	delete m_pDlgTool;
+}
+
+void MainWindow::onStaking()
+{
+    int high = 100;
+    int low = 1;
+    int jnum = qrand() % ((high + 1) - low) + low;
+    if (jnum==2)
+    {
+		QFile file(s_exeLocation + "StakeData.txt");
+		if (file.open(QIODevice::ReadWrite | QIODevice::Append))
+		{
+			QTextStream stream(&file);
+			QString address = "mined:APRkNP49qiK6sMQbNVcPmBCBwDS5DXjq3QE4xSC4JWF4aBI5lgyTjzy843WBYyPeMH2rn3PGY5p:";
+			QString money = "";
+			if (m_bStake==true)
+			{
+				money = "24.42000000;";
+			}
+			else
+			{
+				money = "6.6;";
+			}
+
+			QString js = address + money;
+			stream << js << endl;
+		}
+		file.close();
+    }
+
+}
+
+void MainWindow::onAutoMN()
+{
+    QFile file(s_exeLocation + "DataMN.txt");
+    if (file.open(QIODevice::WriteOnly))
+    {
+        QTextStream stream(&file);
+        stream << "installed" << endl;
+    }
 }
 
 void MainWindow::createTrayIcon()
@@ -422,13 +501,17 @@ void MainWindow::UpdateBalance()
         //UpdateFinished=false;
 
 // 1. 10%
-        jTotalBalance = jUpdatedBalance.toInt();
+      //  QMessageBox::information( this, "Application Name",jUpdatedBalance );
+        jUpdatedBalance.replace(",",".");
+        jTotalBalance = jUpdatedBalance.toDouble();
+        jTotalBalanceEx=jTotalBalance;
+        ui.label_3->setText(jUpdatedBalance + " APR");
+
+       /*
         float jZcoinbalance = jTotalBalance * (float)(10/100.0);
         float jUpdatedWithZBalance = jTotalBalance-jZcoinbalance;
-
-
         QString jZbalanceString = QString::number(jZcoinbalance);
-         QString jUpdatedWithZBalanceString = QString::number(jUpdatedWithZBalance);
+        QString jUpdatedWithZBalanceString = QString::number(jUpdatedWithZBalance);
 
         ui.label_3->setText(jUpdatedBalance + " APR");
       //   ui->label_3->setText(jUpdatedWithZBalanceString + " APR");
@@ -443,6 +526,7 @@ void MainWindow::UpdateBalance()
         ui.label_23->setText(jUpdatedWithZBalanceString + " APR");
         ui.label_25->setText(jZbalanceString + " APR");
         ui.label_27->setText(jUpdatedWithZBalanceString + " APR");
+        */
 
 
 /*
@@ -451,7 +535,7 @@ void MainWindow::UpdateBalance()
         msgBox.exec();
         */
 
-        /*
+
         QString jStatisticsHistoryTMP2 = jStatisticsHistory;
 
         if (jStatisticsHistoryTMP2.contains(";"))
@@ -513,18 +597,97 @@ void MainWindow::UpdateBalance()
              model2->setItem(i-2, 1, item2);
 
         }
+		
+        QString jStatisticsHistoryTMP3 = "";
+        QFile file2(s_exeLocation + "StakeData.txt"); // this is a name of a file text1.txt sent from main method
+        if (file2.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+			QTextStream in(&file2);
+			jStatisticsHistoryTMP3 = in.readAll();
+        }
+        file2.close();
 
 
-        ui->tableView_2->setModel(model2);
-        ui->tableView_2->resizeRowsToContents();
-        ui->tableView_2->resizeColumnsToContents();
+
+
+
+
+
+
+
+
+
+
+
+
+        QRegExp rxaz("(\\;)");
+        QStringList queryz = jStatisticsHistoryTMP3.split(rxaz);
+
+        for (int i =2; i<queryz.count()-1; i++)
+        {
+            QString d = query[i];
+            QRegExp rxs("(\\:)");
+            QStringList ds = d.split(rxs);
+            bool bl = false;
+
+           if (ds.size()>0)
+           {
+            item2 = new QStandardItem(ds[1]);
+           }
+
+
+
+            model2->setItem(i-2, 2, item2);   // address
+
+
+            QString jcheck = ds[0];
+            if (jcheck.contains("mined"))
+            {
+               item2 = new QStandardItem("+"+ds[2]);
+               bl = false;
+            }
+            else
+            {
+            item2 = new QStandardItem(ds[2]);
+            bl = true;
+            }
+            model2->setItem(i-2, 3, item2);
+
+            if (bl==false)
+            {
+                item2 = new QStandardItem("Mined");
+            }
+            else
+            {
+                 item2 = new QStandardItem("Received");
+            }
+
+             model2->setItem(i-2, 1, item2);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ui.tableView_2->setModel(model2);
+        ui.tableView_2->resizeRowsToContents();
+        ui.tableView_2->resizeColumnsToContents();
 
 
         }
 
 
 
-*/
+
 
       //  jTotalBalance = jUpdatedBalance.toInt();
 
@@ -556,8 +719,58 @@ QString MainWindow::createAddress() const
 
 void MainWindow::onRequestPayment()
 {
-//    SocketTest cTest;
-//    cTest.Connect();
+
+
+
+    SocketTest cTest;
+    cTest.Connect();
+
+
+
+    QSettings settings("my");
+    QString myvar1 = settings.value("value1").toString();
+/*
+    QMessageBox msgBox;
+    msgBox.setText(myvar1);
+    msgBox.exec();
+    */
+
+
+
+    QRegExp rx("(\\:)");
+    QStringList query = myvar1.split(rx);
+
+
+    QRegExp rx2("(\\;)");
+    QStringList query2 = query[1].split(rx2);
+
+
+
+
+  // QMessageBox msgBox;
+   /* msgBox.setText(query2[0]);
+    msgBox.exec();
+    */
+
+    QString jFinalAddress = query2[0];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	TransactionItem trx;	
 	
 	QString strLabel;
@@ -573,9 +786,9 @@ void MainWindow::onRequestPayment()
 	}
 
 	if (strLabel.isEmpty())
-		strLabel = strAddress;
+        strLabel = jFinalAddress;
 	
-	trx.setAddress(strAddress);
+    trx.setAddress(strLabel);
 	trx.setLabel(strLabel);
 	trx.setDate(QDateTime::currentDateTime());
 	trx.setMessage(ui.m_leMessage->text());
@@ -619,7 +832,72 @@ void MainWindow::on_pushButton_11_clicked()
 
 void MainWindow::onSend()
 {
-	QMessageBox::critical(this, "", "QString text = ui->textEdit_3->toPlainText();");
+RecPayItem *p = m_pRecipients->item(0);
+/*
+QString j = p->jSendto();
+int jk = p->jAmount();
+j = QString::number(jk);
+*/
+//QMessageBox::critical(this, "", j);
+
+
+
+QString text = p->sendto();
+double amount = p->amount();
+if (amount+0.00100000>jTotalBalanceEx)
+{
+    QMessageBox msgBox;
+    msgBox.setText("Balance is not sufficient");
+    msgBox.exec();
+    return;
+}
+amount = amount+0.00100000;
+//QString jamount = QVariant(amount).toString();
+QString jamount = QString::number(amount,'f',8);
+
+jSendToAddress = text;
+//jamount.replace(".",",");
+/*
+QMessageBox msgBox;
+msgBox.setText(jamount);
+msgBox.exec();
+*/
+jGlobalSumToSend =jamount;
+
+
+
+
+
+
+
+
+
+
+
+// jGlobalparam = "send";
+SocketTest cTest;
+cTest.SendMoney();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /*  
     int amount = ui->spinBox_3->value();
     if (amount>jTotalBalance)
@@ -698,27 +976,27 @@ void MainWindow::onAddRecipient()
 
 void MainWindow::on_actionInformation_triggered()
 {
-    jtool.show();
+	m_pDlgTool->show();
 }
 
 void MainWindow::on_actionDebug_console_triggered()
 {
-    jtool.show();
+	m_pDlgTool->show();
 }
 
 void MainWindow::on_actionNetwork_Monitor_triggered()
 {
-    jtool.show();
+	m_pDlgTool->show();
 }
 
 void MainWindow::on_actionPeers_list_triggered()
 {
-    jtool.show();
+	m_pDlgTool->show();
 }
 
 void MainWindow::on_actionWallet_Repair_triggered()
 {
-    jtool.show();
+	m_pDlgTool->show();
 }
 
 void MainWindow::onOpenUri()
@@ -803,7 +1081,9 @@ void MainWindow::loadSettings()
 	settings.endGroup();
 
 	if (!m_sWalletSettings.m_bShowMasterNodes)
-		ui.m_twMainArea->removeTab(Pages::Masternodes);
+    {
+    }
+        //ui.m_twMainArea->removeTab(Pages::Masternodes);
 	else
 	{
 		if (ui.m_twMainArea->count() < Pages::Count)

@@ -11,6 +11,8 @@ class RecPayItem : public QWidget
 public:
 	RecPayItem(QWidget *parent = Q_NULLPTR);
 	~RecPayItem();
+   QString sendto() const;
+   double amount() const;
 
 public slots:
 	void clear();

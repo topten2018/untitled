@@ -143,7 +143,7 @@ background:transparent</string>
          <rect>
           <x>150</x>
           <y>110</y>
-          <width>101</width>
+          <width>321</width>
           <height>21</height>
          </rect>
         </property>
@@ -937,7 +937,7 @@ background-position: top left;
                  <string notr="true">color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="text">
-                 <string>Recommended 0.0000324234 Estimated to begin confirmation within 2 blocks.</string>
+                 <string>Recommended 0.00010000 Estimated to begin confirmation within 2 blocks.</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
@@ -3066,8 +3066,23 @@ background:transparent</string>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(0, 0, 0);
 color: rgb(255, 255, 255);
-selection-color: rgb(255, 255, 255);
 </string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="m_btnAutoMn">
+        <property name="geometry">
+         <rect>
+          <x>820</x>
+          <y>30</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Auto-configure MN</string>
         </property>
        </widget>
       </widget>
