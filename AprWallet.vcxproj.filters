@@ -143,6 +143,33 @@
     <ClCompile Include="dialogs\Tools.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\DlgMultisignature.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="items\AddressKeyItem.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="models\AddressKeyModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="items\DestinationItem.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="models\DestinationModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="items\TxHashItem.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="models\TxHashModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="items\KeyItem.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="models\KeyModel.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="d.h">
@@ -214,6 +241,33 @@
     <QtMoc Include="dialogs\Tools.h">
       <Filter>Dialogs</Filter>
     </QtMoc>
+    <QtMoc Include="dialogs\DlgMultisignature.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="items\AddressKeyItem.h">
+      <Filter>Items</Filter>
+    </QtMoc>
+    <QtMoc Include="models\AddressKeyModel.h">
+      <Filter>Models</Filter>
+    </QtMoc>
+    <QtMoc Include="items\DestinationItem.h">
+      <Filter>Items</Filter>
+    </QtMoc>
+    <QtMoc Include="models\DestinationModel.h">
+      <Filter>Models</Filter>
+    </QtMoc>
+    <QtMoc Include="items\TxHashItem.h">
+      <Filter>Items</Filter>
+    </QtMoc>
+    <QtMoc Include="models\TxHashModel.h">
+      <Filter>Models</Filter>
+    </QtMoc>
+    <QtMoc Include="items\KeyItem.h">
+      <Filter>Items</Filter>
+    </QtMoc>
+    <QtMoc Include="models\KeyModel.h">
+      <Filter>Models</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GeneratedFiles\moc_predefs.h.cbt">
@@ -258,6 +312,21 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\Tools.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\DlgMultisignature.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\AddressKeyItem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\DestinationItem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\TxHashItem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\KeyItem.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

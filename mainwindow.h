@@ -64,6 +64,10 @@ public:
 private slots:
     void onAutoMN();
 	void loadSettings();
+
+	void onMultisignatureCreation();
+	void onMultisignatureSpending();
+	void onMultisignatureSigning();
 	
     void on_showRequestButton_2_clicked();
 

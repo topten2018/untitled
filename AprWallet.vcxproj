@@ -203,6 +203,7 @@
   <ItemGroup>
     <ClCompile Include="d.cpp" />
     <ClCompile Include="dialogs\DlgAddress.cpp" />
+    <ClCompile Include="dialogs\DlgMultisignature.cpp" />
     <ClCompile Include="dialogs\DlgSettings.cpp" />
     <ClCompile Include="dialogs\OpenUri.cpp" />
     <ClCompile Include="dialogs\ReceiveAddressInfo.cpp" />
@@ -211,13 +212,21 @@
     <ClCompile Include="dialogs\Tools.cpp" />
     <ClCompile Include="form.cpp" />
     <ClCompile Include="items\AddressItem.cpp" />
+    <ClCompile Include="items\AddressKeyItem.cpp" />
+    <ClCompile Include="items\DestinationItem.cpp" />
+    <ClCompile Include="items\KeyItem.cpp" />
     <ClCompile Include="items\RecPayItem.cpp" />
     <ClCompile Include="items\TransactionItem.cpp" />
+    <ClCompile Include="items\TxHashItem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="models\AddressBookModel.cpp" />
+    <ClCompile Include="models\AddressKeyModel.cpp" />
+    <ClCompile Include="models\DestinationModel.cpp" />
+    <ClCompile Include="models\KeyModel.cpp" />
     <ClCompile Include="models\PaymentsModel.cpp" />
     <ClCompile Include="models\RecPayModel.cpp" />
+    <ClCompile Include="models\TxHashModel.cpp" />
     <ClCompile Include="sign_mess.cpp" />
     <ClCompile Include="sockettest.cpp" />
     <ClCompile Include="utils\AutoSaver.cpp" />
@@ -235,6 +244,15 @@
     <QtMoc Include="models\PaymentsModel.h" />
     <QtMoc Include="WalletStorage.h" />
     <QtMoc Include="dialogs\Tools.h" />
+    <QtMoc Include="dialogs\DlgMultisignature.h" />
+    <QtMoc Include="items\AddressKeyItem.h" />
+    <QtMoc Include="models\AddressKeyModel.h" />
+    <QtMoc Include="items\DestinationItem.h" />
+    <QtMoc Include="models\DestinationModel.h" />
+    <QtMoc Include="items\TxHashItem.h" />
+    <QtMoc Include="models\TxHashModel.h" />
+    <QtMoc Include="items\KeyItem.h" />
+    <QtMoc Include="models\KeyModel.h" />
     <ClInclude Include="widgets\QrCodeImage.h" />
     <QtMoc Include="dialogs\DlgAddress.h" />
     <QtMoc Include="dialogs\ReceiveAddressList.h" />
@@ -280,12 +298,16 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="ui\AddressKeyItem.ui" />
+    <QtUic Include="ui\DestinationItem.ui" />
     <QtUic Include="ui\dialog.ui">
     </QtUic>
     <QtUic Include="ui\DlgAddress.ui" />
+    <QtUic Include="ui\DlgMultisignature.ui" />
     <QtUic Include="ui\DlgSettings.ui" />
     <QtUic Include="ui\form.ui">
     </QtUic>
+    <QtUic Include="ui\KeyItem.ui" />
     <QtUic Include="ui\MainWindow.ui" />
     <QtUic Include="ui\OpenUri.ui" />
     <QtUic Include="ui\ReceiveAddressList.ui" />
@@ -295,6 +317,7 @@
     <QtUic Include="ui\sign_mess.ui">
     </QtUic>
     <QtUic Include="ui\Tools.ui" />
+    <QtUic Include="ui\TxHashItem.ui" />
     <QtUic Include="ui\zipvcontrol.ui">
     </QtUic>
   </ItemGroup>

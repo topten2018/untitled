@@ -78,7 +78,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="m_tabOverview">
        <attribute name="icon">
@@ -3112,9 +3112,9 @@ color: rgb(255, 255, 255);
     <addaction name="m_actSendingAddresses"/>
     <addaction name="m_actReceivingAddresses"/>
     <addaction name="separator"/>
-    <addaction name="actionMultisignature_creation"/>
-    <addaction name="actionMultisignature_spending"/>
-    <addaction name="actionMultisignature_signing"/>
+    <addaction name="m_actMultisignatureCreation"/>
+    <addaction name="m_actMultisignatureSpending"/>
+    <addaction name="m_actMultisignatureSigning"/>
     <addaction name="separator"/>
     <addaction name="m_actExit"/>
    </widget>
@@ -3194,17 +3194,29 @@ color: rgb(255, 255, 255);
     <string>Receiving addresses...</string>
    </property>
   </action>
-  <action name="actionMultisignature_creation">
+  <action name="m_actMultisignatureCreation">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/address-book.png</normaloff>:/png/address-book.png</iconset>
+   </property>
    <property name="text">
     <string>Multisignature creation...</string>
    </property>
   </action>
-  <action name="actionMultisignature_spending">
+  <action name="m_actMultisignatureSpending">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/send.png</normaloff>:/png/send.png</iconset>
+   </property>
    <property name="text">
     <string>Multisignature spending...</string>
    </property>
   </action>
-  <action name="actionMultisignature_signing">
+  <action name="m_actMultisignatureSigning">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/editpaste.png</normaloff>:/png/editpaste.png</iconset>
+   </property>
    <property name="text">
     <string>Multisignature signing...</string>
    </property>

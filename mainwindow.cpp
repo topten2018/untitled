@@ -43,6 +43,7 @@
 #include "dialogs/DlgSettings.h"
 #include "dialogs/ReceiveAddressInfo.h"
 #include "dialogs/Tools.h"
+#include "dialogs/DlgMultisignature.h"
 
 #include "utils/StringUtils.h"
 #include "utils/FileUtils.h"
@@ -300,6 +301,10 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui.m_actTransactions, SIGNAL(triggered()), this, SLOT(onTransactionsPage()));
 	connect(ui.m_actPrivacy, SIGNAL(triggered()), this, SLOT(onPrivacyPage()));
 	connect(ui.m_actMasternodes, SIGNAL(triggered()), this, SLOT(onMasternodesPage()));
+
+	connect(ui.m_actMultisignatureCreation, SIGNAL(triggered()), this, SLOT(onMultisignatureCreation()));
+	connect(ui.m_actMultisignatureSpending, SIGNAL(triggered()), this, SLOT(onMultisignatureSpending()));
+	connect(ui.m_actMultisignatureSigning, SIGNAL(triggered()), this, SLOT(onMultisignatureSigning()));
 
 	connect(ui.m_actShowAutomaticBackups, SIGNAL(triggered()), this, SLOT(onShowAutomaticBackups()));
 		
@@ -715,6 +720,22 @@ void checkbalance()
 QString MainWindow::createAddress() const
 {//we neec to reimplement this function 
 	return Utils::randomString(72);
+}
+
+void MainWindow::onMultisignatureCreation()
+{
+	DlgMultisignature * dlg = new DlgMultisignature(this);
+	dlg->show(DlgMultisignature::CreatePage);
+}
+void MainWindow::onMultisignatureSpending()
+{
+	DlgMultisignature * dlg = new DlgMultisignature(this);
+	dlg->show(DlgMultisignature::CreateTxPage);
+}
+void MainWindow::onMultisignatureSigning()
+{
+	DlgMultisignature * dlg = new DlgMultisignature(this);
+	dlg->show(DlgMultisignature::SignTxPage);
 }
 
 void MainWindow::onRequestPayment()
