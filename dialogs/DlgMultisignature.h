@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DLGMULTISIGNATURE_H
+#define DLGMULTISIGNATURE_H
 
 #include <QDialog>
 #include "ui_DlgMultisignature.h"
@@ -40,3 +41,5 @@ private:
 	TxHashModel			*m_pTxHashModel;
 	KeyModel			*m_pKeyModel;
 };
+
+#endif // DLGMULTISIGNATURE_H

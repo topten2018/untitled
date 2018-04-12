@@ -21,7 +21,6 @@ SOURCES += main.cpp\
     zipvcontrol.cpp \
     sockettest.cpp \
     worker.cpp \
-    tools.cpp \
     sign_mess.cpp \
     dialogs/SendingAddressList.cpp \
     dialogs/OpenUri.cpp \
@@ -29,18 +28,30 @@ SOURCES += main.cpp\
     dialogs/ReceiveAddressList.cpp \
     dialogs/ReceiveAddressInfo.cpp \
     dialogs/DlgSettings.cpp \
+    dialogs/DlgAskPassphrase.cpp \
+    dialogs/DlgMultisignature.cpp \
+    dialogs/Tools.cpp \
+    dialogs/DlgMultisignature.cpp \
     items/RecPayItem.cpp \
     items/AddressItem.cpp \
-    items/TransactionItem.cpp\
-    models/RecPayModel.cpp \
-    models/AddressBookModel.cpp \
-    models/PaymentsModel.cpp\
+    items/TransactionItem.cpp \
+    items/AddressKeyItem.cpp \
+    items/DestinationItem.cpp \
+    items/KeyItem.cpp \
+    items/TxHashItem.cpp \
     utils/AutoSaver.cpp \
     utils/StringUtils.cpp \
     utils/FileUtils.cpp \
     utils/QrEncoder.cpp \
     widgets/QrCodeImage.cpp \
-    WalletStorage.cpp
+    WalletStorage.cpp \
+    models/AddressBookModel.cpp \
+    models/AddressKeyModel.cpp \
+    models/DestinationModel.cpp \
+    models/KeyModel.cpp \
+    models/PaymentsModel.cpp \
+    models/RecPayModel.cpp \
+    models/TxHashModel.cpp
 
 HEADERS  += MainWindow.h \
     d.h \
@@ -49,7 +60,6 @@ HEADERS  += MainWindow.h \
     zipvcontrol.h \
     sockettest.h \
     worker.h \
-    tools.h \
     sign_mess.h \
     dialogs/SendingAddressList.h \
     dialogs/OpenUri.h \
@@ -57,18 +67,30 @@ HEADERS  += MainWindow.h \
     dialogs/ReceiveAddressList.h \
     dialogs/ReceiveAddressInfo.h \
     dialogs/DlgSettings.h \
+    dialogs/DlgAskPassphrase.h \
+    dialogs/DlgMultisignature.h \
+    dialogs/Tools.h \
     items/RecPayItem.h \
     items/AddressItem.h \
     items/TransactionItem.h \
-    models/RecPayModel.h \
-    models/AddressBookModel.h \
-    models/PaymentsModel.h \
+    items/AddressKeyItem.h \
+    items/DestinationItem.h \
+    items/KeyItem.h \
+    items/TxHashItem.h \
     utils/AutoSaver.h \
     utils/StringUtils.h \
     utils/QrEncoder.h \
     utils/FileUtils.h \
     widgets/QrCodeImage.h \
-    WalletStorage.h
+    WalletStorage.h \
+    dialogs/DlgMultisignature.h \
+    models/AddressBookModel.h \
+    models/AddressKeyModel.h \
+    models/DestinationModel.h \
+    models/KeyModel.h \
+    models/PaymentsModel.h \
+    models/RecPayModel.h \
+    models/TxHashModel.h
 
 FORMS    += ./ui/MainWindow.ui \
     ./ui/form.ui \
@@ -82,6 +104,13 @@ FORMS    += ./ui/MainWindow.ui \
     ./ui/dialog.ui \
     ./ui/RecPayItem.ui \
     ./ui/ReceiveAddressInfo.ui \
-    ./ui/DlgSettings.ui
+    ./ui/DlgSettings.ui \
+    ui/AddressKeyItem.ui \
+    ui/DestinationItem.ui \
+    ui/DlgAskPassphrase.ui \
+    ui/DlgMultisignature.ui \
+    ui/KeyItem.ui \
+    ui/Tools.ui \
+    ui/TxHashItem.ui
 
 RESOURCES += ./resources/resource.qrc

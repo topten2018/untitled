@@ -44,6 +44,7 @@
 #include "dialogs/ReceiveAddressInfo.h"
 #include "dialogs/Tools.h"
 #include "dialogs/DlgMultisignature.h"
+#include "dialogs/DlgAskPassphrase.h"
 
 #include "utils/StringUtils.h"
 #include "utils/FileUtils.h"
@@ -307,6 +308,10 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui.m_actMultisignatureSigning, SIGNAL(triggered()), this, SLOT(onMultisignatureSigning()));
 
 	connect(ui.m_actShowAutomaticBackups, SIGNAL(triggered()), this, SLOT(onShowAutomaticBackups()));
+
+	connect(ui.m_actEncryptWallet, SIGNAL(triggered()), this, SLOT(onEncryptWallet()));
+	connect(ui.m_actChangePassphrase, SIGNAL(triggered()), this, SLOT(onChangePassphrase()));
+		
 		
 	connect(ui.m_btnChooseFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
 	connect(ui.m_btnMinimizeFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
@@ -494,6 +499,28 @@ void MainWindow::onDeletePayment()
 
 	m_pPaymentsHistory->onDeleteItem(index.row());
 	updatePaymentButtons();
+}
+
+void MainWindow::onEncryptWallet()
+{
+	WalletStorage ws;
+
+	DlgAskPassphrase dlg(DlgAskPassphrase::Mode::Encrypt, &ws, this);
+
+	if (dlg.exec() == QDialog::Accepted)
+	{
+
+	}
+}
+void MainWindow::onChangePassphrase()
+{
+	WalletStorage ws;
+	DlgAskPassphrase dlg(DlgAskPassphrase::Mode::ChangePass, &ws, this);
+
+	if (dlg.exec() == QDialog::Accepted)
+	{
+
+	}
 }
 
 void MainWindow::UpdateBalance()

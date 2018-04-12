@@ -203,6 +203,7 @@
   <ItemGroup>
     <ClCompile Include="d.cpp" />
     <ClCompile Include="dialogs\DlgAddress.cpp" />
+    <ClCompile Include="dialogs\DlgAskPassphrase.cpp" />
     <ClCompile Include="dialogs\DlgMultisignature.cpp" />
     <ClCompile Include="dialogs\DlgSettings.cpp" />
     <ClCompile Include="dialogs\OpenUri.cpp" />
@@ -253,6 +254,7 @@
     <QtMoc Include="models\TxHashModel.h" />
     <QtMoc Include="items\KeyItem.h" />
     <QtMoc Include="models\KeyModel.h" />
+    <QtMoc Include="dialogs\DlgAskPassphrase.h" />
     <ClInclude Include="widgets\QrCodeImage.h" />
     <QtMoc Include="dialogs\DlgAddress.h" />
     <QtMoc Include="dialogs\ReceiveAddressList.h" />
@@ -303,6 +305,7 @@
     <QtUic Include="ui\dialog.ui">
     </QtUic>
     <QtUic Include="ui\DlgAddress.ui" />
+    <QtUic Include="ui\DlgAskPassphrase.ui" />
     <QtUic Include="ui\DlgMultisignature.ui" />
     <QtUic Include="ui\DlgSettings.ui" />
     <QtUic Include="ui\form.ui">

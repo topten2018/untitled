@@ -68,6 +68,9 @@ private slots:
 	void onMultisignatureCreation();
 	void onMultisignatureSpending();
 	void onMultisignatureSigning();
+
+	void onEncryptWallet();
+	void onChangePassphrase();
 	
     void on_showRequestButton_2_clicked();
 

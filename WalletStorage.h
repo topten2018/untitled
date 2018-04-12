@@ -34,6 +34,14 @@ public:
 	bool create(const QString & dst);
 	int  flags(const QString & res);
 	bool restore(const QString & res);
+
+	// Wallet encryption
+	bool setWalletEncrypted(bool encrypted, const QString & passphrase);
+	// Passphrase only needed when unlocking
+	bool setWalletLocked(bool locked, const QString& passPhrase = QString(), bool anonymizeOnly = false);
+	bool changePassphrase(const QString& oldPass, const QString& newPass);
+	// Is wallet unlocked for anonymization only?
+	bool isAnonymizeOnlyUnlocked();
 private:
 	bool writeFile(QFile & file, WalletStorage::FileTypes t);
 	bool readFile(QFile & file, const sFileInfo *);

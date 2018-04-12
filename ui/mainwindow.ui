@@ -3122,10 +3122,10 @@ color: rgb(255, 255, 255);
     <property name="title">
      <string>Settings</string>
     </property>
-    <addaction name="actionEncrypt_Wallet"/>
-    <addaction name="actionChange_passphrase"/>
-    <addaction name="actionBIP38_tool"/>
-    <addaction name="actionMultiSend"/>
+    <addaction name="m_actEncryptWallet"/>
+    <addaction name="m_actChangePassphrase"/>
+    <addaction name="m_actBip38Tool"/>
+    <addaction name="m_actMultiSend"/>
     <addaction name="separator"/>
     <addaction name="m_actOptions"/>
    </widget>
@@ -3239,22 +3239,38 @@ color: rgb(255, 255, 255);
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionEncrypt_Wallet">
+  <action name="m_actEncryptWallet">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/lock.png</normaloff>:/png/lock.png</iconset>
+   </property>
    <property name="text">
     <string>Encrypt Wallet...</string>
    </property>
   </action>
-  <action name="actionChange_passphrase">
+  <action name="m_actChangePassphrase">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/key.png</normaloff>:/png/key.png</iconset>
+   </property>
    <property name="text">
     <string>Change passphrase...</string>
    </property>
   </action>
-  <action name="actionBIP38_tool">
+  <action name="m_actBip38Tool">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/key.png</normaloff>:/png/key.png</iconset>
+   </property>
    <property name="text">
     <string>BIP38 tool</string>
    </property>
   </action>
-  <action name="actionMultiSend">
+  <action name="m_actMultiSend">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/show.png</normaloff>:/png/show.png</iconset>
+   </property>
    <property name="text">
     <string>MultiSend</string>
    </property>

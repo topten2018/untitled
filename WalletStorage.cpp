@@ -218,3 +218,51 @@ int WalletStorage::flags(const QString & res)
 
 	return si.m_nFlags;
 }
+
+
+bool WalletStorage::setWalletEncrypted(bool encrypted, const QString& passphrase)
+{
+	QMutexLocker locker(&m_mtx);
+	if (encrypted) 
+	{
+		// Encrypt
+		return true;// wallet->EncryptWallet(passphrase);
+	}
+	else {
+		// Decrypt -- TODO; not supported yet
+		return false;
+	}
+}
+
+bool WalletStorage::setWalletLocked(bool locked, const QString& passPhrase, bool anonymizeOnly)
+{
+	QMutexLocker locker(&m_mtx);
+	if (locked) 
+	{
+		// Lock
+		//wallet->fWalletUnlockAnonymizeOnly = false;
+		return true;//wallet->Lock();
+	}
+	else {
+		// Unlock
+		return true;// wallet->Unlock(passPhrase, anonymizeOnly);
+	}
+}
+
+bool WalletStorage::isAnonymizeOnlyUnlocked()
+{
+	QMutexLocker locker(&m_mtx);
+	return true;// wallet->fWalletUnlockAnonymizeOnly;
+}
+
+bool WalletStorage::changePassphrase(const QString & oldPass, const QString& newPass)
+{
+	QMutexLocker locker(&m_mtx);
+	bool retval;
+	{
+	//	LOCK(wallet->cs_wallet);
+	//	wallet->Lock(); // Make sure wallet is locked before attempting pass change
+		retval = true;//wallet->ChangeWalletPassphrase(oldPass, newPass);
+	}
+	return retval;
+}

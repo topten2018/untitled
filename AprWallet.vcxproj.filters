@@ -170,6 +170,9 @@
     <ClCompile Include="models\KeyModel.cpp">
       <Filter>Models</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\DlgAskPassphrase.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="d.h">
@@ -268,6 +271,9 @@
     <QtMoc Include="models\KeyModel.h">
       <Filter>Models</Filter>
     </QtMoc>
+    <QtMoc Include="dialogs\DlgAskPassphrase.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GeneratedFiles\moc_predefs.h.cbt">
@@ -327,6 +333,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\KeyItem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\DlgAskPassphrase.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
