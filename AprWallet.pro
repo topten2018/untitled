@@ -51,7 +51,9 @@ SOURCES += main.cpp\
     models/KeyModel.cpp \
     models/PaymentsModel.cpp \
     models/RecPayModel.cpp \
-    models/TxHashModel.cpp
+    models/TxHashModel.cpp \
+    dialogs/DlgMultisend.cpp \
+    dialogs/DlgBip38Tool.cpp
 
 HEADERS  += MainWindow.h \
     d.h \
@@ -90,7 +92,9 @@ HEADERS  += MainWindow.h \
     models/KeyModel.h \
     models/PaymentsModel.h \
     models/RecPayModel.h \
-    models/TxHashModel.h
+    models/TxHashModel.h \
+    dialogs/DlgMultisend.h \
+    dialogs/DlgBip38Tool.h
 
 FORMS    += ./ui/MainWindow.ui \
     ./ui/form.ui \
@@ -111,6 +115,8 @@ FORMS    += ./ui/MainWindow.ui \
     ui/DlgMultisignature.ui \
     ui/KeyItem.ui \
     ui/Tools.ui \
-    ui/TxHashItem.ui
+    ui/TxHashItem.ui \
+    ui/DlgMultisend.ui \
+    ui/DlgBip38Tool.ui
 
 RESOURCES += ./resources/resource.qrc

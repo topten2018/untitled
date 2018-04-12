@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="/png">
+    <file>consoleapplication.png</file>
+    <file>information.png</file>
+    <file>unlock.png</file>
     <file>key.png</file>
     <file>lock.png</file>
     <file>show.png</file>

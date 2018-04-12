@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DlgMultisend</class>
+ <widget class="QDialog" name="DlgMultisend">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>570</width>
+    <height>276</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MultiSend</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources/resource.qrc">
+    <normaloff>:/ico/icon.ico</normaloff>:/ico/icon.ico</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QLabel" name="m_lHint">
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="text">
+      <string>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other PIVX addresses after it matures.
+To Add: enter percentage to give and PIVX address to add to the MultiSend vector.
+To Delete: Enter address to delete and press delete.
+MultiSend will not be activated unless you have clicked Activate</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="m_cbSendStakeCheckBox">
+       <property name="text">
+        <string>Send For Stakes</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="m_cbSendMasternodeCheckBox">
+       <property name="text">
+        <string>Send For Masternode Rewards</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="m_lPercentage">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Percentage of stake to send</string>
+       </property>
+       <property name="text">
+        <string>Percentage:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="m_leSendPercent">
+       <property name="toolTip">
+        <string>Enter whole numbers 1 - 100</string>
+       </property>
+       <property name="placeholderText">
+        <string>Enter % to Give (1-100)</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <item>
+      <widget class="QLabel" name="m_lAddress">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Address to send portion of stake to</string>
+       </property>
+       <property name="text">
+        <string>Address:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="m_leSendAddress">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="placeholderText">
+        <string>Enter Address to Send to</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="m_btnAddressBook">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Choose an address from the address book</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resources/resource.qrc">
+         <normaloff>:/png/address-book.png</normaloff>:/png/address-book.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Alt+A</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="m_btnView">
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="statusTip">
+          <string>View MultiSend Vector</string>
+         </property>
+         <property name="text">
+          <string>View MultiSend</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="m_btnAdd">
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="statusTip">
+            <string>Add to MultiSend Vector</string>
+           </property>
+           <property name="text">
+            <string>Add</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="m_btnDelete">
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="statusTip">
+            <string>Delete Address From MultiSend Vector</string>
+           </property>
+           <property name="text">
+            <string>Delete</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QPushButton" name="m_btnActivate">
+           <property name="statusTip">
+            <string>Activate MultiSend</string>
+           </property>
+           <property name="text">
+            <string>Activate</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="m_btnDisable">
+           <property name="statusTip">
+            <string>Deactivate MultiSend</string>
+           </property>
+           <property name="text">
+            <string>Deactivate</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="m_lMessage">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Panel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="resources/resource.qrc"/>
+ </resources>
+ <connections/>
+</ui>

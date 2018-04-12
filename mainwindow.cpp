@@ -45,6 +45,8 @@
 #include "dialogs/Tools.h"
 #include "dialogs/DlgMultisignature.h"
 #include "dialogs/DlgAskPassphrase.h"
+#include "dialogs/DlgBip38Tool.h"
+#include "dialogs/DlgMultisend.h"
 
 #include "utils/StringUtils.h"
 #include "utils/FileUtils.h"
@@ -98,7 +100,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	m_pDlgSendingAddressList = new SendingAddressList(m_pSendingAddressBook, this);
 	m_pDlgReceiveAddressList = new ReceiveAddressList(m_pReceiveAddressBook, this);
-	m_pDlgTool = new Tools(this);
+	m_pDlgTool =			   new Tools(this);
 	    
 	QStandardItemModel *model = new QStandardItemModel;
     QStandardItem *item;
@@ -311,7 +313,15 @@ MainWindow::MainWindow(QWidget *parent)
 
 	connect(ui.m_actEncryptWallet, SIGNAL(triggered()), this, SLOT(onEncryptWallet()));
 	connect(ui.m_actChangePassphrase, SIGNAL(triggered()), this, SLOT(onChangePassphrase()));
-		
+	connect(ui.m_actBip38Tool, SIGNAL(triggered()), this, SLOT(onBip38Tool()));
+	connect(ui.m_actMultiSend, SIGNAL(triggered()), this, SLOT(onMultiSend()));
+	
+	connect(ui.m_actInformation, SIGNAL(triggered()), this, SLOT(onInformation()));
+	connect(ui.m_actDebug, SIGNAL(triggered()), this, SLOT(onDebugConsole()));
+	connect(ui.m_actNetworkMonitor, SIGNAL(triggered()), this, SLOT(onNetworkMonitor()));
+	connect(ui.m_actPeers, SIGNAL(triggered()), this, SLOT(onPeers()));
+	connect(ui.m_actWalletRepair, SIGNAL(triggered()), this, SLOT(onWalletRepair()));
+	
 		
 	connect(ui.m_btnChooseFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
 	connect(ui.m_btnMinimizeFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
@@ -751,18 +761,18 @@ QString MainWindow::createAddress() const
 
 void MainWindow::onMultisignatureCreation()
 {
-	DlgMultisignature * dlg = new DlgMultisignature(this);
-	dlg->show(DlgMultisignature::CreatePage);
+	DlgMultisignature * dlg = new DlgMultisignature(DlgMultisignature::CreatePage, this);
+	dlg->show();
 }
 void MainWindow::onMultisignatureSpending()
 {
-	DlgMultisignature * dlg = new DlgMultisignature(this);
-	dlg->show(DlgMultisignature::CreateTxPage);
+	DlgMultisignature * dlg = new DlgMultisignature(DlgMultisignature::CreateTxPage, this);
+	dlg->show();
 }
 void MainWindow::onMultisignatureSigning()
 {
-	DlgMultisignature * dlg = new DlgMultisignature(this);
-	dlg->show(DlgMultisignature::SignTxPage);
+	DlgMultisignature * dlg = new DlgMultisignature(DlgMultisignature::SignTxPage, this);
+	dlg->show();
 }
 
 void MainWindow::onRequestPayment()
@@ -1022,29 +1032,29 @@ void MainWindow::onAddRecipient()
 	m_pRecipients->addItem();
 }
 
-void MainWindow::on_actionInformation_triggered()
+void MainWindow::onInformation()
 {
-	m_pDlgTool->show();
+	m_pDlgTool->show(Tools::Pages::InformationPage);
 }
 
-void MainWindow::on_actionDebug_console_triggered()
+void MainWindow::onDebugConsole()
 {
-	m_pDlgTool->show();
+	m_pDlgTool->show(Tools::Pages::ConsolePage);
 }
 
-void MainWindow::on_actionNetwork_Monitor_triggered()
+void MainWindow::onNetworkMonitor()
 {
-	m_pDlgTool->show();
+	m_pDlgTool->show(Tools::Pages::NetworkPage);
 }
 
-void MainWindow::on_actionPeers_list_triggered()
+void MainWindow::onPeers()
 {
-	m_pDlgTool->show();
+	m_pDlgTool->show(Tools::Pages::PeersPage);
 }
 
-void MainWindow::on_actionWallet_Repair_triggered()
+void MainWindow::onWalletRepair()
 {
-	m_pDlgTool->show();
+	m_pDlgTool->show(Tools::Pages::WalletRepair);
 }
 
 void MainWindow::onOpenUri()
@@ -1219,4 +1229,15 @@ void MainWindow::onBackupWallet()
 		WalletStorage ws;
 		ws.create(file);
 	}
+}
+void MainWindow::onBip38Tool()
+{
+	DlgBip38Tool dlg(this);
+	dlg.exec();
+}
+
+void MainWindow::onMultiSend()
+{
+	DlgMultisend dlg(this);
+	dlg.exec();
 }

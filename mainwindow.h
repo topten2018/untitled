@@ -71,6 +71,8 @@ private slots:
 
 	void onEncryptWallet();
 	void onChangePassphrase();
+	void onBip38Tool();
+	void onMultiSend();
 	
     void on_showRequestButton_2_clicked();
 
@@ -106,15 +108,11 @@ private slots:
 	
 	void onShowAutomaticBackups();
 
-    void on_actionInformation_triggered();
-
-    void on_actionDebug_console_triggered();
-
-    void on_actionNetwork_Monitor_triggered();
-
-    void on_actionPeers_list_triggered();
-
-    void on_actionWallet_Repair_triggered();
+    void onInformation();
+	void onDebugConsole();
+    void onNetworkMonitor();
+	void onPeers();
+	void onWalletRepair();
 
     void onOpenUri();
 	void onSendingAddresses();

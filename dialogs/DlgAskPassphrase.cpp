@@ -13,7 +13,8 @@ DlgAskPassphrase::DlgAskPassphrase(Mode mode, WalletStorage *pStorage, QWidget *
 	ui.setupUi(this);
 		
 
-	switch (mode) {
+	switch (mode) 
+	{
 	case Mode::Encrypt: // Ask passphrase x2
 		ui.m_lWarning->setText(tr("Enter the new passphrase to the wallet.<br/>Please use a passphrase of <b>ten or more random characters</b>, or <b>eight or more words</b>."));
 		ui.m_lPass1->hide();

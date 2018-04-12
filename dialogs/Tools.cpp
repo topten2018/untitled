@@ -8,7 +8,7 @@
 
 extern QString s_exeLocation;
 
-Tools::Tools(QWidget *parent) 
+Tools::Tools(QWidget *parent)
 	: QDialog(parent)	
 {
     ui.setupUi(this);
@@ -75,18 +75,22 @@ Tools::Tools(QWidget *parent)
     model->setHorizontalHeaderLabels(horizontalHeader);
     ui.tableView->setModel(model);
     ui.tableView->resizeRowsToContents();
-    ui.tableView->resizeColumnsToContents();
-
-
+    ui.tableView->resizeColumnsToContents();	
 }
 
 Tools::~Tools()
 {
 }
 
+void Tools::show(Pages page)
+{
+	ui.m_twMain->setCurrentIndex(page);
+	QDialog::show();
+}
+
 void Tools::onSend()
 {
-    QString text = ui.textEdit_2->toPlainText();
+    QString text = ui.m_leConsole->text();
     QString jFinalText = "Activating function: "+ text;
     QMessageBox msgBox;
 

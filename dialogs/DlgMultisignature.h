@@ -14,18 +14,16 @@ class DlgMultisignature : public QDialog
 	Q_OBJECT
 
 public:
-	DlgMultisignature(QWidget *parent = Q_NULLPTR);
-	~DlgMultisignature();
-
 	enum Pages
 	{
 		CreatePage = 0,
 		CreateTxPage,
 		SignTxPage
-	};
+	};	
+	
+	DlgMultisignature(Pages page, QWidget *parent = Q_NULLPTR);
+	~DlgMultisignature();
 
-public slots:
-	void show(int i);
 
 private slots:
 	void onAddAddress();

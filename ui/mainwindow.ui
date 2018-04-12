@@ -3133,11 +3133,11 @@ color: rgb(255, 255, 255);
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionInformation"/>
-    <addaction name="actionDebug_console"/>
-    <addaction name="actionNetwork_Monitor"/>
-    <addaction name="actionPeers_list"/>
-    <addaction name="actionWallet_Repair"/>
+    <addaction name="m_actInformation"/>
+    <addaction name="m_actDebug"/>
+    <addaction name="m_actNetworkMonitor"/>
+    <addaction name="m_actPeers"/>
+    <addaction name="m_actWalletRepair"/>
     <addaction name="separator"/>
     <addaction name="actionOpen_Wallet_Configuration_File"/>
     <addaction name="actionOpen_Masternode_Configuration_File"/>
@@ -3284,27 +3284,47 @@ color: rgb(255, 255, 255);
     <string>Options...</string>
    </property>
   </action>
-  <action name="actionInformation">
+  <action name="m_actInformation">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/information.png</normaloff>:/png/information.png</iconset>
+   </property>
    <property name="text">
     <string>Information</string>
    </property>
   </action>
-  <action name="actionDebug_console">
+  <action name="m_actDebug">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/consoleapplication.png</normaloff>:/png/consoleapplication.png</iconset>
+   </property>
    <property name="text">
     <string>Debug console</string>
    </property>
   </action>
-  <action name="actionNetwork_Monitor">
+  <action name="m_actNetworkMonitor">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/connect4_16.png</normaloff>:/png/connect4_16.png</iconset>
+   </property>
    <property name="text">
     <string>Network Monitor</string>
    </property>
   </action>
-  <action name="actionPeers_list">
+  <action name="m_actPeers">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/connect4_16.png</normaloff>:/png/connect4_16.png</iconset>
+   </property>
    <property name="text">
     <string>Peers list</string>
    </property>
   </action>
-  <action name="actionWallet_Repair">
+  <action name="m_actWalletRepair">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/settings.png</normaloff>:/png/settings.png</iconset>
+   </property>
    <property name="text">
     <string>Wallet Repair</string>
    </property>

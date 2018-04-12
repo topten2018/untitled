@@ -5,7 +5,7 @@
 #include "models/TxHashModel.h"
 #include "models/KeyModel.h"
 
-DlgMultisignature::DlgMultisignature(QWidget *parent)
+DlgMultisignature::DlgMultisignature(Pages page, QWidget *parent)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
@@ -20,6 +20,7 @@ DlgMultisignature::DlgMultisignature(QWidget *parent)
 	connect(ui.m_btnAddRawInput, SIGNAL(clicked()), this, SLOT(onAddRawInput()));
 	connect(ui.m_btnAddPrivateKey, SIGNAL(clicked()), this, SLOT(onAddPrivateKey()));
 	
+	ui.m_twMain->setCurrentIndex(page);
 }
 
 DlgMultisignature::~DlgMultisignature()
@@ -45,11 +46,6 @@ void DlgMultisignature::onAddRawInput()
 void DlgMultisignature::onAddPrivateKey()
 {
 	m_pKeyModel->addItem();
-}
-void DlgMultisignature::show(int i)
-{
-	ui.m_twMain->setCurrentIndex(i);
-	QDialog::show();
 }
 void DlgMultisignature::updateButtons()
 {

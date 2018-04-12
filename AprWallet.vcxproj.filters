@@ -104,9 +104,6 @@
     <ClCompile Include="utils\StringUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="items\AddressItem.cpp">
       <Filter>Items</Filter>
     </ClCompile>
@@ -171,6 +168,15 @@
       <Filter>Models</Filter>
     </ClCompile>
     <ClCompile Include="dialogs\DlgAskPassphrase.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\DlgBip38Tool.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\DlgMultisend.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
   </ItemGroup>
@@ -274,6 +280,12 @@
     <QtMoc Include="dialogs\DlgAskPassphrase.h">
       <Filter>Dialogs</Filter>
     </QtMoc>
+    <QtMoc Include="dialogs\DlgBip38Tool.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="dialogs\DlgMultisend.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="GeneratedFiles\moc_predefs.h.cbt">
@@ -336,6 +348,12 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\DlgAskPassphrase.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\DlgBip38Tool.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\DlgMultisend.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
