@@ -20,6 +20,8 @@ class ReceiveAddressList;
 class SendingAddressList;
 class Tools;
 
+class WalletStorage;
+
 struct WalletSettings 
 {
 	bool m_bEnableCoinControl;
@@ -143,6 +145,8 @@ private:
     Sign_Mess jsign;
 
 	bool				  m_bStake;
+
+	WalletStorage		* m_pStorage;
 
 	RecPayModel			* m_pRecipients;
 	AddressBookModel	* m_pSendingAddressBook;

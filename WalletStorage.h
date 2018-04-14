@@ -23,16 +23,16 @@ public:
 	enum Flags 
 	{
 		NoFlags = 0,
-		Encripted = 1,
+		Encrypted = 1,
 	};
 
 	WalletStorage();
 	~WalletStorage();
 
-	void setPassphrase(const QString & passphrase);
-		
-	bool create(const QString & dst);
-	int  flags(const QString & res);
+	
+	bool open(const QString & filename);
+	bool copy(const QString & filename);
+	int  flags();
 	bool restore(const QString & res);
 
 	// Wallet encryption
@@ -42,11 +42,18 @@ public:
 	bool changePassphrase(const QString& oldPass, const QString& newPass);
 	// Is wallet unlocked for anonymization only?
 	bool isAnonymizeOnlyUnlocked();
+	bool save();
 private:
 	bool writeFile(QFile & file, WalletStorage::FileTypes t);
 	bool readFile(QFile & file, const sFileInfo *);
+	bool create(const QString & dst);
 
-	QString m_strPassphrase;
+	bool checkPass(const QString & str);
+
+	QString			m_strPassphrase;
+	QByteArray		m_arrHash;
+	int				m_iFlags;
+	QString			m_strFilename;
 
 	mutable QMutex	m_mtx;
 };

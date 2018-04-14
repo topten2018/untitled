@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     models/RecPayModel.cpp \
     models/TxHashModel.cpp \
     dialogs/DlgMultisend.cpp \
-    dialogs/DlgBip38Tool.cpp
+    dialogs/DlgBip38Tool.cpp \
+    dialogs/DlgBlockchainExplorer.cpp
 
 HEADERS  += MainWindow.h \
     d.h \
@@ -94,7 +95,8 @@ HEADERS  += MainWindow.h \
     models/RecPayModel.h \
     models/TxHashModel.h \
     dialogs/DlgMultisend.h \
-    dialogs/DlgBip38Tool.h
+    dialogs/DlgBip38Tool.h \
+    dialogs/DlgBlockchainExplorer.h
 
 FORMS    += ./ui/MainWindow.ui \
     ./ui/form.ui \
@@ -117,6 +119,7 @@ FORMS    += ./ui/MainWindow.ui \
     ui/Tools.ui \
     ui/TxHashItem.ui \
     ui/DlgMultisend.ui \
-    ui/DlgBip38Tool.ui
+    ui/DlgBip38Tool.ui \
+    ui/DlgBlockchainExplorer.ui
 
 RESOURCES += ./resources/resource.qrc

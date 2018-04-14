@@ -2,6 +2,9 @@
 
 #include <QClipboard>
 #include <QFile>
+#include <QCryptographicHash>
+#include <QFileInfo>
+#include <QDir>
 
 #define BLOCK_SIZE 1024*1024
 
@@ -18,7 +21,7 @@ const char * g_Filenames_bak[] = {
 	"Addresses.txt.bak"
 };
 
-const char g_szPassphrase[] = "asd;fka28sdkmaswk3457faksdfl;ksad09fkklasdjf238kjsblkjiorhjiuhwaeq8021";
+const char g_szPassphrase[] = "asd;fka28sdkmaswk3qwer457faksdfl;ksad09fkklasdjf238kjsblkjiorhjiuhwaeq8021";
 
 #define VERSION_1 1
 #define CURRENT_VERSION VERSION_1
@@ -49,13 +52,24 @@ struct sBlockInfo
 WalletStorage::WalletStorage()
 	: m_mtx(QMutex::RecursionMode::Recursive)
 	, m_strPassphrase(g_szPassphrase)
+	, m_iFlags(0)
 {
 
 }
 
 WalletStorage::~WalletStorage()
 {
+	save();
+}
 
+bool WalletStorage::copy(const QString & filename)
+{
+	if (m_strFilename.isEmpty())
+		return false;
+
+	QFile::copy(m_strFilename, filename);
+
+	return true;
 }
 
 bool WalletStorage::create(const QString & dst)
@@ -71,13 +85,25 @@ bool WalletStorage::create(const QString & dst)
 	si.m_nVersion = CURRENT_VERSION;
 
 	if (m_strPassphrase != g_szPassphrase)
-		si.m_nFlags = Flags::Encripted;
+		si.m_nFlags = Flags::Encrypted;
 	else
 		si.m_nFlags = 0;
-
+	
 	si.m_nFiles = FileTypes::Count;
 
 	file.write((const char*)&si, sizeof(si));
+	
+	if (si.m_nFlags && Flags::Encrypted)
+	{
+		QCryptographicHash hash(QCryptographicHash::Sha256);
+		hash.addData(m_strPassphrase.toLocal8Bit());
+		hash.addData(QString(g_szPassphrase).toLocal8Bit());
+		m_arrHash = hash.result();
+		qint64 i = m_arrHash.size();
+		file.write((const char*)&i, sizeof(i));
+		file.write(m_arrHash);
+	}
+
 	for (int i = 0; i < WalletStorage::Count; i++)
 	{
 		sFileInfo fi = {0};
@@ -90,6 +116,102 @@ bool WalletStorage::create(const QString & dst)
 	}
 	return true;
 }
+
+bool WalletStorage::open(const QString & filename)
+{
+	QMutexLocker locker(&m_mtx);
+
+	QFileInfo fi(filename);
+	if (!fi.exists())
+	{
+		if (!create(filename))
+			return false;
+	}
+
+	m_strFilename = filename;
+
+	QFile file(filename);
+	if (!file.open(QFile::ReadOnly))
+		return false;
+
+	sStorageInfo si;
+
+	file.read((char*)&si, sizeof(si));
+	if (si.m_nType != 'WRPA')
+		return false;
+
+	if (si.m_nVersion != CURRENT_VERSION)
+		return false;
+
+	if (si.m_nFlags && Flags::Encrypted)
+	{
+		qint64 i;
+		file.read((char *)&i, sizeof(i));
+		m_arrHash = file.read(i);
+	}
+
+	m_iFlags = si.m_nFlags;
+
+	QList<sFileInfo> lst;
+
+	for (int i = 0; i < WalletStorage::Count; i++)
+	{
+		sFileInfo fi;
+		file.read((char*)&fi, sizeof(sFileInfo));
+		lst.append(fi);
+	}
+
+	return true;
+}
+
+bool WalletStorage::save()
+{
+	QMutexLocker locker(&m_mtx);
+
+	if (m_strFilename.isEmpty())
+		return true;
+
+	QFile file(m_strFilename);
+	if (!file.open(QFile::WriteOnly))
+		return false;
+
+	sStorageInfo si = { 0 };
+	si.m_nType = 'WRPA';
+	si.m_nVersion = CURRENT_VERSION;
+
+	if (m_strPassphrase != g_szPassphrase)
+		si.m_nFlags = Flags::Encrypted;
+	else
+		si.m_nFlags = 0;
+	
+	si.m_nFiles = FileTypes::Count;
+	file.write((const char*)&si, sizeof(si));
+
+	m_iFlags = si.m_nFlags;
+	if (si.m_nFlags && Flags::Encrypted)
+	{		
+		QCryptographicHash hash(QCryptographicHash::Sha256);
+		hash.addData(m_strPassphrase.toLocal8Bit());
+		hash.addData(QString(g_szPassphrase).toLocal8Bit());
+		m_arrHash = hash.result();
+		qint64 i = m_arrHash.size();
+		file.write((const char*)&i, sizeof(i));
+		file.write(m_arrHash);
+	}
+
+	for (int i = 0; i < WalletStorage::Count; i++)
+	{
+		sFileInfo fi = { 0 };
+		file.write((const char*)&fi, sizeof(fi));
+	}
+	for (int i = 0; i < WalletStorage::Count; i++)
+	{
+		if (!writeFile(file, WalletStorage::FileTypes(i)))
+			return true;
+	}
+	return true;
+}
+
 bool WalletStorage::restore(const QString & res)
 {
 	QMutexLocker locker(&m_mtx);
@@ -106,6 +228,15 @@ bool WalletStorage::restore(const QString & res)
 
 	if (si.m_nVersion != CURRENT_VERSION)
 		return false;
+	
+	if (si.m_nFlags && Flags::Encrypted)
+	{
+		qint64 i;
+		file.read((char *)&i, sizeof(i));
+		m_arrHash = file.read(i);
+	}
+
+	m_iFlags = si.m_nFlags;
 
 	QList<sFileInfo> lst;
 
@@ -137,6 +268,12 @@ bool WalletStorage::writeFile(QFile & file, WalletStorage::FileTypes t)
 	fi.m_nOffset = file.pos();
 	fi.m_nSize = 0;
 
+	int offset = sizeof(sStorageInfo);
+	if (m_iFlags & Flags::Encrypted)
+	{
+		offset += m_arrHash.size() + sizeof(qint64);
+	}
+
 	while (!dst.atEnd()) 
 	{
 		QByteArray arr = dst.read(BLOCK_SIZE);
@@ -159,7 +296,7 @@ bool WalletStorage::writeFile(QFile & file, WalletStorage::FileTypes t)
 		file.write(arr2);
 	}
 	qint64 pos = file.pos();
-	file.seek(sizeof(sStorageInfo) + sizeof(sFileInfo)*t);
+	file.seek(offset + sizeof(sFileInfo)*t);
 	file.write((const char *)&fi, sizeof(sFileInfo));
 	file.seek(pos);
 
@@ -194,44 +331,50 @@ bool WalletStorage::readFile(QFile & file, const sFileInfo * fi)
 
 	return true;
 }
-void WalletStorage::setPassphrase(const QString & passphrase)
-{
-	m_strPassphrase = passphrase;
+
+int WalletStorage::flags()
+{	
+	return m_iFlags;
 }
-
-int WalletStorage::flags(const QString & res)
-{
-	QMutexLocker locker(&m_mtx);
-
-	QFile file(res);
-	if (!file.open(QFile::ReadOnly))
-		return 0;
-
-	sStorageInfo si;
-
-	file.read((char*)&si, sizeof(si));
-	if (si.m_nType != 'WRPA')
-		return 0;
-
-	if (si.m_nVersion != CURRENT_VERSION)
-		return 0;
-
-	return si.m_nFlags;
-}
-
 
 bool WalletStorage::setWalletEncrypted(bool encrypted, const QString& passphrase)
 {
 	QMutexLocker locker(&m_mtx);
-	if (encrypted) 
+	if (encrypted && g_szPassphrase != passphrase)
 	{
-		// Encrypt
-		return true;// wallet->EncryptWallet(passphrase);
+		m_iFlags |= Flags::Encrypted;
+		m_strPassphrase = passphrase;
+
+		QCryptographicHash hash(QCryptographicHash::Sha256);
+		hash.addData(m_strPassphrase.toLocal8Bit());
+		hash.addData(QString(g_szPassphrase).toLocal8Bit());
+		m_arrHash = hash.result();
+		
+		return true;
 	}
-	else {
-		// Decrypt -- TODO; not supported yet
+	else 
+	{
+		if (checkPass(passphrase))
+		{
+			m_iFlags &= ~Flags::Encrypted;
+			m_strPassphrase = g_szPassphrase;
+			return true;
+		}
+		else
+			return false;
+	}
+}
+
+bool WalletStorage::checkPass(const QString & str)
+{
+	QCryptographicHash hash(QCryptographicHash::Sha256);
+	hash.addData(str.toLocal8Bit());
+	hash.addData(QString(g_szPassphrase).toLocal8Bit());
+	if (hash.result() != m_arrHash)
 		return false;
-	}
+	return 
+		true;
+	
 }
 
 bool WalletStorage::setWalletLocked(bool locked, const QString& passPhrase, bool anonymizeOnly)
@@ -258,11 +401,17 @@ bool WalletStorage::isAnonymizeOnlyUnlocked()
 bool WalletStorage::changePassphrase(const QString & oldPass, const QString& newPass)
 {
 	QMutexLocker locker(&m_mtx);
-	bool retval;
+	if (!(m_iFlags & Flags::Encrypted) || ((m_iFlags & Flags::Encrypted) && checkPass(oldPass)))
 	{
-	//	LOCK(wallet->cs_wallet);
-	//	wallet->Lock(); // Make sure wallet is locked before attempting pass change
-		retval = true;//wallet->ChangeWalletPassphrase(oldPass, newPass);
+		m_strPassphrase = newPass;
+		m_iFlags |= Flags::Encrypted;
+
+		QCryptographicHash hash(QCryptographicHash::Sha256);
+		hash.addData(m_strPassphrase.toLocal8Bit());
+		hash.addData(QString(g_szPassphrase).toLocal8Bit());
+		m_arrHash = hash.result();
+		return true;
 	}
-	return retval;
+	else
+		return false;
 }

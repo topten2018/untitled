@@ -81,10 +81,18 @@ MainWindow::MainWindow(QWidget *parent)
 	
 	ui.setupUi(this);
 	
-	WalletStorage ws;
 	QString fname = s_exeLocation + tr("backups/AprWallet.dat") + QDateTime::currentDateTime().toString("-yyyy-MM-dd-hh-mm-ss");
-	ws.create(fname);
-//	ws.restore(fname);
+	m_pStorage = new WalletStorage();
+	if (m_pStorage->open(s_exeLocation + tr("AprWallet.dat")))
+	{
+		m_pStorage->copy(fname);
+		if (m_pStorage->flags() & WalletStorage::Flags::Encrypted)
+		{
+			ui.m_actEncryptWallet->setEnabled(false);
+		}
+		else
+			ui.m_actChangePassphrase->setEnabled(false);
+	}
 
 	m_pMasternodesTab = ui.m_twMainArea->widget(Pages::Masternodes);	
 	
@@ -359,6 +367,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+	delete m_pStorage;
+
 	delete m_pDlgSendingAddressList;
 	delete m_pDlgReceiveAddressList;
 	delete m_pDlgTool;
@@ -518,23 +528,32 @@ void MainWindow::onDeletePayment()
 
 void MainWindow::onEncryptWallet()
 {
-	WalletStorage ws;
-
-	DlgAskPassphrase dlg(DlgAskPassphrase::Mode::Encrypt, &ws, this);
+	DlgAskPassphrase dlg(DlgAskPassphrase::Mode::Encrypt, m_pStorage, this);
 
 	if (dlg.exec() == QDialog::Accepted)
 	{
-
+		m_pStorage->save();
+		if (m_pStorage->flags() & WalletStorage::Flags::Encrypted)
+		{
+			ui.m_actEncryptWallet->setEnabled(false);
+		}
+		else
+			ui.m_actChangePassphrase->setEnabled(false);
 	}
 }
 void MainWindow::onChangePassphrase()
 {
-	WalletStorage ws;
-	DlgAskPassphrase dlg(DlgAskPassphrase::Mode::ChangePass, &ws, this);
+	DlgAskPassphrase dlg(DlgAskPassphrase::Mode::ChangePass, m_pStorage, this);
 
 	if (dlg.exec() == QDialog::Accepted)
 	{
-
+		m_pStorage->save();
+		if (m_pStorage->flags() & WalletStorage::Flags::Encrypted)
+		{
+			ui.m_actEncryptWallet->setEnabled(false);
+		}
+		else
+			ui.m_actChangePassphrase->setEnabled(false);
 	}
 }
 
@@ -1231,8 +1250,8 @@ void MainWindow::onBackupWallet()
 
 	if (!file.isEmpty())
 	{
-		WalletStorage ws;
-		ws.create(file);
+		m_pStorage->save();
+		m_pStorage->copy(file);
 	}
 }
 void MainWindow::onBip38Tool()
