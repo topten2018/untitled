@@ -205,6 +205,7 @@
     <ClCompile Include="dialogs\DlgAddress.cpp" />
     <ClCompile Include="dialogs\DlgAskPassphrase.cpp" />
     <ClCompile Include="dialogs\DlgBip38Tool.cpp" />
+    <ClCompile Include="dialogs\DlgBlockchainExplorer.cpp" />
     <ClCompile Include="dialogs\DlgMultisend.cpp" />
     <ClCompile Include="dialogs\DlgMultisignature.cpp" />
     <ClCompile Include="dialogs\DlgSettings.cpp" />
@@ -259,6 +260,7 @@
     <QtMoc Include="dialogs\DlgAskPassphrase.h" />
     <QtMoc Include="dialogs\DlgBip38Tool.h" />
     <QtMoc Include="dialogs\DlgMultisend.h" />
+    <QtMoc Include="dialogs\DlgBlockchainExplorer.h" />
     <ClInclude Include="widgets\QrCodeImage.h" />
     <QtMoc Include="dialogs\DlgAddress.h" />
     <QtMoc Include="dialogs\ReceiveAddressList.h" />
@@ -311,6 +313,7 @@
     <QtUic Include="ui\DlgAddress.ui" />
     <QtUic Include="ui\DlgAskPassphrase.ui" />
     <QtUic Include="ui\DlgBip38Tool.ui" />
+    <QtUic Include="ui\DlgBlockchainExplorer.ui" />
     <QtUic Include="ui\DlgMultisend.ui" />
     <QtUic Include="ui\DlgMultisignature.ui" />
     <QtUic Include="ui\DlgSettings.ui" />

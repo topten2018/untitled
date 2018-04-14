@@ -113,6 +113,9 @@ private slots:
     void onNetworkMonitor();
 	void onPeers();
 	void onWalletRepair();
+	void onOpenWalletConfiguration();
+	void onOpenMasternodeConfiguration();
+	void onBlockchainExplorer();
 
     void onOpenUri();
 	void onSendingAddresses();

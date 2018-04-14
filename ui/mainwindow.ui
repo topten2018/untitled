@@ -3139,10 +3139,10 @@ color: rgb(255, 255, 255);
     <addaction name="m_actPeers"/>
     <addaction name="m_actWalletRepair"/>
     <addaction name="separator"/>
-    <addaction name="actionOpen_Wallet_Configuration_File"/>
-    <addaction name="actionOpen_Masternode_Configuration_File"/>
+    <addaction name="m_actOpenWalletConfiguration"/>
+    <addaction name="m_actOpenMasternodeConfiguration"/>
     <addaction name="m_actShowAutomaticBackups"/>
-    <addaction name="actionBlockchain_explorer"/>
+    <addaction name="m_actBlockchainExplorer"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSettings"/>
@@ -3329,12 +3329,20 @@ color: rgb(255, 255, 255);
     <string>Wallet Repair</string>
    </property>
   </action>
-  <action name="actionOpen_Wallet_Configuration_File">
+  <action name="m_actOpenWalletConfiguration">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/editpaste.png</normaloff>:/png/editpaste.png</iconset>
+   </property>
    <property name="text">
     <string>Open Wallet Configuration File</string>
    </property>
   </action>
-  <action name="actionOpen_Masternode_Configuration_File">
+  <action name="m_actOpenMasternodeConfiguration">
+   <property name="icon">
+    <iconset resource="../resources/resource.qrc">
+     <normaloff>:/png/editpaste.png</normaloff>:/png/editpaste.png</iconset>
+   </property>
    <property name="text">
     <string>Open Masternode Configuration File</string>
    </property>
@@ -3348,7 +3356,7 @@ color: rgb(255, 255, 255);
     <string>Show Automatic Backups</string>
    </property>
   </action>
-  <action name="actionBlockchain_explorer">
+  <action name="m_actBlockchainExplorer">
    <property name="text">
     <string>Blockchain explorer</string>
    </property>

@@ -47,6 +47,7 @@
 #include "dialogs/DlgAskPassphrase.h"
 #include "dialogs/DlgBip38Tool.h"
 #include "dialogs/DlgMultisend.h"
+#include "dialogs/DlgBlockchainExplorer.h"
 
 #include "utils/StringUtils.h"
 #include "utils/FileUtils.h"
@@ -321,6 +322,10 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui.m_actNetworkMonitor, SIGNAL(triggered()), this, SLOT(onNetworkMonitor()));
 	connect(ui.m_actPeers, SIGNAL(triggered()), this, SLOT(onPeers()));
 	connect(ui.m_actWalletRepair, SIGNAL(triggered()), this, SLOT(onWalletRepair()));
+
+	connect(ui.m_actOpenWalletConfiguration, SIGNAL(triggered()), this, SLOT(onOpenWalletConfiguration()));
+	connect(ui.m_actOpenMasternodeConfiguration, SIGNAL(triggered()), this, SLOT(onOpenMasternodeConfiguration()));
+	connect(ui.m_actBlockchainExplorer, SIGNAL(triggered()), this, SLOT(onBlockchainExplorer()));
 	
 		
 	connect(ui.m_btnChooseFee, SIGNAL(clicked()), this, SLOT(onShowHideFeeInfo()));
@@ -1239,5 +1244,31 @@ void MainWindow::onBip38Tool()
 void MainWindow::onMultiSend()
 {
 	DlgMultisend dlg(this);
+	dlg.exec();
+}
+
+void MainWindow::onOpenWalletConfiguration()
+{
+	QFileInfo fi(s_exeLocation + "apr.conf");
+	if (!fi.exists())
+	{
+		QFile file(s_exeLocation + "apr.conf");
+		file.open(file.WriteOnly);
+	}
+	QDesktopServices::openUrl(QUrl::fromLocalFile(s_exeLocation + "apr.conf"));
+}
+void MainWindow::onOpenMasternodeConfiguration()
+{
+	QFileInfo fi(s_exeLocation + "masternode.conf");
+	if (!fi.exists())
+	{
+		QFile file(s_exeLocation + "masternode.conf");
+		file.open(file.WriteOnly);
+	}
+	QDesktopServices::openUrl(QUrl::fromLocalFile(s_exeLocation + "masternode.conf"));
+}
+void MainWindow::onBlockchainExplorer()
+{
+	DlgBlockchainExplorer dlg(this);
 	dlg.exec();
 }
